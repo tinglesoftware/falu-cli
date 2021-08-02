@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31515.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaluCli", "src\FaluCli\FaluCli.csproj", "{FE48265D-93DF-4B00-9EFD-A8DB2815CA2B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{08B40617-9B88-4F7E-A294-1365BE71D353}"
+	ProjectSection(SolutionItems) = preProject
+		src\Directory.Build.props = src\Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{03C404AC-4BD7-48D3-8973-07AAC9F1D84B}"
+	ProjectSection(SolutionItems) = preProject
+		tests\Directory.Build.props = tests\Directory.Build.props
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE48265D-93DF-4B00-9EFD-A8DB2815CA2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE48265D-93DF-4B00-9EFD-A8DB2815CA2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE48265D-93DF-4B00-9EFD-A8DB2815CA2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE48265D-93DF-4B00-9EFD-A8DB2815CA2B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FE48265D-93DF-4B00-9EFD-A8DB2815CA2B} = {08B40617-9B88-4F7E-A294-1365BE71D353}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {74F859A4-C759-4A66-B464-23D4F3FC20CA}
+	EndGlobalSection
+EndGlobal
