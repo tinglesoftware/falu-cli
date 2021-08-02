@@ -16,6 +16,7 @@ jobs:
     env:
       buildConfiguration: 'Release'
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+      RuntimeIdentifiersSingleLine: "win-x64;linux-x64;osx-x64"
 
     steps:
     - name: Checkout
