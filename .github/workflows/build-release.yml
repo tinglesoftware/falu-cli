@@ -23,12 +23,15 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        rid:
-          - win-x64
-          - linux-x64
-          - osx-x64
+        config:
+          - rid: linux-x64
+            os: ubuntu-latest
+          - rid: win-x64
+            os: ubuntu-latest #windows-latest
+          - rid: osx-x64
+            os: ubuntu-latest #macos-latest
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.config.os }}
     env:
       buildConfiguration: 'Release'
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -55,7 +58,7 @@ jobs:
         dotnet-version: '5.0.x'
 
     - name: Install dependencies
-      run: dotnet restore --runtime ${{ matrix.rid }}
+      run: dotnet restore --runtime ${{ matrix.config.rid }}
 
     - name: Publish
       run: >
@@ -65,9 +68,9 @@ jobs:
         -p:DebugSymbols=false
         -p:IncludeNativeLibrariesForSelfExtract=true
         -p:PublishTrimmed=true
-        --runtime ${{ matrix.rid }}
+        --runtime ${{ matrix.config.rid }}
         --configuration $buildConfiguration
-        --output $GITHUB_WORKSPACE/drop/${{ matrix.rid }}
+        --output $GITHUB_WORKSPACE/drop/${{ matrix.config.rid }}
         --self-contained true
         --no-restore
 
