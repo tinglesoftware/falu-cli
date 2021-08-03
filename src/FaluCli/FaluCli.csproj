@@ -12,4 +12,8 @@
     <PackageReference Include="System.CommandLine.Hosting" Version="0.3.0-alpha.21216.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\falu-sdk-dotnet\src\Falu\Falu.csproj" />
+  </ItemGroup>
+
 </Project>

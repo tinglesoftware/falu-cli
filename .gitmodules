@@ -1,0 +1,3 @@
+[submodule "falu-sdk-dotnet"]
+	path = falu-sdk-dotnet
+	url = https://github.com/tinglesoftware/falu-sdk-dotnet.git
