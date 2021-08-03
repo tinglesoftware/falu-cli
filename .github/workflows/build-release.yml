@@ -74,6 +74,7 @@ jobs:
         --output $GITHUB_WORKSPACE/drop/${{ matrix.config.rid }}
         --self-contained true
         --no-restore
+        src/FaluCli/FaluCli.csproj
 
     - name: Publish Artifact
       uses: actions/upload-artifact@v2
