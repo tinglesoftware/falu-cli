@@ -11,18 +11,23 @@ Installing the CLI provides access to the `falu` command.
 
 ```bash
 falu [command]
+```
 
-# Run `--help` for detailed information about CLI commands
-falu [command] help
+```bash
+# Run `-h` for detailed information about the tool
+falu -h
+
+# Run `-h` for detailed information about commands
+falu [command] -h
 ```
 
 ### Commands
 
 The Falu CLI supports a broad range of commands including:
 
-- [`logs tail`][wiki-command-logs-tail]
+<!-- - [`logs tail`][wiki-command-logs-tail] -->
 - [`events resend`](/wiki/commands/events-resend)
-- [`listen`](/wiki/commands/listen)
+<!-- - [`listen`](/wiki/commands/listen) -->
 
 Check out the [wiki](/wiki) for more on using the CLI.
 
