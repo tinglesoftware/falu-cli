@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaluCli", "src\FaluCli\FaluCli.csproj", "{FE48265D-93DF-4B00-9EFD-A8DB2815CA2B}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{08B40617-9B88-4F7E-A294-1365BE71D353}"
 	ProjectSection(SolutionItems) = preProject
 		src\Directory.Build.props = src\Directory.Build.props
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaluCli", "src\FaluCli\FaluCli.csproj", "{FE48265D-93DF-4B00-9EFD-A8DB2815CA2B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaluSdk", "falu-sdk-dotnet\src\FaluSdk\FaluSdk.csproj", "{8343F76B-8A1C-46E4-8ECF-F7EB8EF1819F}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{03C404AC-4BD7-48D3-8973-07AAC9F1D84B}"
 	ProjectSection(SolutionItems) = preProject
 		tests\Directory.Build.props = tests\Directory.Build.props
 	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaluSdk", "falu-sdk-dotnet\src\FaluSdk\FaluSdk.csproj", "{8343F76B-8A1C-46E4-8ECF-F7EB8EF1819F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
