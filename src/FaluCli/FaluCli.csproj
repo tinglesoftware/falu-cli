@@ -1,13 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>falucli</AssemblyName>
+    <AssemblyName>falu</AssemblyName>
     <Description>Official CLI tool for Falu.</Description>
     <Product>Falu CLI</Product>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Falu" Version="0.5.1" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.21308.1" />
     <PackageReference Include="System.CommandLine.Hosting" Version="0.3.0-alpha.21216.1" />
   </ItemGroup>
