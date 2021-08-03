@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{03C404AC
 		tests\Directory.Build.props = tests\Directory.Build.props
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Falu", "falu-sdk-dotnet\src\Falu\Falu.csproj", "{8343F76B-8A1C-46E4-8ECF-F7EB8EF1819F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FaluSdk", "falu-sdk-dotnet\src\FaluSdk\FaluSdk.csproj", "{8343F76B-8A1C-46E4-8ECF-F7EB8EF1819F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

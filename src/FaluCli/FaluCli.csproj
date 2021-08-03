@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\falu-sdk-dotnet\src\Falu\Falu.csproj" />
+    <ProjectReference Include="..\..\falu-sdk-dotnet\src\FaluSdk\FaluSdk.csproj" />
   </ItemGroup>
 
 </Project>
