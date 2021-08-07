@@ -35,6 +35,8 @@ jobs:
     env:
       buildConfiguration: 'Release'
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+      RELEASING_SDK: false # ensure the SDK is not built for release
+      RELEASING_CLI: true # enables
 
     steps:
     - name: Checkout
@@ -64,11 +66,6 @@ jobs:
     - name: Publish
       run: >
         dotnet publish
-        -p:PublishSingleFile=true
-        -p:DebugType=None
-        -p:DebugSymbols=false
-        -p:IncludeNativeLibrariesForSelfExtract=true
-        -p:PublishTrimmed=true
         --runtime ${{ matrix.config.rid }}
         --configuration $buildConfiguration
         --output $GITHUB_WORKSPACE/drop/${{ matrix.config.rid }}
