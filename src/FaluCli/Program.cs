@@ -59,8 +59,7 @@ namespace FaluCli
                         services.AddFaluClientForCli(configuration.GetSection("FaluClient"));
                     });
                 })
-                .UseDefaults()
-                .UseTypoCorrections();
+                .UseFaluDefaults();
 
             // Parse the incoming args and invoke the handler
             var parser = builder.Build();

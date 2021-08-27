@@ -11,7 +11,7 @@ namespace Microsoft.Extensions.DependencyInjection
     internal static class IServiceCollectionExtensions
     {
         // get the version from the assembly
-        private readonly static string ProductVersion = typeof(Program).Assembly.GetName().Version!.ToString(3);
+        private static readonly string ProductVersion = typeof(Program).Assembly.GetName().Version!.ToString(3);
 
         public static IServiceCollection AddFaluClientForCli(this IServiceCollection services, IConfiguration configuration)
         {
