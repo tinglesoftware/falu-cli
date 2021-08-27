@@ -31,6 +31,7 @@ namespace FaluCli
 
                 new Command("events", "Work with events on Falu.")
                 {
+                    new Commands.Events.RetryCommand(),
                 },
 
                 new Command("webhooks", "Manage webhooks.")
@@ -58,6 +59,8 @@ namespace FaluCli
                         var configuration = context.Configuration;
                         services.AddFaluClientForCli(configuration.GetSection("FaluClient"));
                     });
+
+                    host.UseCommandHandler<Commands.Events.RetryCommand, Commands.Events.RetryCommandHandler>();
                 })
                 .UseFaluDefaults();
 
