@@ -22,8 +22,8 @@ namespace FaluCli.Commands.Events
         public async Task<int> InvokeAsync(InvocationContext context)
         {
             var cancellationToken = context.GetCancellationToken();
-            var webhookEndpointId = context.ParseResult.ValueForArgument<string>("--webhook-endpoint");
-            var eventId = context.ParseResult.ValueForOption<string>("--event");
+            var eventId = context.ParseResult.ValueForArgument<string>("event");
+            var webhookEndpointId = context.ParseResult.ValueForOption<string>("--webhook-endpoint");
 
             var model = new EventDeliveryRetry { WebhookEndpointId = webhookEndpointId, };
             var response = await client.EventsCli.RetryAsync(eventId!, model, cancellationToken: cancellationToken);
