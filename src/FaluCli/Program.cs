@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
 using System.CommandLine;
@@ -38,7 +39,7 @@ namespace FaluCli
             };
 
             rootCommand.Description = "Official CLI tool for Falu.";
-            rootCommand.AddGlobalOption(new[] { "-v", "--verbose" }, "Whether to output verbosely.", () => false);
+            rootCommand.AddCommonGlobalOptions();
 
             var builder = new CommandLineBuilder(rootCommand)
                 .UseHost(_ => Host.CreateDefaultBuilder(args), host =>
@@ -51,9 +52,14 @@ namespace FaluCli
                             ["Logging:LogLevel:Microsoft"] = "Warning",
                         });
                     });
+
+                    host.ConfigureServices((context, services) =>
+                    {
+                        var configuration = context.Configuration;
+                        services.AddFaluClientForCli(configuration.GetSection("FaluClient"));
+                    });
                 })
-                .UseDefaults()
-                .UseTypoCorrections();
+                .UseFaluDefaults();
 
             // Parse the incoming args and invoke the handler
             var parser = builder.Build();

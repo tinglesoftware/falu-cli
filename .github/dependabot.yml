@@ -20,6 +20,6 @@ updates:
   - package-ecosystem: "gitsubmodule" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
-      interval: "daily" # More frequent so we can tell if there are compatibility issues
+      interval: "weekly" # More frequent so we can tell if there are compatibility issues
       time: "02:00"
     open-pull-requests-limit: 10
