@@ -185,7 +185,7 @@ namespace System.CommandLine
                                             description: "The identifier of the workspace being accessed. Required when loggin is by user account. Looks like: sk_test_LdVyn0upN...",
                                             configure: o => o.IsRequired = true);
 
-            //command.AddGlobalOption(new[] { "-v", "--verbose" }, "Whether to output verbosely.", () => false);
+            command.AddGlobalOption(new[] { "-v", "--verbose" }, "Whether to output verbosely.", false);
 
             return command;
         }
