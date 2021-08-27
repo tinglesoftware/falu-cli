@@ -45,7 +45,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             public void Configure(FaluCliClientOptions options)
             {
-                var apiKey = context.ParseResult.ValueForOption<string>("--api-key");
+                var apiKey = context.ParseResult.ValueForOption<string>("--apikey");
 
                 options.ApiKey = apiKey;
                 var workspaceId = context.ParseResult.ValueForOption<string>("--workspace-id");
