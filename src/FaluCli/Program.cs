@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
 using System.CommandLine;
@@ -50,6 +51,12 @@ namespace FaluCli
                             ["Logging:LogLevel:Default"] = "Information",
                             ["Logging:LogLevel:Microsoft"] = "Warning",
                         });
+                    });
+
+                    host.ConfigureServices((context, services) =>
+                    {
+                        var configuration = context.Configuration;
+                        services.AddFaluClientForCli(configuration.GetSection("FaluClient"));
                     });
                 })
                 .UseDefaults()

@@ -175,12 +175,10 @@ namespace System.CommandLine
         {
             // TODO: validate workspaceId using regex -> "^wksp_[0-9a-f]{24}$"
             command.AddGlobalOption<string>(aliases: new[] { "--workspace", "--workspace-id", },
-                                            description: "The identifier of the workspace which the entity belongs to. e.g. wksp_610010be9228355f14ce6e08",
-                                            configure: o => o.IsRequired = true);
+                                            description: "The identifier of the workspace being accessed. Required when loggin is by user account. Example: wksp_610010be9228355f14ce6e08");
 
-            command.AddGlobalOption(aliases: new[] { "--live", },
-                                    description: "Whether the entity resides in live mode or not.",
-                                    defaultValue: false);
+            command.AddGlobalOption<bool>(aliases: new[] { "--live", },
+                                          description: "Whether the entity resides in live mode or not. Required when login is by user account.");
 
             //command.AddGlobalOption(new[] { "-v", "--verbose" }, "Whether to output verbosely.", () => false);
 
