@@ -1,6 +1,7 @@
 ﻿using System.CommandLine.Invocation;
 using System.CommandLine.IO;
 using System.Net;
+using Res = FaluCli.Properties.Resources;
 
 namespace System.CommandLine.Builder
 {
@@ -41,25 +42,27 @@ namespace System.CommandLine.Builder
                 var error = fe.Error;
                 if (error is not null)
                 {
-                    stderr.WriteLine($"RequestId: {fe.RequestId}");
+                    stderr.WriteLine(Res.RequestFailedHeader);
+                    stderr.WriteLine();
+                    stderr.WriteLine(Res.RequestIdFormat, fe.RequestId);
                     if (!string.IsNullOrWhiteSpace(fe.TraceId))
                     {
-                        stderr.WriteLine($"TraceId: {fe.TraceId}");
+                        stderr.WriteLine(Res.TraceIdentifierFormat, fe.TraceId);
                     }
 
-                    stderr.WriteLine($"Code: {error.Title!}");
+                    stderr.WriteLine(Res.ProblemDetailsErrorCodeFormat, error.Title);
                     if (!string.IsNullOrWhiteSpace(error.Detail))
                     {
-                        stderr.WriteLine(error.Detail);
+                        stderr.WriteLine(Res.ProblemDetailsErrorDetailFormat, error.Detail);
                     }
                 }
                 else if (fe.StatusCode == HttpStatusCode.Unauthorized)
                 {
-                    stderr.WriteLine("The API key provided cannot authenticate your request.\r\nConfirm you have provided the right value and that it matches any other related values.\r\nFor example, do not use a key that belongs to another workspace or mix live and test mode keys");
+                    stderr.WriteLine(Res.Unauthorized401ErrorMessage);
                 }
                 else if (fe.StatusCode == HttpStatusCode.Forbidden)
                 {
-                    stderr.WriteLine("The API Key provided or logged in user does not have permissions to perform this operation.\r\nConsult your Falu dashboard to confirm the permissions of the API key or ask your administrator to grant you permissions.");
+                    stderr.WriteLine(Res.Forbidden403Message);
                 }
                 else
                 {
@@ -68,7 +71,7 @@ namespace System.CommandLine.Builder
             }
             else
             {
-                stderr.WriteLine($"Unhandled exception: {exception}");
+                stderr.WriteLine(Res.UnhandledExceptionFormat, exception.ToString());
             }
 
             console.ResetTerminalForegroundColor();
