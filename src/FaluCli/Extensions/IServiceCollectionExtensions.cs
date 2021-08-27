@@ -1,11 +1,10 @@
-﻿using Falu;
-using Falu.Core;
-using FaluCli;
+﻿using FaluCli;
 using FaluCli.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using System;
 using System.CommandLine.Invocation;
+using System.Net.Http.Headers;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -27,9 +26,11 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             builder.ConfigureHttpClient(client =>
             {
+                // TODO: remove this once we migrate to using the library and not gitsubmodule since it will have correct value
+                client.DefaultRequestHeaders.UserAgent.Clear();
+
                 // populate the User-Agent header
-                var userAgent = $"falucli/{ProductVersion}";
-                client.DefaultRequestHeaders.Add("User-Agent", userAgent);
+                client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("falucli", ProductVersion));
             });
         }
 
