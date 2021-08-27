@@ -174,7 +174,7 @@ namespace System.CommandLine
         public static Command AddCommonGlobalOptions(this Command command)
         {
             // TODO: validate workspaceId using regex -> "^wksp_[0-9a-f]{24}$"
-            command.AddGlobalOption<string>(aliases: new[] { "--workspace", "--workspace-id", },
+            command.AddGlobalOption<string>(aliases: new[] { "--workspace", },
                                             description: "The identifier of the workspace being accessed. Required when login is by user account. Example: wksp_610010be9228355f14ce6e08");
 
             command.AddGlobalOption<bool>(aliases: new[] { "--live", },
