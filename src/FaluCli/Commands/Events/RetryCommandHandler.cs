@@ -22,7 +22,7 @@ namespace FaluCli.Commands.Events
         public async Task<int> InvokeAsync(InvocationContext context)
         {
             var cancellationToken = context.GetCancellationToken();
-            var webhookEndpointId = context.ParseResult.ValueForOption<string>("--webhook-endpoint");
+            var webhookEndpointId = context.ParseResult.ValueForArgument<string>("--webhook-endpoint");
             var eventId = context.ParseResult.ValueForOption<string>("--event");
 
             var model = new EventDeliveryRetry { WebhookEndpointId = webhookEndpointId, };
