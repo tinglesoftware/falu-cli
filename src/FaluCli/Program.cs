@@ -38,7 +38,7 @@ namespace FaluCli
             };
 
             rootCommand.Description = "Official CLI tool for Falu.";
-            rootCommand.AddGlobalOption(new[] { "-v", "--verbose" }, "Whether to output verbosely.", () => false);
+            rootCommand.AddCommonGlobalOptions();
 
             var builder = new CommandLineBuilder(rootCommand)
                 .UseHost(_ => Host.CreateDefaultBuilder(args), host =>
