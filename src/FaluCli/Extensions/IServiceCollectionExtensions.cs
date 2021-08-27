@@ -1,6 +1,7 @@
 ﻿using Falu;
 using Falu.Core;
 using FaluCli;
+using FaluCli.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using System;
@@ -15,10 +16,9 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static IServiceCollection AddFaluClientForCli(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddFalu(configuration: configuration, configureBuilder: ConfigureHttpClient);
+            services.AddFaluInner<FaluCliClient, FaluCliClientOptions>(configuration: configuration, configureBuilder: ConfigureHttpClient);
 
-            services.AddSingleton<IConfigureOptions<FaluClientOptions>, ConfigureOptionsFaluClientOptions>();
-            services.AddSingleton<IConfigureOptions<RequestOptions>, ConfigureOptionsRequestOptions>();
+            services.AddSingleton<IConfigureOptions<FaluCliClientOptions>, ConfigureFaluCliClientOptions>();
 
             return services;
         }
@@ -33,40 +33,25 @@ namespace Microsoft.Extensions.DependencyInjection
             });
         }
 
-        internal class ConfigureOptionsFaluClientOptions : IConfigureOptions<FaluClientOptions>
+        internal class ConfigureFaluCliClientOptions : IConfigureOptions<FaluCliClientOptions>
         {
             private readonly InvocationContext context;
 
-            public ConfigureOptionsFaluClientOptions(InvocationContext context)
+            public ConfigureFaluCliClientOptions(InvocationContext context)
             {
                 this.context = context ?? throw new ArgumentNullException(nameof(context));
             }
 
-            public void Configure(FaluClientOptions options)
+            public void Configure(FaluCliClientOptions options)
             {
                 var apiKey = context.ParseResult.ValueForOption<string>("--api-key");
 
                 options.ApiKey = apiKey;
-            }
-        }
-
-        internal class ConfigureOptionsRequestOptions : IConfigureOptions<RequestOptions>
-        {
-            private readonly InvocationContext context;
-
-            public ConfigureOptionsRequestOptions(InvocationContext context)
-            {
-                this.context = context ?? throw new ArgumentNullException(nameof(context));
-            }
-
-            public void Configure(RequestOptions options)
-            {
                 var workspaceId = context.ParseResult.ValueForOption<string>("--workspace-id");
                 var live = context.ParseResult.ValueForOption<bool?>("--live");
 
-                options.Workspace = workspaceId;
-                // TODO: restore this
-                //options.Live = live;
+                options.WorkspaceId = workspaceId;
+                options.Live = live;
             }
         }
     }
