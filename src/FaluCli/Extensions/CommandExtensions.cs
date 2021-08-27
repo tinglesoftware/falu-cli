@@ -174,18 +174,18 @@ namespace System.CommandLine
         public static Command AddCommonGlobalOptions(this Command command)
         {
             // TODO: validate workspaceId using regex -> "^wksp_[0-9a-f]{24}$"
-            command.AddGlobalOption<string>(aliases: new[] { "--workspace", "--workspace-id", },
-                                            description: "The identifier of the workspace being accessed. Required when loggin is by user account. Example: wksp_610010be9228355f14ce6e08");
+            command.AddGlobalOption<string>(aliases: new[] { "--workspace", },
+                                            description: "The identifier of the workspace being accessed. Required when login is by user account. Example: wksp_610010be9228355f14ce6e08");
 
             command.AddGlobalOption<bool>(aliases: new[] { "--live", },
                                           description: "Whether the entity resides in live mode or not. Required when login is by user account.");
 
             // TODO: validate api key using regex -> "^{sk|pk}_{live|test}_[0-9a-zA-Z]+$"
-            command.AddGlobalOption<string>(aliases: new[] { "--key", "--apikey", "--api-key", },
-                                            description: "The identifier of the workspace being accessed. Required when loggin is by user account. Example: wksp_610010be9228355f14ce6e08",
+            command.AddGlobalOption<string>(aliases: new[] { "-k", "--apikey", },
+                                            description: "The identifier of the workspace being accessed. Required when loggin is by user account. Looks like: sk_test_LdVyn0upN...",
                                             configure: o => o.IsRequired = true);
 
-            //command.AddGlobalOption(new[] { "-v", "--verbose" }, "Whether to output verbosely.", () => false);
+            command.AddGlobalOption(new[] { "-v", "--verbose" }, "Whether to output verbosely.", false);
 
             return command;
         }

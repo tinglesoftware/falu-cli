@@ -31,6 +31,7 @@ namespace FaluCli
 
                 new Command("events", "Work with events on Falu.")
                 {
+                    new Commands.Events.RetryCommand(),
                 },
 
                 new Command("webhooks", "Manage webhooks.")
@@ -46,10 +47,15 @@ namespace FaluCli
                 {
                     host.ConfigureAppConfiguration((context, builder) =>
                     {
+                        var iv = context.GetInvocationContext();
+                        var verbose = iv.ParseResult.ValueForOption<bool>("--verbose");
+
                         builder.AddInMemoryCollection(new Dictionary<string, string>
                         {
                             ["Logging:LogLevel:Default"] = "Information",
                             ["Logging:LogLevel:Microsoft"] = "Warning",
+                            ["Logging:LogLevel:System.Net.Http.HttpClient"] = "None", // removes all we do not need
+                            ["Logging:LogLevel:System.Net.Http.HttpClient.FaluCliClient.LogicalHandler"] = verbose ? "Trace" : "Warning", // add the one we need
                         });
                     });
 
@@ -58,6 +64,8 @@ namespace FaluCli
                         var configuration = context.Configuration;
                         services.AddFaluClientForCli(configuration.GetSection("FaluClient"));
                     });
+
+                    host.UseCommandHandler<Commands.Events.RetryCommand, Commands.Events.RetryCommandHandler>();
                 })
                 .UseFaluDefaults();
 

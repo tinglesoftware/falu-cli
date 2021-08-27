@@ -2,6 +2,9 @@
 
 namespace System.CommandLine.IO
 {
+    /// <summary>
+    /// Extension methods for <see cref="IConsole"/>
+    /// </summary>
     internal static class ConsoleExtensions
     {
         internal static void SetTerminalForegroundRed(this IConsole console)
@@ -38,6 +41,17 @@ namespace System.CommandLine.IO
             {
                 Console.ResetColor();
             }
+        }
+    }
+
+    /// <summary>
+    /// Extension methods for <see cref="IStandardStreamWriter"/>
+    /// </summary>
+    public static class IStandardStreamWriterExtensions
+    {
+        public static void WriteLine(this IStandardStreamWriter writer, string format, params object?[] args)
+        {
+            writer.WriteLine(string.Format(format, args));
         }
     }
 }

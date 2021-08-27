@@ -1,5 +1,7 @@
 ﻿using System.CommandLine.Invocation;
 using System.CommandLine.IO;
+using System.Net;
+using Res = FaluCli.Properties.Resources;
 
 namespace System.CommandLine.Builder
 {
@@ -33,24 +35,43 @@ namespace System.CommandLine.Builder
             console.ResetTerminalForegroundColor();
             console.SetTerminalForegroundRed();
 
+            var stderr = console.Error;
+
             if (exception is Falu.Infrastructure.FaluException fe)
             {
                 var error = fe.Error;
                 if (error is not null)
                 {
-                    console.Error.WriteLine($"RequestId: {fe.RequestId}");
-                    console.Error.WriteLine($"TraceId: {fe.TraceId}");
-                    console.Error.WriteLine(error.Title!);
-                    console.Error.WriteLine(error.Detail!);
+                    stderr.WriteLine(Res.RequestFailedHeader);
+                    stderr.WriteLine();
+                    stderr.WriteLine(Res.RequestIdFormat, fe.RequestId);
+                    if (!string.IsNullOrWhiteSpace(fe.TraceId))
+                    {
+                        stderr.WriteLine(Res.TraceIdentifierFormat, fe.TraceId);
+                    }
+
+                    stderr.WriteLine(Res.ProblemDetailsErrorCodeFormat, error.Title);
+                    if (!string.IsNullOrWhiteSpace(error.Detail))
+                    {
+                        stderr.WriteLine(Res.ProblemDetailsErrorDetailFormat, error.Detail);
+                    }
+                }
+                else if (fe.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    stderr.WriteLine(Res.Unauthorized401ErrorMessage);
+                }
+                else if (fe.StatusCode == HttpStatusCode.Forbidden)
+                {
+                    stderr.WriteLine(Res.Forbidden403Message);
                 }
                 else
                 {
-                    console.Error.WriteLine(fe.Message);
+                    stderr.WriteLine(fe.Message);
                 }
             }
             else
             {
-                console.Error.WriteLine($"Unhandled exception: {exception}");
+                stderr.WriteLine(Res.UnhandledExceptionFormat, exception.ToString());
             }
 
             console.ResetTerminalForegroundColor();
