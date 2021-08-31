@@ -3,7 +3,11 @@ using FaluCli.Client.Events;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.CommandLine;
 using System.CommandLine.Invocation;
+using System.Net;
+using System.Text.Encodings.Web;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace FaluCli.Commands.Events
@@ -35,15 +39,19 @@ namespace FaluCli.Commands.Events
             var data = new Dictionary<string, object?>
             {
                 ["Attempted"] = attempt.Attempted,
-                ["Url"] = attempt.Url!,
+                ["Url"] = attempt.Url,
                 ["Response Time"] = $"{time.TotalSeconds:n3} seconds",
             };
 
             if (!attempt.Successful)
             {
-                data["Http Status"] = attempt.HttpStatus;
-                data["Request Body"] = attempt.RequestBody!;
-                data["Response Body"] = attempt.ResponseBody!;
+                var statusCode = Enum.Parse<HttpStatusCode>(attempt.HttpStatus.ToString());
+                data["Http Status"] = $"{statusCode} ({attempt.HttpStatus})";
+                if (context.IsVerboseEnabled())
+                {
+                    data["Request Body"] = PrettyJson(attempt.RequestBody!);
+                    data["Response Body"] = attempt.ResponseBody;
+                }
             }
 
             var str = $"{(attempt.Successful ? "Retry succeeded." : "Retry failed!")}\r\n";
@@ -51,6 +59,17 @@ namespace FaluCli.Commands.Events
             logger.LogInformation(str);
 
             return 0;
+        }
+
+        private static string PrettyJson(string json)
+        {
+            var so = new JsonSerializerOptions(JsonSerializerDefaults.Web)
+            {
+                WriteIndented = true,
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+            };
+            var je = JsonSerializer.Deserialize<JsonElement>(json);
+            return JsonSerializer.Serialize(je, so);
         }
     }
 }

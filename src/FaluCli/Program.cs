@@ -48,7 +48,7 @@ namespace FaluCli
                     host.ConfigureAppConfiguration((context, builder) =>
                     {
                         var iv = context.GetInvocationContext();
-                        var verbose = iv.ParseResult.ValueForOption<bool>("--verbose");
+                        var verbose = iv.IsVerboseEnabled();
 
                         builder.AddInMemoryCollection(new Dictionary<string, string>
                         {
