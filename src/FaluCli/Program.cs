@@ -25,6 +25,11 @@ namespace FaluCli
                 {
                 },
 
+                new Command("templates", "Manage message templates.")
+                {
+                    new Commands.Templates.PullTemplatesCommand(),
+                },
+
                 new Command("payments", "Manage payments.")
                 {
                 },
@@ -66,6 +71,7 @@ namespace FaluCli
                     });
 
                     host.UseCommandHandler<Commands.Events.RetryCommand, Commands.Events.RetryCommandHandler>();
+                    host.UseCommandHandler<Commands.Templates.PullTemplatesCommand, Commands.Templates.PullTemplatesCommandHandler>();
                 })
                 .UseFaluDefaults();
 
