@@ -10,9 +10,9 @@ namespace FaluCli.Client
         public FaluCliClient(HttpClient backChannel, IOptions<FaluCliClientOptions> optionsAccessor)
             : base(backChannel, optionsAccessor)
         {
-            EventsCli = new EventsCliService(BackChannel, Options);
+            EventsCli = new EventsServiceForCli(BackChannel, Options);
         }
 
-        internal EventsCliService EventsCli { get; }
+        internal EventsServiceForCli EventsCli { get; }
     }
 }
