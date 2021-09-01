@@ -72,8 +72,8 @@ namespace FaluCli
                     });
 
                     host.UseCommandHandler<Commands.Events.RetryCommand, Commands.Events.RetryCommandHandler>();
-                    host.UseCommandHandler<Commands.Templates.PullTemplatesCommand, Commands.Templates.PullTemplatesCommandHandler>();
-                    host.UseCommandHandler<Commands.Templates.PushTemplatesCommand, Commands.Templates.PushTemplatesCommandHandler>();
+                    host.UseCommandHandler<Commands.Templates.PullTemplatesCommand, Commands.Templates.TemplatesCommandHandler>();
+                    host.UseCommandHandler<Commands.Templates.PushTemplatesCommand, Commands.Templates.TemplatesCommandHandler>();
                 })
                 .UseFaluDefaults();
 

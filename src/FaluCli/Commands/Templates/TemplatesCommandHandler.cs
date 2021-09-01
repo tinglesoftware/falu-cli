@@ -11,19 +11,27 @@ using System.Threading.Tasks;
 
 namespace FaluCli.Commands.Templates
 {
-    internal class PullTemplatesCommandHandler : ICommandHandler
+    internal class TemplatesCommandHandler : ICommandHandler
     {
         public FaluCliClient client;
         private readonly ILogger logger;
 
-        public PullTemplatesCommandHandler(FaluCliClient client, ILogger<PullTemplatesCommandHandler> logger)
+        public TemplatesCommandHandler(FaluCliClient client, ILogger<TemplatesCommandHandler> logger)
         {
             this.client = client ?? throw new ArgumentNullException(nameof(client));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <inheritdoc/>
-        public async Task<int> InvokeAsync(InvocationContext context)
+        public Task<int> InvokeAsync(InvocationContext context)
+        {
+            var command = context.ParseResult.CommandResult.Command;
+            if (command is PullTemplatesCommand) return HandlePullAsync(context);
+            else if (command is PushTemplatesCommand) return HandlePushAsync(context);
+            throw new InvalidOperationException($"Command of type '{command.GetType().FullName}' is not supported here.");
+        }
+
+        private async Task<int> HandlePullAsync(InvocationContext context)
         {
             var cancellationToken = context.GetCancellationToken();
             var outputPath = context.ParseResult.ValueForArgument<string>("output-directory")!;
@@ -53,6 +61,14 @@ namespace FaluCli.Commands.Templates
             return 0;
         }
 
+        /// <inheritdoc/>
+        public async Task<int> HandlePushAsync(InvocationContext context)
+        {
+            var cancellationToken = context.GetCancellationToken();
+            var all = context.ParseResult.ValueForOption<bool>("--all");
+
+            return 0;
+        }
         private async Task<IReadOnlyList<MessageTemplate>> DownloadTemplatesAsync(CancellationToken cancellationToken)
         {
             var result = new List<MessageTemplate>();
