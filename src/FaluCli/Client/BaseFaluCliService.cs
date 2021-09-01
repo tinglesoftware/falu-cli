@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace FaluCli.Client
 {
+    // TODO: find another way to work with FaluCliClientOptions
     internal class BaseFaluCliService : BaseService
     {
         public BaseFaluCliService(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
-        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, RequestOptions? options = null, CancellationToken cancellationToken = default)
+        protected override Task<HttpResponseMessage> RequestCoreAsync(HttpRequestMessage request, RequestOptions? options = null, CancellationToken cancellationToken = default)
         {
             if (Options is FaluCliClientOptions fcco)
             {
@@ -20,7 +21,7 @@ namespace FaluCli.Client
                 options.Live = fcco.Live;
             }
 
-            return base.SendAsync(request, options, cancellationToken);
+            return base.RequestCoreAsync(request, options, cancellationToken);
         }
     }
 }
