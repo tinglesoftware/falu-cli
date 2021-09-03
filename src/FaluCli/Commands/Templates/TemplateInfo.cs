@@ -4,20 +4,16 @@ using System.Collections.Generic;
 
 namespace FaluCli.Commands.Templates
 {
-    internal class TemplateMetadata : IHasId, IHasDescription, IHasMetadata
+    internal class TemplateInfo : IHasDescription, IHasMetadata
     {
-        public TemplateMetadata() { } // required for deserialization
+        public TemplateInfo() { } // required for deserialization
 
-        public TemplateMetadata(MessageTemplate template)
+        public TemplateInfo(MessageTemplate template)
         {
-            Id = template.Id;
             Alias = template.Alias;
             Description = template.Alias;
             Metadata = template.Metadata;
         }
-
-        /// <inheritdoc/>
-        public string? Id { get; set; }
 
         public string? Alias { get; set; }
 
