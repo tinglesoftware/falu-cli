@@ -1,13 +1,13 @@
 ﻿using Falu;
 using Falu.Core;
-using Falu.Infrastructure;
+using Falu.Events;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace FaluCli.Client.Events
 {
-    internal class EventsServiceForCli : Falu.Events.EventsService
+    internal class EventsServiceForCli : EventsServiceClient
     {
         public EventsServiceForCli(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 

@@ -16,7 +16,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static IServiceCollection AddFaluClientForCli(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddFaluInner<FaluCliClient, FaluClientOptions>(configuration: configuration, configureBuilder: ConfigureHttpClient);
+            services.AddFalu<FaluCliClient, FaluClientOptions>(configuration: configuration, configureBuilder: ConfigureHttpClient);
 
             services.AddSingleton<IConfigureOptions<FaluClientOptions>, ConfigureFaluClientOptions>();
 
