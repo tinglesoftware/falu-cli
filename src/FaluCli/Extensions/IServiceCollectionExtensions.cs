@@ -1,4 +1,5 @@
-﻿using FaluCli;
+﻿using Falu;
+using FaluCli;
 using FaluCli.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -15,15 +16,17 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static IServiceCollection AddFaluClientForCli(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddFaluInner<FaluCliClient, FaluCliClientOptions>(configuration: configuration, configureBuilder: ConfigureHttpClient);
+            services.AddFaluInner<FaluCliClient, FaluClientOptions>(configuration: configuration, configureBuilder: ConfigureHttpClient);
 
-            services.AddSingleton<IConfigureOptions<FaluCliClientOptions>, ConfigureFaluCliClientOptions>();
+            services.AddSingleton<IConfigureOptions<FaluClientOptions>, ConfigureFaluClientOptions>();
 
             return services;
         }
 
         private static void ConfigureHttpClient(IHttpClientBuilder builder)
         {
+            builder.AddHttpMessageHandler(provider => ActivatorUtilities.CreateInstance<FaluCliClientHandler>(provider));
+
             builder.ConfigureHttpClient(client =>
             {
                 // TODO: remove this once we migrate to using the library and not gitsubmodule since it will have correct value
@@ -34,25 +37,18 @@ namespace Microsoft.Extensions.DependencyInjection
             });
         }
 
-        internal class ConfigureFaluCliClientOptions : IConfigureOptions<FaluCliClientOptions>
+        internal class ConfigureFaluClientOptions : IConfigureOptions<FaluClientOptions>
         {
             private readonly InvocationContext context;
 
-            public ConfigureFaluCliClientOptions(InvocationContext context)
+            public ConfigureFaluClientOptions(InvocationContext context)
             {
                 this.context = context ?? throw new ArgumentNullException(nameof(context));
             }
 
-            public void Configure(FaluCliClientOptions options)
+            public void Configure(FaluClientOptions options)
             {
-                var apiKey = context.ParseResult.ValueForOption<string>("--apikey");
-
-                options.ApiKey = apiKey;
-                var workspaceId = context.ParseResult.ValueForOption<string>("--workspace");
-                var live = context.ParseResult.ValueForOption<bool?>("--live");
-
-                options.WorkspaceId = workspaceId;
-                options.Live = live;
+                options.ApiKey = context.ParseResult.ValueForOption<string>("--apikey");
             }
         }
     }

@@ -5,14 +5,14 @@ using System.Net.Http;
 
 namespace FaluCli.Client
 {
-    internal class FaluCliClient : FaluClient<FaluCliClientOptions>
+    internal class FaluCliClient : FaluClient
     {
-        public FaluCliClient(HttpClient backChannel, IOptions<FaluCliClientOptions> optionsAccessor)
+        public FaluCliClient(HttpClient backChannel, IOptions<FaluClientOptions> optionsAccessor)
             : base(backChannel, optionsAccessor)
         {
-            EventsCli = new EventsServiceForCli(BackChannel, Options);
+            Events = new EventsServiceForCli(BackChannel, Options);
         }
 
-        internal EventsServiceForCli EventsCli { get; }
+        public new EventsServiceForCli Events { get; protected set; }
     }
 }

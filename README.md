@@ -25,9 +25,9 @@ falu [command] -h
 
 The Falu CLI supports a broad range of commands including:
 
-<!-- - [`logs tail`][wiki-command-logs-tail] -->
 - [`events resend`](/wiki/commands/events-resend)
-<!-- - [`listen`](/wiki/commands/listen) -->
+- [`templates pull`](/wiki/commands/templates-pull)
+- [`templates push`](/wiki/commands/templates-push)
 
 Check out the [wiki](/wiki) for more on using the CLI.
 

@@ -30,7 +30,7 @@ namespace FaluCli.Commands.Events
             var webhookEndpointId = context.ParseResult.ValueForOption<string>("--webhook-endpoint");
 
             var model = new EventDeliveryRetry { WebhookEndpointId = webhookEndpointId, };
-            var response = await client.EventsCli.RetryAsync(eventId!, model, cancellationToken: cancellationToken);
+            var response = await client.Events.RetryAsync(eventId!, model, cancellationToken: cancellationToken);
             response.EnsureSuccess();
 
             var attempt = response.Resource!;
