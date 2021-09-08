@@ -1,4 +1,5 @@
-﻿using System.CommandLine.Invocation;
+﻿using Falu;
+using System.CommandLine.Invocation;
 using System.CommandLine.IO;
 using System.Net;
 using Res = FaluCli.Properties.Resources;
@@ -37,7 +38,7 @@ namespace System.CommandLine.Builder
 
             var stderr = console.Error;
 
-            if (exception is Falu.Infrastructure.FaluException fe)
+            if (exception is FaluException fe)
             {
                 var error = fe.Error;
                 if (error is not null)
