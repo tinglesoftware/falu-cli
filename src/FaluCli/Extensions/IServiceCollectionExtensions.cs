@@ -24,6 +24,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
         private static void ConfigureHttpClient(IHttpClientBuilder builder)
         {
+            builder.AddHttpMessageHandler(provider => ActivatorUtilities.CreateInstance<FaluCliClientHandler>(provider));
+
             builder.ConfigureHttpClient(client =>
             {
                 // TODO: remove this once we migrate to using the library and not gitsubmodule since it will have correct value
@@ -45,14 +47,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             public void Configure(FaluCliClientOptions options)
             {
-                var apiKey = context.ParseResult.ValueForOption<string>("--apikey");
-
-                options.ApiKey = apiKey;
-                var workspaceId = context.ParseResult.ValueForOption<string>("--workspace");
-                var live = context.ParseResult.ValueForOption<bool?>("--live");
-
-                options.WorkspaceId = workspaceId;
-                options.Live = live;
+                options.ApiKey = context.ParseResult.ValueForOption<string>("--apikey");
             }
         }
     }
