@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace FaluCli.Client.Events
 {
-    internal class EventsServiceForCli : EventsServiceClient
+    internal class ExtendedEventsServiceClient : EventsServiceClient
     {
-        public EventsServiceForCli(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
+        public ExtendedEventsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
         public virtual Task<ResourceResponse<WebhookDeliveryAttempt>> RetryAsync(string id,
                                                                                  EventDeliveryRetry model,
