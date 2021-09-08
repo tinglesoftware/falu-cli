@@ -1,4 +1,5 @@
-﻿using FaluCli;
+﻿using Falu;
+using FaluCli;
 using FaluCli.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -15,9 +16,9 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static IServiceCollection AddFaluClientForCli(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddFaluInner<FaluCliClient, FaluCliClientOptions>(configuration: configuration, configureBuilder: ConfigureHttpClient);
+            services.AddFaluInner<FaluCliClient, FaluClientOptions>(configuration: configuration, configureBuilder: ConfigureHttpClient);
 
-            services.AddSingleton<IConfigureOptions<FaluCliClientOptions>, ConfigureFaluCliClientOptions>();
+            services.AddSingleton<IConfigureOptions<FaluClientOptions>, ConfigureFaluClientOptions>();
 
             return services;
         }
@@ -36,16 +37,16 @@ namespace Microsoft.Extensions.DependencyInjection
             });
         }
 
-        internal class ConfigureFaluCliClientOptions : IConfigureOptions<FaluCliClientOptions>
+        internal class ConfigureFaluClientOptions : IConfigureOptions<FaluClientOptions>
         {
             private readonly InvocationContext context;
 
-            public ConfigureFaluCliClientOptions(InvocationContext context)
+            public ConfigureFaluClientOptions(InvocationContext context)
             {
                 this.context = context ?? throw new ArgumentNullException(nameof(context));
             }
 
-            public void Configure(FaluCliClientOptions options)
+            public void Configure(FaluClientOptions options)
             {
                 options.ApiKey = context.ParseResult.ValueForOption<string>("--apikey");
             }
