@@ -83,3 +83,25 @@ jobs:
       with:
         path: ${{ github.workspace }}/drop/**
         name: drop
+
+    - name: Create Archive
+      uses: thedoctor0/zip-release@master
+      if: startsWith(matrix.config.rid, 'win-')
+      with:
+        type: 'zip'
+        filename: '${{ github.workspace }}/releases/falu-${{ matrix.config.rid }}.zip'
+        path: $GITHUB_WORKSPACE/drop/${{ matrix.config.rid }}
+
+    - name: Create Archive
+      uses: thedoctor0/zip-release@master
+      if: not(startsWith(matrix.config.rid, 'win-'))
+      with:
+        type: 'tar'
+        filename: '${{ github.workspace }}/releases/falu-${{ matrix.config.rid }}.tar.gz'
+        path: $GITHUB_WORKSPACE/drop/${{ matrix.config.rid }}
+
+    - name: Publish Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        path: ${{ github.workspace }}/releases/**
+        name: releases
