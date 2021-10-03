@@ -90,7 +90,7 @@ jobs:
       with:
         type: 'zip'
         filename: '${{ github.workspace }}/releases/falu-${{ matrix.config.rid }}.zip'
-        path: $GITHUB_WORKSPACE/drop/${{ matrix.config.rid }}
+        path: ${{ github.workspace }}/drop/${{ matrix.config.rid }}
 
     - name: Create Archive
       uses: thedoctor0/zip-release@master
@@ -98,7 +98,7 @@ jobs:
       with:
         type: 'tar'
         filename: '${{ github.workspace }}/releases/falu-${{ matrix.config.rid }}.tar.gz'
-        path: $GITHUB_WORKSPACE/drop/${{ matrix.config.rid }}
+        path: ${{ github.workspace }}/drop/${{ matrix.config.rid }}
 
     - name: Publish Artifact
       uses: actions/upload-artifact@v2
