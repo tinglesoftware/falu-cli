@@ -25,7 +25,7 @@ falu [command] -h
 
 The Falu CLI supports a broad range of commands including:
 
-- [`events resend`](/wiki/commands/events-resend)
+<!-- - [`events resend`](/wiki/commands/events-resend) -->
 - [`templates pull`](/wiki/commands/templates-pull)
 - [`templates push`](/wiki/commands/templates-push)
 
@@ -35,13 +35,13 @@ Check out the [wiki](/wiki) for more on using the CLI.
 
 Falu CLI is available for macOS, Windows and Linux (Ubuntu). You can download each of the binaries in the [releases](/releases) or you can use package managers in the respective platforms.
 
-### Windows
+<!-- ### Windows
 
 Falu CLI is available on Windows via [Chocolatey][chocolatey] package manager:
 
 ```bash
 choco install falu
-```
+``` -->
 
 ## Issues & Comments
 
