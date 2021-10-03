@@ -78,7 +78,7 @@ jobs:
         --no-restore
         src/FaluCli/FaluCli.csproj
 
-    - name: Publish Artifact
+    - name: Publish Artifact (drop)
       uses: actions/upload-artifact@v2
       with:
         path: ${{ github.workspace }}/drop/**
@@ -100,7 +100,7 @@ jobs:
         filename: '${{ github.workspace }}/releases/falu-${{ matrix.config.rid }}.tar.gz'
         path: ${{ github.workspace }}/drop/${{ matrix.config.rid }}
 
-    - name: Publish Artifact
+    - name: Publish Artifact (releases)
       uses: actions/upload-artifact@v2
       with:
         path: ${{ github.workspace }}/releases/**
