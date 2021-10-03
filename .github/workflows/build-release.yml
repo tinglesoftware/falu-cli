@@ -94,7 +94,7 @@ jobs:
 
     - name: Create Archive
       uses: thedoctor0/zip-release@master
-      if: not(startsWith(matrix.config.rid, 'win-'))
+      if: startsWith(matrix.config.rid, 'win-') != true
       with:
         type: 'tar'
         filename: '${{ github.workspace }}/releases/falu-${{ matrix.config.rid }}.tar.gz'
