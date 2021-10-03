@@ -51,6 +51,7 @@ jobs:
 
     - name: Determine Version
       uses: gittools/actions/gitversion/execute@v0
+      id: gitversion
       with:
         useConfigFile: true
 
@@ -92,7 +93,7 @@ jobs:
       if: startsWith(matrix.config.rid, 'win-')
       with:
         type: 'zip'
-        filename: '${{ github.workspace }}/releases/falu-$GITVERSION_NUGETVERSION-${{ matrix.config.rid }}.zip'
+        filename: '${{ github.workspace }}/releases/falu-${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ matrix.config.rid }}.zip'
         directory: ${{ github.workspace }}/drop/${{ matrix.config.rid }}
 
     - name: Create Archive
@@ -100,7 +101,7 @@ jobs:
       if: startsWith(matrix.config.rid, 'win-') != true
       with:
         type: 'tar'
-        filename: '${{ github.workspace }}/releases/falu-$GITVERSION_NUGETVERSION-${{ matrix.config.rid }}.tar.gz'
+        filename: '${{ github.workspace }}/releases/falu-${{ steps.gitversion.outputs.nuGetVersionV2 }}-${{ matrix.config.rid }}.tar.gz'
         directory: ${{ github.workspace }}/drop/${{ matrix.config.rid }}
 
     - name: Publish Artifact (releases)
