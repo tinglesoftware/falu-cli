@@ -1,4 +1,4 @@
-# Falu SDK for .NET
+# Falu CLI
 
 [![Release](https://img.shields.io/github/release/tinglesoftware/falu-cli.svg?style=flat-square)](https://github.com/tinglesoftware/falu-cli/releases/latest)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/tinglesoftware/falu-cli/Build%20and%20Publish?style=flat-square)
