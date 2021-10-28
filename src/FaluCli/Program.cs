@@ -67,7 +67,7 @@ namespace FaluCli
                             ["Logging:LogLevel:System.Net.Http.HttpClient.FaluCliClient.ClientHandler"] = verbose ? "Trace" : "Warning", // add the one we need
 
                             ["Logging:Console:FormatterName"] = "Falu",
-                            ["Logging:Console:FormatterOptions:SingleLine"] = "True",
+                            ["Logging:Console:FormatterOptions:SingleLine"] = verbose ? "False" : "True",
                             ["Logging:Console:FormatterOptions:TimestampFormat"] = "HH:mm:ss ",
                             ["Logging:Console:FormatterOptions:IncludeCategory"] = "False",
                             ["Logging:Console:FormatterOptions:IncludeEventId"] = "False",
