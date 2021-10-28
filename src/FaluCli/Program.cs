@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Builder;
@@ -60,10 +61,22 @@ namespace FaluCli
                         {
                             ["Logging:LogLevel:Default"] = "Information",
                             ["Logging:LogLevel:Microsoft"] = "Warning",
+
                             // See https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-requests?view=aspnetcore-5.0#logging
                             ["Logging:LogLevel:System.Net.Http.HttpClient"] = "None", // removes all we do not need
                             ["Logging:LogLevel:System.Net.Http.HttpClient.FaluCliClient.ClientHandler"] = verbose ? "Trace" : "Warning", // add the one we need
+
+                            ["Logging:Console:FormatterName"] = "Falu",
+                            ["Logging:Console:FormatterOptions:SingleLine"] = verbose ? "False" : "True",
+                            ["Logging:Console:FormatterOptions:TimestampFormat"] = "HH:mm:ss ",
+                            ["Logging:Console:FormatterOptions:IncludeCategory"] = "False",
+                            ["Logging:Console:FormatterOptions:IncludeEventId"] = "False",
                         });
+                    });
+
+                    host.ConfigureLogging((context, builder) =>
+                    {
+                        builder.AddConsoleFormatter<Logging.FaluConsoleFormatter, Logging.FaluConsoleFormatterOptions>();
                     });
 
                     host.ConfigureServices((context, services) =>
