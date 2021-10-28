@@ -61,9 +61,16 @@ namespace FaluCli
                         {
                             ["Logging:LogLevel:Default"] = "Information",
                             ["Logging:LogLevel:Microsoft"] = "Warning",
+
                             // See https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-requests?view=aspnetcore-5.0#logging
                             ["Logging:LogLevel:System.Net.Http.HttpClient"] = "None", // removes all we do not need
                             ["Logging:LogLevel:System.Net.Http.HttpClient.FaluCliClient.ClientHandler"] = verbose ? "Trace" : "Warning", // add the one we need
+
+                            ["Logging:Console:FormatterName"] = "Falu",
+                            ["Logging:Console:FormatterOptions:SingleLine"] = "True",
+                            ["Logging:Console:FormatterOptions:TimestampFormat"] = "HH:mm:ss ",
+                            ["Logging:Console:FormatterOptions:IncludeCategory"] = "False",
+                            ["Logging:Console:FormatterOptions:IncludeEventId"] = "False",
                         });
                     });
 
