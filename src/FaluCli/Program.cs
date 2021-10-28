@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Builder;
@@ -64,6 +65,11 @@ namespace FaluCli
                             ["Logging:LogLevel:System.Net.Http.HttpClient"] = "None", // removes all we do not need
                             ["Logging:LogLevel:System.Net.Http.HttpClient.FaluCliClient.ClientHandler"] = verbose ? "Trace" : "Warning", // add the one we need
                         });
+                    });
+
+                    host.ConfigureLogging((context, builder) =>
+                    {
+                        builder.AddConsoleFormatter<Logging.FaluConsoleFormatter, Logging.FaluConsoleFormatterOptions>();
                     });
 
                     host.ConfigureServices((context, services) =>
