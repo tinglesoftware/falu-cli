@@ -82,7 +82,7 @@ namespace FaluCli
                     host.ConfigureServices((context, services) =>
                     {
                         var configuration = context.Configuration;
-                        services.AddFaluClientForCli(configuration.GetSection("FaluClient"));
+                        services.AddFaluClientForCli();
                     });
 
                     host.UseCommandHandler<Commands.Events.RetryCommand, Commands.Events.RetryCommandHandler>();
