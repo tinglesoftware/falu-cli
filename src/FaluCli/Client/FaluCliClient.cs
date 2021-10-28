@@ -7,7 +7,7 @@ namespace FaluCli.Client
 {
     internal class FaluCliClient : FaluClient
     {
-        public FaluCliClient(HttpClient backChannel, IOptions<FaluClientOptions> optionsAccessor)
+        public FaluCliClient(HttpClient backChannel, IOptionsSnapshot<FaluClientOptions> optionsAccessor)
             : base(backChannel, optionsAccessor)
         {
             Events = new ExtendedEventsServiceClient(BackChannel, Options);
