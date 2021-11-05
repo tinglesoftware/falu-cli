@@ -68,9 +68,9 @@ namespace FaluCli
 
                             ["Logging:Console:FormatterName"] = "Falu",
                             ["Logging:Console:FormatterOptions:SingleLine"] = verbose ? "False" : "True",
+                            ["Logging:Console:FormatterOptions:IncludeCategory"] = verbose ? "True" : "False",
+                            ["Logging:Console:FormatterOptions:IncludeEventId"] = verbose ? "True" : "False",
                             ["Logging:Console:FormatterOptions:TimestampFormat"] = "HH:mm:ss ",
-                            ["Logging:Console:FormatterOptions:IncludeCategory"] = "False",
-                            ["Logging:Console:FormatterOptions:IncludeEventId"] = "False",
                         });
                     });
 
