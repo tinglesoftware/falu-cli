@@ -1,5 +1,4 @@
 ﻿using Falu;
-using FaluCli;
 using FaluCli.Client;
 using Microsoft.Extensions.Options;
 using System.CommandLine.Invocation;
@@ -18,10 +17,8 @@ internal static class IServiceCollectionExtensions
                 .AddHttpMessageHandler(provider => ActivatorUtilities.CreateInstance<FaluCliClientHandler>(provider))
                 .ConfigureHttpClient(client =>
                 {
-                    // TODO: remove this once we migrate to using the library and not gitsubmodule since it will have correct value
+                    // change the User-Agent header
                     client.DefaultRequestHeaders.UserAgent.Clear();
-
-                    // populate the User-Agent header
                     client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("falucli", ProductVersion));
                 });
 
