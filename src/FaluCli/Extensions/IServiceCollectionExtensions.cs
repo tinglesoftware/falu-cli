@@ -18,11 +18,11 @@ internal static class IServiceCollectionExtensions
                 .AddHttpMessageHandler(provider => ActivatorUtilities.CreateInstance<FaluCliClientHandler>(provider))
                 .ConfigureHttpClient(client =>
                 {
-                        // TODO: remove this once we migrate to using the library and not gitsubmodule since it will have correct value
-                        client.DefaultRequestHeaders.UserAgent.Clear();
+                    // TODO: remove this once we migrate to using the library and not gitsubmodule since it will have correct value
+                    client.DefaultRequestHeaders.UserAgent.Clear();
 
-                        // populate the User-Agent header
-                        client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("falucli", ProductVersion));
+                    // populate the User-Agent header
+                    client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("falucli", ProductVersion));
                 });
 
         services.AddSingleton<IConfigureOptions<FaluClientOptions>, ConfigureFaluClientOptions>();
