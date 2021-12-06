@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace System.CommandLine.IO
+﻿namespace System.CommandLine.IO
 {
     /// <summary>
     /// Extension methods for <see cref="IConsole"/>

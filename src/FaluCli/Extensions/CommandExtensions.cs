@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.CommandLine.Parsing;
-using System.Linq;
+﻿using System.CommandLine.Parsing;
 
 namespace System.CommandLine
 {

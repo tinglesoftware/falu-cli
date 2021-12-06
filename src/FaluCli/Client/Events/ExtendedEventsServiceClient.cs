@@ -1,9 +1,6 @@
 ﻿using Falu;
 using Falu.Core;
 using Falu.Events;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace FaluCli.Client.Events
 {

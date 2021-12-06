@@ -1,6 +1,5 @@
 ﻿using Falu.Core;
 using Falu.MessageTemplates;
-using System.Collections.Generic;
 
 namespace FaluCli.Commands.Templates
 {

@@ -1,7 +1,6 @@
 ﻿using Falu;
 using FaluCli.Client.Events;
 using Microsoft.Extensions.Options;
-using System.Net.Http;
 
 namespace FaluCli.Client
 {

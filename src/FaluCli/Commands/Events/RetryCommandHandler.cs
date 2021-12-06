@@ -1,14 +1,11 @@
 ﻿using FaluCli.Client;
 using FaluCli.Client.Events;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.Net;
 using System.Text.Encodings.Web;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace FaluCli.Commands.Events
 {

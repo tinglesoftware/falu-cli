@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FaluCli.Commands.Templates
+﻿namespace FaluCli.Commands.Templates
 {
     internal class TemplateManifest
     {

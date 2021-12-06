@@ -1,14 +1,8 @@
 ﻿using Falu.MessageTemplates;
 using FaluCli.Client;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.CommandLine.Invocation;
-using System.Linq;
-using System.IO;
 using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 using Tingle.Extensions.JsonPatch;
 
 namespace FaluCli.Commands.Templates

@@ -1,9 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using System;
-using System.CommandLine.Invocation;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.CommandLine.Invocation;
 
 namespace FaluCli.Client
 {

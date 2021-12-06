@@ -2,7 +2,6 @@
 using FaluCli;
 using FaluCli.Client;
 using Microsoft.Extensions.Options;
-using System;
 using System.CommandLine.Invocation;
 using System.Net.Http.Headers;
 
