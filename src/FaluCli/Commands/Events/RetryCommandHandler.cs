@@ -1,6 +1,5 @@
 ﻿using FaluCli.Client;
 using FaluCli.Client.Events;
-using Microsoft.Extensions.Logging;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.Net;

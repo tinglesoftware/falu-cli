@@ -1,6 +1,5 @@
 ﻿using Falu.MessageTemplates;
 using FaluCli.Client;
-using Microsoft.Extensions.Logging;
 using System.CommandLine.Invocation;
 using System.Text.Json;
 using Tingle.Extensions.JsonPatch;
