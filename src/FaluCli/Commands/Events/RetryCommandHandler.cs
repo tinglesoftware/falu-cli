@@ -1,5 +1,4 @@
 ﻿using Falu.Client;
-using FaluCli.Client.Events;
 using System.Net;
 using System.Text.Encodings.Web;
 using System.Text.Json;

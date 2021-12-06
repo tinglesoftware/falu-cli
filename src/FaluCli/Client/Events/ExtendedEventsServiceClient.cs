@@ -1,5 +1,4 @@
-﻿using Falu;
-using Falu.Core;
+﻿using Falu.Core;
 using Falu.Events;
 
 namespace Falu.Client.Events;

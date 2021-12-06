@@ -1,5 +1,4 @@
-﻿using Falu;
-using Falu.Client.Events;
+﻿using Falu.Client.Events;
 using Microsoft.Extensions.Options;
 
 namespace Falu.Client;
