@@ -1,4 +1,4 @@
-﻿namespace FaluCli.Commands.Templates;
+﻿namespace Falu.Commands.Templates;
 
 internal class TemplateManifest
 {

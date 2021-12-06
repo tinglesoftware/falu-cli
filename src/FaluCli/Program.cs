@@ -1,5 +1,5 @@
-﻿using FaluCli.Commands.Events;
-using FaluCli.Commands.Templates;
+﻿using Falu.Commands.Events;
+using Falu.Commands.Templates;
 using System.CommandLine.Builder;
 using System.CommandLine.Hosting;
 using System.CommandLine.Parsing;
@@ -65,7 +65,7 @@ var builder = new CommandLineBuilder(rootCommand)
 
         host.ConfigureLogging((context, builder) =>
         {
-            builder.AddConsoleFormatter<FaluCli.Logging.FaluConsoleFormatter, FaluCli.Logging.FaluConsoleFormatterOptions>();
+            builder.AddConsoleFormatter<Falu.Logging.FaluConsoleFormatter, Falu.Logging.FaluConsoleFormatterOptions>();
         });
 
         host.ConfigureServices((context, services) =>

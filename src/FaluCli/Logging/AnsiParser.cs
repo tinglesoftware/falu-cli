@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace FaluCli.Logging;
+namespace Falu.Logging;
 
 internal sealed class AnsiParser
 {

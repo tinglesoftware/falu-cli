@@ -2,7 +2,7 @@
 using Falu.Core;
 using Falu.Events;
 
-namespace FaluCli.Client.Events;
+namespace Falu.Client.Events;
 
 internal class ExtendedEventsServiceClient : EventsServiceClient
 {

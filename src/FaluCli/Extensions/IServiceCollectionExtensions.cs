@@ -1,5 +1,5 @@
 ﻿using Falu;
-using FaluCli.Client;
+using Falu.Client;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Headers;
 

@@ -1,10 +1,10 @@
-﻿using FaluCli.Client;
+﻿using Falu.Client;
 using FaluCli.Client.Events;
 using System.Net;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 
-namespace FaluCli.Commands.Events;
+namespace Falu.Commands.Events;
 
 internal class RetryCommandHandler : ICommandHandler
 {

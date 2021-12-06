@@ -1,7 +1,7 @@
 ﻿using Falu.Core;
 using Falu.MessageTemplates;
 
-namespace FaluCli.Commands.Templates;
+namespace Falu.Commands.Templates;
 
 internal class TemplateInfo : IHasDescription, IHasMetadata
 {

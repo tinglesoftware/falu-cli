@@ -1,8 +1,8 @@
 ﻿using Falu;
-using FaluCli.Client.Events;
+using Falu.Client.Events;
 using Microsoft.Extensions.Options;
 
-namespace FaluCli.Client;
+namespace Falu.Client;
 
 internal class FaluCliClient : FaluClient
 {

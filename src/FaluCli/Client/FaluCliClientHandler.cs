@@ -1,4 +1,4 @@
-﻿namespace FaluCli.Client;
+﻿namespace Falu.Client;
 
 internal class FaluCliClientHandler : DelegatingHandler
 {

@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <!--<AssemblyName>falu</AssemblyName>-->
+    <RootNamespace>Falu</RootNamespace>
     <Description>Official CLI tool for Falu.</Description>
     <Product>Falu CLI</Product>
   </PropertyGroup>
