@@ -1,5 +1,4 @@
 ﻿using Falu;
-using System.CommandLine.Invocation;
 using System.CommandLine.IO;
 using System.Net;
 using Res = FaluCli.Properties.Resources;

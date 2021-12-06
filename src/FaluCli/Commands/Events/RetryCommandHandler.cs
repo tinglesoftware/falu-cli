@@ -1,7 +1,5 @@
 ﻿using FaluCli.Client;
 using FaluCli.Client.Events;
-using System.CommandLine;
-using System.CommandLine.Invocation;
 using System.Net;
 using System.Text.Encodings.Web;
 using System.Text.Json;

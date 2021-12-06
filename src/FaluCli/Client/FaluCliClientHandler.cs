@@ -1,6 +1,4 @@
-﻿using System.CommandLine.Invocation;
-
-namespace FaluCli.Client;
+﻿namespace FaluCli.Client;
 
 internal class FaluCliClientHandler : DelegatingHandler
 {

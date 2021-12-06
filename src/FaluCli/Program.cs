@@ -1,6 +1,5 @@
 ﻿using FaluCli.Commands.Events;
 using FaluCli.Commands.Templates;
-using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Hosting;
 using System.CommandLine.Parsing;

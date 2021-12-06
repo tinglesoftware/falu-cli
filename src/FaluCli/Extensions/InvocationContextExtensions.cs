@@ -1,6 +1,4 @@
-﻿using System.CommandLine.Invocation;
-
-namespace System.CommandLine;
+﻿namespace System.CommandLine;
 
 /// <summary>
 /// Extensions for <see cref="InvocationContext"/>
