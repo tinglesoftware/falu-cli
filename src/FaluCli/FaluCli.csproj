@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
-    <AssemblyName>falu</AssemblyName>
+    <!--<AssemblyName>falu</AssemblyName>-->
     <Description>Official CLI tool for Falu.</Description>
     <Product>Falu CLI</Product>
   </PropertyGroup>
