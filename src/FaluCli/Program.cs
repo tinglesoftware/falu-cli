@@ -75,9 +75,9 @@ rootCommand.Description = "Official CLI tool for Falu.";
                     services.AddFaluClientForCli();
                 });
 
-                host.UseCommandHandler<FaluCli.Commands.Events.RetryCommand, FaluCli.Commands.Events.RetryCommandHandler>();
-                host.UseCommandHandler<FaluCli.Commands.Templates.PullTemplatesCommand, FaluCli.Commands.Templates.TemplatesCommandHandler>();
-                host.UseCommandHandler<FaluCli.Commands.Templates.PushTemplatesCommand, FaluCli.Commands.Templates.TemplatesCommandHandler>();
+                host.UseCommandHandler<RetryCommand, RetryCommandHandler>();
+                host.UseCommandHandler<PullTemplatesCommand, TemplatesCommandHandler>();
+                host.UseCommandHandler<PushTemplatesCommand, TemplatesCommandHandler>();
             })
             .UseFaluDefaults();
 
