@@ -1,10 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
     <AssemblyName>falu</AssemblyName>
     <Description>Official CLI tool for Falu.</Description>
     <Product>Falu CLI</Product>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Using Remove="System.IO" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />

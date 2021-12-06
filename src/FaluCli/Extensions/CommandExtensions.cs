@@ -1,193 +1,190 @@
-﻿using System.Collections.Generic;
-using System.CommandLine.Parsing;
-using System.Linq;
+﻿using System.CommandLine.Parsing;
 
-namespace System.CommandLine
+namespace System.CommandLine;
+
+/// <summary>
+/// Extension methods on <see cref="Command"/>.
+/// </summary>
+public static class CommandExtensions
 {
-    /// <summary>
-    /// Extension methods on <see cref="Command"/>.
-    /// </summary>
-    public static class CommandExtensions
+    #region Options
+
+    ///
+    public static Command AddOption<T>(this Command command,
+                                       IEnumerable<string> aliases,
+                                       string? description = null,
+                                       ValidateSymbol<OptionResult>? validate = null,
+                                       Action<Option<T>>? configure = null)
     {
-        #region Options
+        // Create the option and add it to the command
+        var option = CreateOption(aliases: aliases,
+                                  description: description,
+                                  validate: validate,
+                                  configure: configure);
 
-        ///
-        public static Command AddOption<T>(this Command command,
-                                           IEnumerable<string> aliases,
-                                           string? description = null,
-                                           ValidateSymbol<OptionResult>? validate = null,
-                                           Action<Option<T>>? configure = null)
-        {
-            // Create the option and add it to the command
-            var option = CreateOption(aliases: aliases,
-                                      description: description,
-                                      validate: validate,
-                                      configure: configure);
+        command.AddOption(option);
+        return command;
+    }
 
-            command.AddOption(option);
-            return command;
-        }
+    ///
+    public static Command AddOption<T>(this Command command,
+                                       IEnumerable<string> aliases,
+                                       string? description,
+                                       T defaultValue,
+                                       ValidateSymbol<OptionResult>? validate = null,
+                                       Action<Option<T>>? configure = null)
+    {
+        // Create the option and add it to the command
+        var option = CreateOption(aliases: aliases,
+                                  description: description,
+                                  validate: validate,
+                                  configure: configure);
 
-        ///
-        public static Command AddOption<T>(this Command command,
-                                           IEnumerable<string> aliases,
-                                           string? description,
-                                           T defaultValue,
-                                           ValidateSymbol<OptionResult>? validate = null,
-                                           Action<Option<T>>? configure = null)
-        {
-            // Create the option and add it to the command
-            var option = CreateOption(aliases: aliases,
-                                      description: description,
-                                      validate: validate,
-                                      configure: configure);
+        // Set default value
+        option.SetDefaultValue(defaultValue);
 
-            // Set default value
-            option.SetDefaultValue(defaultValue);
+        command.AddOption(option);
+        return command;
+    }
 
-            command.AddOption(option);
-            return command;
-        }
-
-        ///
-        public static Command AddGlobalOption<T>(this Command command,
-                                                 IEnumerable<string> aliases,
-                                                 string? description,
-                                                 T defaultValue,
-                                                 ValidateSymbol<OptionResult>? validate = null,
-                                                 Action<Option<T>>? configure = null)
-        {
-            // Create the option and add it to the command
-            var option = CreateOption(aliases: aliases,
-                                      description: description,
-                                      validate: validate,
-                                      configure: configure);
-
-            // Set default value
-            option.SetDefaultValue(defaultValue);
-
-            command.AddGlobalOption(option);
-            return command;
-        }
-
-        ///
-        public static Command AddGlobalOption<T>(this Command command,
-                                                 IEnumerable<string> aliases,
-                                                 string? description = null,
-                                                 ValidateSymbol<OptionResult>? validate = null,
-                                                 Action<Option<T>>? configure = null)
-        {
-            // Create the option and add it to the command
-            var option = CreateOption(aliases: aliases,
-                                      description: description,
-                                      validate: validate,
-                                      configure: configure);
-
-            command.AddGlobalOption(option);
-            return command;
-        }
-
-        private static Option<T> CreateOption<T>(IEnumerable<string> aliases,
-                                                 string? description = null,
-                                                 ValidateSymbol<OptionResult>? validate = null,
-                                                 Action<Option<T>>? configure = null)
-        {
-            // Create the option
-            var option = new Option<T>(aliases: aliases.ToArray(), description: description);
-
-            // Add validator if provided
-            if (validate is not null)
-            {
-                option.AddValidator(validate);
-            }
-
-            // Perfom further configuration
-            configure?.Invoke(option);
-
-            return option;
-        }
-
-        #endregion
-
-        #region Arguments
-
-        ///
-        public static Command AddArgument<T>(this Command command,
-                                             string name,
-                                             string? description = null,
-                                             ValidateSymbol<ArgumentResult>? validate = null,
-                                             Action<Argument<T>>? configure = null)
-        {
-            // Create the argument and add it to the command
-            var argument = CreateArgument(name: name,
-                                          description: description,
-                                          validate: validate,
-                                          configure: configure);
-
-            command.AddArgument(argument);
-            return command;
-        }
-
-        ///
-        public static Command AddArgument<T>(this Command command,
-                                             string name,
+    ///
+    public static Command AddGlobalOption<T>(this Command command,
+                                             IEnumerable<string> aliases,
                                              string? description,
                                              T defaultValue,
-                                             ValidateSymbol<ArgumentResult>? validate = null,
-                                             Action<Argument<T>>? configure = null)
+                                             ValidateSymbol<OptionResult>? validate = null,
+                                             Action<Option<T>>? configure = null)
+    {
+        // Create the option and add it to the command
+        var option = CreateOption(aliases: aliases,
+                                  description: description,
+                                  validate: validate,
+                                  configure: configure);
+
+        // Set default value
+        option.SetDefaultValue(defaultValue);
+
+        command.AddGlobalOption(option);
+        return command;
+    }
+
+    ///
+    public static Command AddGlobalOption<T>(this Command command,
+                                             IEnumerable<string> aliases,
+                                             string? description = null,
+                                             ValidateSymbol<OptionResult>? validate = null,
+                                             Action<Option<T>>? configure = null)
+    {
+        // Create the option and add it to the command
+        var option = CreateOption(aliases: aliases,
+                                  description: description,
+                                  validate: validate,
+                                  configure: configure);
+
+        command.AddGlobalOption(option);
+        return command;
+    }
+
+    private static Option<T> CreateOption<T>(IEnumerable<string> aliases,
+                                             string? description = null,
+                                             ValidateSymbol<OptionResult>? validate = null,
+                                             Action<Option<T>>? configure = null)
+    {
+        // Create the option
+        var option = new Option<T>(aliases: aliases.ToArray(), description: description);
+
+        // Add validator if provided
+        if (validate is not null)
         {
-            // Create the argument and add it to the command
-            var argument = CreateArgument(name: name,
-                                          description: description,
-                                          validate: validate,
-                                          configure: configure);
-
-            // Set default value if provided
-            argument.SetDefaultValue(defaultValue);
-
-            command.AddArgument(argument);
-            return command;
+            option.AddValidator(validate);
         }
 
-        private static Argument<T> CreateArgument<T>(string name,
-                                                     string? description = null,
-                                                     ValidateSymbol<ArgumentResult>? validate = null,
-                                                     Action<Argument<T>>? configure = null)
+        // Perfom further configuration
+        configure?.Invoke(option);
+
+        return option;
+    }
+
+    #endregion
+
+    #region Arguments
+
+    ///
+    public static Command AddArgument<T>(this Command command,
+                                         string name,
+                                         string? description = null,
+                                         ValidateSymbol<ArgumentResult>? validate = null,
+                                         Action<Argument<T>>? configure = null)
+    {
+        // Create the argument and add it to the command
+        var argument = CreateArgument(name: name,
+                                      description: description,
+                                      validate: validate,
+                                      configure: configure);
+
+        command.AddArgument(argument);
+        return command;
+    }
+
+    ///
+    public static Command AddArgument<T>(this Command command,
+                                         string name,
+                                         string? description,
+                                         T defaultValue,
+                                         ValidateSymbol<ArgumentResult>? validate = null,
+                                         Action<Argument<T>>? configure = null)
+    {
+        // Create the argument and add it to the command
+        var argument = CreateArgument(name: name,
+                                      description: description,
+                                      validate: validate,
+                                      configure: configure);
+
+        // Set default value if provided
+        argument.SetDefaultValue(defaultValue);
+
+        command.AddArgument(argument);
+        return command;
+    }
+
+    private static Argument<T> CreateArgument<T>(string name,
+                                                 string? description = null,
+                                                 ValidateSymbol<ArgumentResult>? validate = null,
+                                                 Action<Argument<T>>? configure = null)
+    {
+        // Create the argument
+        var argument = new Argument<T>(name: name, description: description);
+
+        // Add validator if provided
+        if (validate is not null)
         {
-            // Create the argument
-            var argument = new Argument<T>(name: name, description: description);
-
-            // Add validator if provided
-            if (validate is not null)
-            {
-                argument.AddValidator(validate);
-            }
-
-            // Perfom further configuration
-            configure?.Invoke(argument);
-
-            return argument;
+            argument.AddValidator(validate);
         }
 
-        #endregion
+        // Perfom further configuration
+        configure?.Invoke(argument);
 
-        public static Command AddCommonGlobalOptions(this Command command)
-        {
-            // TODO: validate workspaceId using regex -> "^wksp_[0-9a-f]{24}$"
-            command.AddGlobalOption<string>(aliases: new[] { "--workspace", },
-                                            description: "The identifier of the workspace being accessed. Required when login is by user account. Example: wksp_610010be9228355f14ce6e08");
+        return argument;
+    }
 
-            command.AddGlobalOption<bool>(aliases: new[] { "--live", },
-                                          description: "Whether the entity resides in live mode or not. Required when login is by user account.");
+    #endregion
 
-            // TODO: validate api key using regex -> "^{sk|pk}_{live|test}_[0-9a-zA-Z]+$"
-            command.AddGlobalOption<string>(aliases: new[] { "-k", "--apikey", },
-                                            description: "The identifier of the workspace being accessed. Required when loggin is by user account. Looks like: sk_test_LdVyn0upN...",
-                                            configure: o => o.IsRequired = true);
+    public static Command AddCommonGlobalOptions(this Command command)
+    {
+        // TODO: validate workspaceId using regex -> "^wksp_[0-9a-f]{24}$"
+        command.AddGlobalOption<string>(aliases: new[] { "--workspace", },
+                                        description: "The identifier of the workspace being accessed. Required when login is by user account. Example: wksp_610010be9228355f14ce6e08");
 
-            command.AddGlobalOption(new[] { "-v", "--verbose" }, "Whether to output verbosely.", false);
+        command.AddGlobalOption<bool>(aliases: new[] { "--live", },
+                                      description: "Whether the entity resides in live mode or not. Required when login is by user account.");
 
-            return command;
-        }
+        // TODO: validate api key using regex -> "^{sk|pk}_{live|test}_[0-9a-zA-Z]+$"
+        command.AddGlobalOption<string>(aliases: new[] { "-k", "--apikey", },
+                                        description: "The identifier of the workspace being accessed. Required when loggin is by user account. Looks like: sk_test_LdVyn0upN...",
+                                        configure: o => o.IsRequired = true);
+
+        command.AddGlobalOption(new[] { "-v", "--verbose" }, "Whether to output verbosely.", false);
+
+        return command;
     }
 }
