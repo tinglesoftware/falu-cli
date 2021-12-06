@@ -1,16 +1,12 @@
-﻿using System.CommandLine;
+﻿using FaluCli.Commands.Events;
+using FaluCli.Commands.Templates;
+using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Hosting;
 using System.CommandLine.Parsing;
 
-namespace FaluCli;
-
-class Program
-{
-    async static Task<int> Main(string[] args)
-    {
-        // Create a root command with some options
-        var rootCommand = new RootCommand
+// Create a root command with some options
+var rootCommand = new RootCommand
             {
                 new Command("evaluations", "Manage evaluations.")
                 {
@@ -22,8 +18,8 @@ class Program
 
                 new Command("templates", "Manage message templates.")
                 {
-                    new Commands.Templates.PullTemplatesCommand(),
-                    new Commands.Templates.PushTemplatesCommand(),
+                    new PullTemplatesCommand(),
+                    new PushTemplatesCommand(),
                 },
 
                 new Command("payments", "Manage payments.")
@@ -32,7 +28,7 @@ class Program
 
                 new Command("events", "Work with events on Falu.")
                 {
-                    new Commands.Events.RetryCommand(),
+                    new RetryCommand(),
                 },
 
                 new Command("webhooks", "Manage webhooks.")
@@ -40,7 +36,7 @@ class Program
                 },
             };
 
-        rootCommand.Description = "Official CLI tool for Falu.";
+rootCommand.Description = "Official CLI tool for Falu.";
         rootCommand.AddCommonGlobalOptions();
 
         var builder = new CommandLineBuilder(rootCommand)
@@ -56,11 +52,11 @@ class Program
                         ["Logging:LogLevel:Default"] = "Information",
                         ["Logging:LogLevel:Microsoft"] = "Warning",
 
-                            // See https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-requests?view=aspnetcore-5.0#logging
-                            ["Logging:LogLevel:System.Net.Http.HttpClient"] = "None", // removes all we do not need
-                            ["Logging:LogLevel:System.Net.Http.HttpClient.FaluCliClient.ClientHandler"] = verbose ? "Trace" : "Warning", // add the one we need
+                        // See https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-requests?view=aspnetcore-5.0#logging
+                        ["Logging:LogLevel:System.Net.Http.HttpClient"] = "None", // removes all we do not need
+                        ["Logging:LogLevel:System.Net.Http.HttpClient.FaluCliClient.ClientHandler"] = verbose ? "Trace" : "Warning", // add the one we need
 
-                            ["Logging:Console:FormatterName"] = "Falu",
+                        ["Logging:Console:FormatterName"] = "Falu",
                         ["Logging:Console:FormatterOptions:SingleLine"] = verbose ? "False" : "True",
                         ["Logging:Console:FormatterOptions:IncludeCategory"] = verbose ? "True" : "False",
                         ["Logging:Console:FormatterOptions:IncludeEventId"] = verbose ? "True" : "False",
@@ -70,7 +66,7 @@ class Program
 
                 host.ConfigureLogging((context, builder) =>
                 {
-                    builder.AddConsoleFormatter<Logging.FaluConsoleFormatter, Logging.FaluConsoleFormatterOptions>();
+                    builder.AddConsoleFormatter<FaluCli.Logging.FaluConsoleFormatter, FaluCli.Logging.FaluConsoleFormatterOptions>();
                 });
 
                 host.ConfigureServices((context, services) =>
@@ -79,14 +75,12 @@ class Program
                     services.AddFaluClientForCli();
                 });
 
-                host.UseCommandHandler<Commands.Events.RetryCommand, Commands.Events.RetryCommandHandler>();
-                host.UseCommandHandler<Commands.Templates.PullTemplatesCommand, Commands.Templates.TemplatesCommandHandler>();
-                host.UseCommandHandler<Commands.Templates.PushTemplatesCommand, Commands.Templates.TemplatesCommandHandler>();
+                host.UseCommandHandler<FaluCli.Commands.Events.RetryCommand, FaluCli.Commands.Events.RetryCommandHandler>();
+                host.UseCommandHandler<FaluCli.Commands.Templates.PullTemplatesCommand, FaluCli.Commands.Templates.TemplatesCommandHandler>();
+                host.UseCommandHandler<FaluCli.Commands.Templates.PushTemplatesCommand, FaluCli.Commands.Templates.TemplatesCommandHandler>();
             })
             .UseFaluDefaults();
 
-        // Parse the incoming args and invoke the handler
-        var parser = builder.Build();
+// Parse the incoming args and invoke the handler
+var parser = builder.Build();
         return await parser.InvokeAsync(args);
-    }
-}
