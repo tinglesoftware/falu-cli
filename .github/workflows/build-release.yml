@@ -73,6 +73,7 @@ jobs:
         -p:PublishTrimmed=true
         -p:GenerateDocumentationFile=false
         -p:AssemblyName=falu
+        -p:EnableCompressionInSingleFile=true
         --runtime ${{ matrix.config.rid }}
         --configuration $buildConfiguration
         --output $GITHUB_WORKSPACE/drop/${{ matrix.config.rid }}
