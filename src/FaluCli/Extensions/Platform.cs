@@ -1,21 +1,20 @@
-﻿namespace System.CommandLine
+﻿namespace System.CommandLine;
+
+internal static class Platform
 {
-    internal static class Platform
+    private static readonly Lazy<bool> isConsoleRedirectionCheckSupported = new(() =>
     {
-        private static readonly Lazy<bool> isConsoleRedirectionCheckSupported = new(() =>
+        try
         {
-            try
-            {
-                var check = Console.IsOutputRedirected;
-                return true;
-            }
+            var check = Console.IsOutputRedirected;
+            return true;
+        }
 
-            catch (PlatformNotSupportedException)
-            {
-                return false;
-            }
-        });
+        catch (PlatformNotSupportedException)
+        {
+            return false;
+        }
+    });
 
-        public static bool IsConsoleRedirectionCheckSupported => isConsoleRedirectionCheckSupported.Value;
-    }
+    public static bool IsConsoleRedirectionCheckSupported => isConsoleRedirectionCheckSupported.Value;
 }

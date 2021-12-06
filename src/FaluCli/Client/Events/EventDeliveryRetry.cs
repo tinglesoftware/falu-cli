@@ -1,7 +1,6 @@
-﻿namespace FaluCli.Client.Events
+﻿namespace FaluCli.Client.Events;
+
+public class EventDeliveryRetry
 {
-    public class EventDeliveryRetry
-    {
-        public string? WebhookEndpointId { get; set; }
-    }
+    public string? WebhookEndpointId { get; set; }
 }
