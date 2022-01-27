@@ -5,7 +5,7 @@ using System.IO;
 
 #nullable disable
 
-namespace FaluCli.Logging;
+namespace Falu.Logging;
 
 internal class FaluConsoleFormatter : ConsoleFormatter
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging.Console;
 
-namespace FaluCli.Logging;
+namespace Falu.Logging;
 
 public class FaluConsoleFormatterOptions : SimpleConsoleFormatterOptions
 {

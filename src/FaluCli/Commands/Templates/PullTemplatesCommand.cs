@@ -1,6 +1,4 @@
-﻿using System.CommandLine;
-
-namespace FaluCli.Commands.Templates;
+﻿namespace Falu.Commands.Templates;
 
 public class PullTemplatesCommand : Command
 {

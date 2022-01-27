@@ -1,4 +1,4 @@
-﻿namespace FaluCli.Client.Events;
+﻿namespace Falu.Client.Events;
 
 internal class WebhookDeliveryAttempt
 {

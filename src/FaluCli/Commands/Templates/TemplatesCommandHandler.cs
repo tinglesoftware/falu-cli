@@ -1,11 +1,10 @@
-﻿using Falu.MessageTemplates;
-using FaluCli.Client;
-using System.CommandLine.Invocation;
+﻿using Falu.Client;
+using Falu.MessageTemplates;
 using System.IO;
 using System.Text.Json;
 using Tingle.Extensions.JsonPatch;
 
-namespace FaluCli.Commands.Templates;
+namespace Falu.Commands.Templates;
 
 internal class TemplatesCommandHandler : ICommandHandler
 {

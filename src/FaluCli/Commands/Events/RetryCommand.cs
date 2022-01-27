@@ -1,6 +1,4 @@
-﻿using System.CommandLine;
-
-namespace FaluCli.Commands.Events;
+﻿namespace Falu.Commands.Events;
 
 internal class RetryCommand : Command
 {

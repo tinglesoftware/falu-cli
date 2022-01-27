@@ -1,7 +1,6 @@
 ﻿using Falu;
-using FaluCli.Client;
+using Falu.Client;
 using Microsoft.Extensions.Options;
-using System.CommandLine.Invocation;
 using System.Net.Http.Headers;
 
 namespace Microsoft.Extensions.DependencyInjection;
