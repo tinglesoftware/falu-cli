@@ -1,7 +1,7 @@
 ﻿using Falu;
 using System.CommandLine.IO;
 using System.Net;
-using Res = FaluCli.Properties.Resources;
+using Res = Falu.Properties.Resources;
 
 namespace System.CommandLine.Builder;
 
