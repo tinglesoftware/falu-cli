@@ -88,6 +88,9 @@ internal static class CommandLineBuilderExtensions
         {
             await next(invocation);
 
+            // At this point, we can check if a newer version was found.
+            // This code will not be reached if there's an exception but validation errors do get here.
+
             var latest = UpdateChecker.LatestVersion;
             if (latest is not null && latest > UpdateChecker.CurrentVersion)
             {
