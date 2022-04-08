@@ -19,7 +19,7 @@ internal static class IServiceCollectionExtensions
                     client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("falucli", VersioningHelper.ProductVersion));
                 });
 
-        services.AddSingleton<IConfigureOptions<FaluClientOptions>, ConfigureFaluClientOptions>();
+        services.ConfigureOptions<FaluClientConfigureOptions>();
 
         return services;
     }
@@ -31,11 +31,11 @@ internal static class IServiceCollectionExtensions
         return services;
     }
 
-    internal class ConfigureFaluClientOptions : IConfigureOptions<FaluClientOptions>
+    internal class FaluClientConfigureOptions : IConfigureOptions<FaluClientOptions>
     {
         private readonly InvocationContext context;
 
-        public ConfigureFaluClientOptions(InvocationContext context)
+        public FaluClientConfigureOptions(InvocationContext context)
         {
             this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
