@@ -94,6 +94,8 @@ internal static class CommandLineBuilderExtensions
                 var console = invocation.Console;
                 var stdout = console.Out;
 
+                stdout.WriteLine(); // empty line
+
                 console.ResetTerminalForegroundColor();
                 stdout.Write("New version (");
                 console.SetTerminalForegroundGreen();
