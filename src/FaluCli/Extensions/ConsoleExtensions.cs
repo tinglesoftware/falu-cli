@@ -5,21 +5,24 @@
 /// </summary>
 internal static class ConsoleExtensions
 {
-    internal static void SetTerminalForegroundRed(this IConsole console)
+    internal static void SetTerminalForegroundRed(this IConsole console) => console.SetTerminalForegroundColor(ConsoleColor.Red);
+    internal static void SetTerminalForegroundGreen(this IConsole console) => console.SetTerminalForegroundColor(ConsoleColor.Green);
+
+    internal static void SetTerminalForegroundColor(this IConsole console, ConsoleColor color)
     {
         if (console.GetType().GetInterfaces().Any(i => i.Name == "ITerminal"))
         {
-            ((dynamic)console).ForegroundColor = ConsoleColor.Red;
+            ((dynamic)console).ForegroundColor = color;
         }
 
         if (Platform.IsConsoleRedirectionCheckSupported &&
             !Console.IsOutputRedirected)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = color;
         }
         else if (Platform.IsConsoleRedirectionCheckSupported)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = color;
         }
     }
 

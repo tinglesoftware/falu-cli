@@ -79,7 +79,8 @@ var builder = new CommandLineBuilder(rootCommand)
         host.UseCommandHandler<PullTemplatesCommand, TemplatesCommandHandler>();
         host.UseCommandHandler<PushTemplatesCommand, TemplatesCommandHandler>();
     })
-    .UseFaluDefaults();
+    .UseFaluDefaults()
+    .UseUpdateChecker();
 
 // Parse the incoming args and invoke the handler
 var parser = builder.Build();
