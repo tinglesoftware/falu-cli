@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using Octokit;
+﻿using Octokit;
 
 namespace Falu.Updates;
 
@@ -9,14 +8,8 @@ internal class UpdateChecker : BackgroundService
     public const string RepositoryName = "falu-cli";
 
     private static readonly SemaphoreSlim locker = new(1);
-    private static SemanticVersioning.Version? latestVersion, currentVersion;
-
-    private readonly UpdateCheckerOptions options;
-
-    public UpdateChecker(IOptions<UpdateCheckerOptions> optionsAccessor)
-    {
-        options = optionsAccessor?.Value ?? throw new ArgumentNullException(nameof(optionsAccessor));
-    }
+    private static readonly SemanticVersioning.Version? currentVersion = SemanticVersioning.Version.Parse(VersioningHelper.ProductVersion);
+    private static SemanticVersioning.Version? latestVersion;
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
@@ -30,7 +23,6 @@ internal class UpdateChecker : BackgroundService
                 await locker.WaitAsync(stoppingToken);
                 var release = await client.Repository.Release.GetLatest(RepositoryOwner, RepositoryName);
                 Interlocked.Exchange(ref latestVersion, SemanticVersioning.Version.Parse(release.TagName));
-                Interlocked.Exchange(ref currentVersion, SemanticVersioning.Version.Parse(options.CurrentVersion));
             }
             finally
             {
