@@ -80,7 +80,7 @@ var builder = new CommandLineBuilder(rootCommand)
         host.UseCommandHandler<PushTemplatesCommand, TemplatesCommandHandler>();
     })
     .UseFaluDefaults()
-    .UseUpdateChecker();
+    .UseUpdateChecker() /* update checker middleware must be added last because it only prints what the checker has */;
 
 // Parse the incoming args and invoke the handler
 var parser = builder.Build();
