@@ -1,4 +1,6 @@
-﻿namespace Falu.Config;
+﻿using IdentityModel.Client;
+
+namespace Falu.Config;
 
 internal class ConfigValuesProvider : IConfigValuesProvider
 {
@@ -40,5 +42,13 @@ internal class ConfigValuesProvider : IConfigValuesProvider
         values ??= await GetConfigValuesAsync(cancellationToken);
         var toml = Tomlyn.Toml.FromModel(values);
         await File.WriteAllTextAsync(FilePath, toml, cancellationToken);
+    }
+
+    public async Task SaveConfigValuesAsync(TokenResponse response, CancellationToken cancellationToken = default)
+    {
+        values ??= await GetConfigValuesAsync(cancellationToken);
+        values.Update(response);
+
+        await SaveConfigValuesAsync(cancellationToken);
     }
 }

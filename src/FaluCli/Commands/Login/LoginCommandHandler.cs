@@ -35,14 +35,7 @@ internal class LoginCommandHandler : ICommandHandler
         logger.LogInformation("Authentication tokens issued successfully.");
 
         // save the authentication information
-        var config = await configValuesProvider.GetConfigValuesAsync(cancellationToken);
-        config.Authentication = new AuthenticationTokenConfigData
-        {
-            AccessToken = token_resp.AccessToken,
-            RefreshToken = token_resp.RefreshToken,
-            AccessTokenExpiry = DateTimeOffset.UtcNow.AddSeconds(token_resp.ExpiresIn).AddSeconds(-5),
-        };
-        await configValuesProvider.SaveConfigValuesAsync(cancellationToken);
+        await configValuesProvider.SaveConfigValuesAsync(token_resp, cancellationToken);
         logger.LogInformation("Authentication tokens issued successfully.");
 
         return 0;
