@@ -35,7 +35,7 @@ internal class ConfigValuesProvider : IConfigValuesProvider
         return values;
     }
 
-    public async Task SetConfigValuesAsync(CancellationToken cancellationToken = default)
+    public async Task SaveConfigValuesAsync(CancellationToken cancellationToken = default)
     {
         values ??= await GetConfigValuesAsync(cancellationToken);
         var toml = Tomlyn.Toml.FromModel(values);
