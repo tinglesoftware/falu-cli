@@ -25,8 +25,7 @@ internal class LoginCommandHandler : ICommandHandler
         var cancellationToken = context.GetCancellationToken();
 
         // perform confirguration discovery
-        var disco = await discoveryCache.GetAsync();
-        if (disco.IsError) throw new LoginException(disco.Error, disco.Exception);
+        var disco = await discoveryCache.GetSafelyAsync(cancellationToken);
 
         // perform device authorization
         var auth_resp = await RequestAuthorizationAsync(disco, cancellationToken);
