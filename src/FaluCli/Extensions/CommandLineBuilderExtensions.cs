@@ -1,4 +1,5 @@
 ﻿using Falu;
+using Falu.Commands.Login;
 using Falu.Updates;
 using System.CommandLine.IO;
 using System.Net;
@@ -71,6 +72,10 @@ internal static class CommandLineBuilderExtensions
             {
                 stderr.WriteLine(fe.Message);
             }
+        }
+        else if (exception is LoginException le)
+        {
+            stderr.WriteLine(Res.LoginFailedFormat, le.Message);
         }
         else
         {

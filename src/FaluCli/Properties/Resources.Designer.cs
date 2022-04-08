@@ -71,6 +71,15 @@ namespace Falu.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Login request failed with code: {0}.
+        /// </summary>
+        internal static string LoginFailedFormat {
+            get {
+                return ResourceManager.GetString("LoginFailedFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error Code: {0}.
         /// </summary>
         internal static string ProblemDetailsErrorCodeFormat {
