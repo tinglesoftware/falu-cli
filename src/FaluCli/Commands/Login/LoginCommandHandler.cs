@@ -6,13 +6,19 @@ namespace Falu.Commands.Login;
 
 internal class LoginCommandHandler : ICommandHandler
 {
+    private static readonly string Scopes = string.Join(" ",
+                                                        OidcConstants.StandardScopes.Profile,
+                                                        OidcConstants.StandardScopes.OfflineAccess,
+                                                        Constants.ScopeApi);
+
     private readonly HttpClient client;
     private readonly IDiscoveryCache discoveryCache;
     private readonly ILogger logger;
 
-    public LoginCommandHandler(HttpClient client, ILogger<LoginCommandHandler> logger)
+    public LoginCommandHandler(IHttpClientFactory httpClientFactory, ILogger<LoginCommandHandler> logger)
     {
-        this.client = client ?? throw new ArgumentNullException(nameof(client));
+        // unfortunately, injecting does not work, instead if gives the default client instance
+        client = httpClientFactory?.CreateClient(nameof(LoginCommandHandler)) ?? throw new ArgumentNullException(nameof(httpClientFactory));
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
         discoveryCache = new DiscoveryCache(Constants.Authority, () => client);
@@ -45,7 +51,7 @@ internal class LoginCommandHandler : ICommandHandler
             Address = disco.DeviceAuthorizationEndpoint,
             ClientId = Constants.ClientId,
             ClientCredentialStyle = ClientCredentialStyle.PostBody,
-            Scope = Constants.ScopeApi,
+            Scope = Scopes,
         };
         var response = await client.RequestDeviceAuthorizationAsync(request, cancellationToken);
         if (response.IsError) throw new LoginException(response.Error);
