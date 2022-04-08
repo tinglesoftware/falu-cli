@@ -20,7 +20,6 @@ internal static class CommandLineBuilderExtensions
                       .UseHelp()
                       .UseEnvironmentVariableDirective()
                       .UseParseDirective()
-                      .UseDebugDirective()
                       .UseSuggestDirective()
                       .RegisterWithDotnetSuggest()
                       .UseTypoCorrections()
