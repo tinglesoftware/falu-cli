@@ -11,7 +11,6 @@ internal static class IServiceCollectionExtensions
 {
     // get the version from the assembly
     private static readonly AssemblyName AssemblyName = typeof(Program).Assembly.GetName();
-    private static readonly string ProductName = AssemblyName.Name!;
     private static readonly string ProductVersion = AssemblyName.Version!.ToString(3);
 
     public static IServiceCollection AddFaluClientForCli(this IServiceCollection services)
@@ -32,11 +31,7 @@ internal static class IServiceCollectionExtensions
 
     public static IServiceCollection AddUpdateChecker(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<UpdateCheckerOptions>(options =>
-        {
-            options.ProductName = ProductName;
-            options.CurrentVersion = ProductVersion;
-        });
+        services.Configure<UpdateCheckerOptions>(o => o.CurrentVersion = ProductVersion);
         services.Configure<UpdateCheckerOptions>(configuration);
         services.ConfigureOptions<UpdateCheckerConfigureOptions>();
         services.AddHostedService<UpdateCheckerHost>();

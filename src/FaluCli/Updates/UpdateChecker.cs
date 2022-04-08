@@ -13,7 +13,7 @@ internal static class UpdateChecker
 
         try
         {
-            var client = new GitHubClient(new ProductHeaderValue(options.ProductName));
+            var client = new GitHubClient(new ProductHeaderValue(options.RepositoryName));
             await locker.WaitAsync(cancellationToken);
             var release = await client.Repository.Release.GetLatest(options.RepositoryOwner, options.RepositoryName);
             Interlocked.Exchange(ref latestVersion, SemanticVersioning.Version.Parse(release.TagName));
