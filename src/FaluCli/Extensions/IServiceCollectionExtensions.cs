@@ -10,8 +10,11 @@ namespace Microsoft.Extensions.DependencyInjection;
 internal static class IServiceCollectionExtensions
 {
     // get the version from the assembly
-    private static readonly AssemblyName AssemblyName = typeof(Program).Assembly.GetName();
-    private static readonly string ProductVersion = AssemblyName.Version!.ToString(3);
+    private static readonly Lazy<string> ProductVersion = new(delegate
+    {
+        var assembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
+        return assembly.GetName().Version!.ToString();
+    });
 
     public static IServiceCollection AddFaluClientForCli(this IServiceCollection services)
     {
@@ -21,7 +24,7 @@ internal static class IServiceCollectionExtensions
                 {
                     // change the User-Agent header
                     client.DefaultRequestHeaders.UserAgent.Clear();
-                    client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("falucli", ProductVersion));
+                    client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("falucli", ProductVersion.Value));
                 });
 
         services.AddSingleton<IConfigureOptions<FaluClientOptions>, ConfigureFaluClientOptions>();
@@ -31,7 +34,7 @@ internal static class IServiceCollectionExtensions
 
     public static IServiceCollection AddUpdateChecker(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<UpdateCheckerOptions>(o => o.CurrentVersion = ProductVersion);
+        services.Configure<UpdateCheckerOptions>(o => o.CurrentVersion = ProductVersion.Value);
         services.Configure<UpdateCheckerOptions>(configuration);
         services.ConfigureOptions<UpdateCheckerConfigureOptions>();
         services.AddHostedService<UpdateCheckerHost>();
