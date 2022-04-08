@@ -38,7 +38,7 @@ internal static class IServiceCollectionExtensions
         services.Configure<UpdateCheckerOptions>(o => o.CurrentVersion = ProductVersion.Value);
         services.Configure<UpdateCheckerOptions>(configuration);
         services.ConfigureOptions<UpdateCheckerConfigureOptions>();
-        services.AddHostedService<UpdateCheckerHost>();
+        services.AddHostedService<UpdateChecker>();
 
         return services;
     }
