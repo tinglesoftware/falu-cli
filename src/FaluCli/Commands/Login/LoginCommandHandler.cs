@@ -1,4 +1,5 @@
-﻿using IdentityModel;
+﻿using Falu.Config;
+using IdentityModel;
 using IdentityModel.Client;
 using System.Diagnostics;
 
@@ -7,13 +8,15 @@ namespace Falu.Commands.Login;
 internal class LoginCommandHandler : ICommandHandler
 {
     private readonly HttpClient client;
-    private readonly IDiscoveryCache discoveryCache;
+    private readonly IConfigValuesProvider configValuesProvider;
     private readonly ILogger logger;
+    private readonly IDiscoveryCache discoveryCache;
 
-    public LoginCommandHandler(IHttpClientFactory httpClientFactory, ILogger<LoginCommandHandler> logger)
+    public LoginCommandHandler(IHttpClientFactory httpClientFactory, IConfigValuesProvider configValuesProvider, ILogger<LoginCommandHandler> logger)
     {
         // unfortunately, injecting does not work, instead if gives the default client instance
         client = httpClientFactory?.CreateClient(nameof(LoginCommandHandler)) ?? throw new ArgumentNullException(nameof(httpClientFactory));
+        this.configValuesProvider = configValuesProvider ?? throw new ArgumentNullException(nameof(configValuesProvider));
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
         discoveryCache = new DiscoveryCache(Constants.Authority, () => client);
@@ -30,9 +33,20 @@ internal class LoginCommandHandler : ICommandHandler
         // perform device authorization
         var auth_resp = await RequestAuthorizationAsync(disco, cancellationToken);
 
-        // get the token, (polling)
+        // get the token via polling
         var token_resp = await RequestTokenAsync(disco, auth_resp, cancellationToken);
-        //token_resp.Show();
+        logger.LogInformation("Authentication tokens issued successfully.");
+
+        // save the authentication information
+        var config = await configValuesProvider.GetConfigValuesAsync(cancellationToken);
+        config.Authentication = new AuthenticationTokenConfigData
+        {
+            AccessToken = token_resp.AccessToken,
+            RefreshToken = token_resp.RefreshToken,
+            AccessTokenExpiry = DateTimeOffset.UtcNow.AddSeconds(token_resp.ExpiresIn).AddSeconds(-5),
+        };
+        await configValuesProvider.SetConfigValuesAsync(config, cancellationToken);
+        logger.LogInformation("Authentication tokens issued successfully.");
 
         return 0;
     }
