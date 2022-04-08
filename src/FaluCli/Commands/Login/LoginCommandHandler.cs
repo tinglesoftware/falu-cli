@@ -40,6 +40,8 @@ internal class LoginCommandHandler : ICommandHandler
 
     private async Task<DeviceAuthorizationResponse> RequestAuthorizationAsync(DiscoveryDocumentResponse disco, CancellationToken cancellationToken = default)
     {
+        logger.LogInformation("Performing device authentication. You will be redirected to the browser.");
+
         var request = new DeviceAuthorizationRequest
         {
             Address = disco.DeviceAuthorizationEndpoint,
@@ -50,15 +52,10 @@ internal class LoginCommandHandler : ICommandHandler
         var response = await httpClient.RequestDeviceAuthorizationAsync(request, cancellationToken);
         if (response.IsError) throw new LoginException(response.Error);
 
-        logger.LogInformation("Device authentication started. You need to complete this in the browser.");
+        logger.LogInformation("Complete authentication in the browser using the following information:");
         logger.LogInformation("User code   : {UserCode}", response.UserCode);
         logger.LogInformation("Device code : {DeviceCode}", response.DeviceCode);
-        logger.LogInformation("URL         : {VerificationUri}", response.VerificationUri);
-        //logger.LogInformation("Complete URL: {VerificationUriComplete}",response.VerificationUriComplete);
-
-        logger.LogInformation("");
-        logger.LogInformation("Press enter to launch browser ({VerificationUri})", response.VerificationUri);
-        Console.ReadLine();
+        logger.LogInformation("Opening your browser at {VerificationUri}", response.VerificationUri);
 
         Process.Start(new ProcessStartInfo(response.VerificationUriComplete) { UseShellExecute = true });
 
