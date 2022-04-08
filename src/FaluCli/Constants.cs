@@ -2,6 +2,8 @@
 
 internal class Constants
 {
+    public const string OpenIdHttpClientName = "OpenIdClient";
+
     public const string RepositoryOwner = "tinglesoftware";
     public const string RepositoryName = "falu-cli";
 

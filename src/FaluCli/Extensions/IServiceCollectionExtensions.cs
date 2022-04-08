@@ -2,6 +2,7 @@
 using Falu.Client;
 using Falu.Config;
 using Falu.Updates;
+using IdentityModel.Client;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Headers;
 
@@ -33,6 +34,20 @@ internal static class IServiceCollectionExtensions
     public static IServiceCollection AddConfigValuesProvider(this IServiceCollection services)
     {
         return services.AddScoped<IConfigValuesProvider, ConfigValuesProvider>();
+    }
+
+    public static IServiceCollection AddOpenIdServices(this IServiceCollection services)
+    {
+        services.AddHttpClient(Constants.OpenIdHttpClientName);
+
+        services.AddScoped<IDiscoveryCache>(p =>
+        {
+            var httpClientFactory = p.GetRequiredService<IHttpClientFactory>();
+            var client = httpClientFactory.CreateOpenIdClient();
+            return new DiscoveryCache(Constants.Authority, () => client);
+        });
+
+        return services;
     }
 
     internal class FaluClientConfigureOptions : IConfigureOptions<FaluClientOptions>

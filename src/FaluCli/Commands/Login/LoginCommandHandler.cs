@@ -12,14 +12,12 @@ internal class LoginCommandHandler : ICommandHandler
     private readonly ILogger logger;
     private readonly IDiscoveryCache discoveryCache;
 
-    public LoginCommandHandler(IHttpClientFactory httpClientFactory, IConfigValuesProvider configValuesProvider, ILogger<LoginCommandHandler> logger)
+    public LoginCommandHandler(IHttpClientFactory httpClientFactory, IDiscoveryCache discoveryCache, IConfigValuesProvider configValuesProvider, ILogger<LoginCommandHandler> logger)
     {
-        // unfortunately, injecting does not work, instead if gives the default client instance
-        client = httpClientFactory?.CreateClient(nameof(LoginCommandHandler)) ?? throw new ArgumentNullException(nameof(httpClientFactory));
+        client = httpClientFactory?.CreateOpenIdClient() ?? throw new ArgumentNullException(nameof(httpClientFactory));
+        this.discoveryCache = discoveryCache ?? throw new ArgumentNullException(nameof(discoveryCache));
         this.configValuesProvider = configValuesProvider ?? throw new ArgumentNullException(nameof(configValuesProvider));
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
-
-        discoveryCache = new DiscoveryCache(Constants.Authority, () => client);
     }
 
     public async Task<int> InvokeAsync(InvocationContext context)
