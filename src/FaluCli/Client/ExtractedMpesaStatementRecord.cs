@@ -1,4 +1,4 @@
-﻿namespace Falu.Client.Money;
+﻿namespace Falu.Client;
 
 public record ExtractedMpesaStatementRecord
 {

@@ -1,5 +1,4 @@
 ﻿using Falu.Client;
-using Falu.Client.Money;
 using Falu.Core;
 using System.IO;
 
@@ -24,8 +23,8 @@ internal class UploadMpesaStatementCommandHandler : ICommandHandler
         var command = context.ParseResult.CommandResult.Command;
         Uploader uploader = command switch
         {
-            UploadMpesaPaymentsStatementCommand p => client.MoneyMpesa.UploadPaymentsAsync,
-            UploadMpesaTransfersStatementCommand t => client.MoneyMpesa.UploadTransfersAsync,
+            UploadMpesaPaymentsStatementCommand p => client.Payments.UploadMpesaAsync,
+            UploadMpesaTransfersStatementCommand t => client.Transfers.UploadMpesaAsync,
             _ => throw new InvalidOperationException($"Command of type '{command.GetType().FullName}' is not supported here."),
         };
 
