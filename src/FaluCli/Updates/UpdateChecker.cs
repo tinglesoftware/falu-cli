@@ -10,12 +10,20 @@ internal class UpdateChecker : BackgroundService
     private static readonly SemaphoreSlim locker = new(1);
     private static readonly SemanticVersioning.Version? currentVersion = SemanticVersioning.Version.Parse(VersioningHelper.ProductVersion);
     private static SemanticVersioning.Version? latestVersion;
+    private static string? latestVersionHtmlUrl;
+
+    private readonly IHostEnvironment environment;
+
+    public UpdateChecker(IHostEnvironment environment)
+    {
+        this.environment = environment ?? throw new ArgumentNullException(nameof(environment));
+    }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         try
         {
-            if (latestVersion is not null) return;
+            if (environment.IsDevelopment() || latestVersion is not null) return;
 
             try
             {
@@ -23,6 +31,7 @@ internal class UpdateChecker : BackgroundService
                 await locker.WaitAsync(stoppingToken);
                 var release = await client.Repository.Release.GetLatest(RepositoryOwner, RepositoryName);
                 Interlocked.Exchange(ref latestVersion, SemanticVersioning.Version.Parse(release.TagName));
+                Interlocked.Exchange(ref latestVersionHtmlUrl, release.HtmlUrl);
             }
             finally
             {
@@ -34,5 +43,5 @@ internal class UpdateChecker : BackgroundService
 
     public static SemanticVersioning.Version? LatestVersion => latestVersion;
     public static SemanticVersioning.Version? CurrentVersion => currentVersion;
-    public static bool HasUpdate => LatestVersion > CurrentVersion;
+    public static string? LatestVersionHtmlUrl => latestVersionHtmlUrl;
 }

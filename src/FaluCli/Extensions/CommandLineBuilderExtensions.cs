@@ -106,10 +106,9 @@ internal static class CommandLineBuilderExtensions
                 console.ResetTerminalForegroundColor();
                 stdout.WriteLine(") is available.");
 
-                var url = $"https://github.com/tinglesoftware/falu-cli/releases/tag/{latest}";
                 stdout.Write("Download at: ");
                 console.SetTerminalForegroundGreen();
-                stdout.WriteLine(url);
+                stdout.WriteLine(UpdateChecker.LatestVersionHtmlUrl!);
                 console.ResetTerminalForegroundColor();
             }
         });

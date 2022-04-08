@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace Falu.Logging;
+﻿namespace Falu.Logging;
 
 internal static class TextWriterExtensions
 {
