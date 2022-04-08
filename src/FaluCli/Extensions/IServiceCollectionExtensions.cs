@@ -32,10 +32,14 @@ internal static class IServiceCollectionExtensions
 
     public static IServiceCollection AddUpdateChecker(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<UpdateCheckerOptions>(o => o.ProductName = ProductName);
+        services.Configure<UpdateCheckerOptions>(options =>
+        {
+            options.ProductName = ProductName;
+            options.CurrentVersion = ProductVersion;
+        });
         services.Configure<UpdateCheckerOptions>(configuration);
         services.ConfigureOptions<UpdateCheckerConfigureOptions>();
-        services.AddSingleton<UpdateChecker>();
+        services.AddHostedService<UpdateCheckerHost>();
 
         return services;
     }

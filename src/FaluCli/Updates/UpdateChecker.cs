@@ -1,23 +1,29 @@
-﻿using Microsoft.Extensions.Options;
-using Octokit;
+﻿using Octokit;
 
 namespace Falu.Updates;
 
-internal sealed class UpdateChecker
+internal static class UpdateChecker
 {
-    private readonly UpdateCheckerOptions options;
-    private readonly IGitHubClient client;
+    private static readonly SemaphoreSlim locker = new(1);
+    private static SemanticVersioning.Version? latestVersion, currentVersion;
 
-    public UpdateChecker(IOptions<UpdateCheckerOptions> optionsAccessor)
+    public static async Task CheckForUpdateAsync(UpdateCheckerOptions options, CancellationToken cancellationToken = default)
     {
-        options = optionsAccessor?.Value ?? throw new ArgumentNullException(nameof(optionsAccessor));
-        client = new GitHubClient(new ProductHeaderValue(options.ProductName));
+        if (latestVersion is not null) return;
+
+        try
+        {
+            var client = new GitHubClient(new ProductHeaderValue(options.ProductName));
+            await locker.WaitAsync(cancellationToken);
+            var release = await client.Repository.Release.GetLatest(options.RepositoryOwner, options.RepositoryName);
+            Interlocked.Exchange(ref latestVersion, SemanticVersioning.Version.Parse(release.TagName ?? release.Name));
+            Interlocked.Exchange(ref currentVersion, SemanticVersioning.Version.Parse(options.CurrentVersion));
+        }
+        finally
+        {
+            locker.Release();
+        }
     }
 
-    public async Task<Version> GetLatestVersionAsync()
-    {
-        var release = await client.Repository.Release.GetLatest(options.RepositoryOwner, options.RepositoryName);
-        var version = SemanticVersioning.Version.Parse(release.TagName ?? release.Name);
-        return new Version(version.Major, version.Minor, version.Patch);
-    }
+    public static bool HasUpdate => latestVersion > currentVersion;
 }
