@@ -1,4 +1,5 @@
 ﻿using Falu.Commands.Events;
+using Falu.Commands.Login;
 using Falu.Commands.Templates;
 using System.CommandLine.Builder;
 using System.CommandLine.Hosting;
@@ -7,6 +8,8 @@ using System.CommandLine.Parsing;
 // Create a root command with some options
 var rootCommand = new RootCommand
 {
+    new LoginCommand(),
+
     new Command("evaluations", "Manage evaluations.")
     {
     },
@@ -75,6 +78,7 @@ var builder = new CommandLineBuilder(rootCommand)
             services.AddUpdateChecker();
         });
 
+        host.UseCommandHandler<LoginCommand, LoginCommandHandler>();
         host.UseCommandHandler<RetryCommand, RetryCommandHandler>();
         host.UseCommandHandler<PullTemplatesCommand, TemplatesCommandHandler>();
         host.UseCommandHandler<PushTemplatesCommand, TemplatesCommandHandler>();
