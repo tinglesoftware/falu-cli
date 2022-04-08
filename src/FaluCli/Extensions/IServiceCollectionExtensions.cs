@@ -13,7 +13,8 @@ internal static class IServiceCollectionExtensions
     private static readonly Lazy<string> ProductVersion = new(delegate
     {
         var assembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
-        return assembly.GetName().Version!.ToString();
+        var attr = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+        return (attr is null) ? assembly.GetName().Version!.ToString() : attr.InformationalVersion;
     });
 
     public static IServiceCollection AddFaluClientForCli(this IServiceCollection services)
