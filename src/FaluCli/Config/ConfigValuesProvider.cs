@@ -28,9 +28,9 @@ internal class ConfigValuesProvider : IConfigValuesProvider
         return values;
     }
 
-    public async Task SetConfigValuesAsync(ConfigValues values, CancellationToken cancellationToken = default)
+    public async Task SetConfigValuesAsync(CancellationToken cancellationToken = default)
     {
-        Interlocked.Exchange(ref this.values, values);
+        values ??= await GetConfigValuesAsync(cancellationToken);
         var toml = Tomlyn.Toml.FromModel(values);
         await File.WriteAllTextAsync(FilePath, toml, cancellationToken);
     }

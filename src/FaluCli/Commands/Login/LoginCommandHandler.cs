@@ -45,7 +45,7 @@ internal class LoginCommandHandler : ICommandHandler
             RefreshToken = token_resp.RefreshToken,
             AccessTokenExpiry = DateTimeOffset.UtcNow.AddSeconds(token_resp.ExpiresIn).AddSeconds(-5),
         };
-        await configValuesProvider.SetConfigValuesAsync(config, cancellationToken);
+        await configValuesProvider.SetConfigValuesAsync(cancellationToken);
         logger.LogInformation("Authentication tokens issued successfully.");
 
         return 0;
