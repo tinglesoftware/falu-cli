@@ -16,7 +16,7 @@ internal static class UpdateChecker
             var client = new GitHubClient(new ProductHeaderValue(options.ProductName));
             await locker.WaitAsync(cancellationToken);
             var release = await client.Repository.Release.GetLatest(options.RepositoryOwner, options.RepositoryName);
-            Interlocked.Exchange(ref latestVersion, SemanticVersioning.Version.Parse(release.TagName ?? release.Name));
+            Interlocked.Exchange(ref latestVersion, SemanticVersioning.Version.Parse(release.TagName));
             Interlocked.Exchange(ref currentVersion, SemanticVersioning.Version.Parse(options.CurrentVersion));
         }
         finally
@@ -25,5 +25,7 @@ internal static class UpdateChecker
         }
     }
 
-    public static bool HasUpdate => latestVersion > currentVersion;
+    public static SemanticVersioning.Version? LatestVersion => latestVersion;
+    public static SemanticVersioning.Version? CurrentVersion => currentVersion;
+    public static bool HasUpdate => LatestVersion > CurrentVersion;
 }
