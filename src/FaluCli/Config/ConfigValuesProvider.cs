@@ -10,16 +10,6 @@ internal class ConfigValuesProvider : IConfigValuesProvider
 
     private ConfigValues? values;
 
-    public ConfigValues GetConfigValues()
-    {
-        if (values is null)
-        {
-            var toml = File.ReadAllText(FilePath);
-            values = Tomlyn.Toml.ToModel<ConfigValues>(toml);
-        }
-        return values;
-    }
-
     public async ValueTask<ConfigValues> GetConfigValuesAsync(CancellationToken cancellationToken = default)
     {
         if (values is null)

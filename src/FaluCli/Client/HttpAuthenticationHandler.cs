@@ -36,7 +36,7 @@ internal class HttpAuthenticationHandler : DelegatingHandler
             // if we do not have a key, we need to have it pulled from the configuration
             if (string.IsNullOrWhiteSpace(key))
             {
-                var config = configValuesProvider.GetConfigValues();
+                var config = await configValuesProvider.GetConfigValuesAsync(cancellationToken);
 
                 // ensure we have login information
                 if (config.Authentication is null)
