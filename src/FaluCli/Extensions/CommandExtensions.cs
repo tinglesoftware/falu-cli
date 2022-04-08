@@ -180,8 +180,7 @@ public static class CommandExtensions
 
         // TODO: validate api key using regex -> "^{sk|pk}_{live|test}_[0-9a-zA-Z]+$"
         command.AddGlobalOption<string>(aliases: new[] { "-k", "--apikey", },
-                                        description: "The API key to use for the command. Required it not logged in or when accessing another workspace. Looks like: sk_test_LdVyn0upN...",
-                                        configure: o => o.IsRequired = true);
+                                        description: "The API key to use for the command. Required it not logged in or when accessing another workspace. Looks like: sk_test_LdVyn0upN...");
 
         command.AddGlobalOption(new[] { "-v", "--verbose" }, "Whether to output verbosely.", false);
 
