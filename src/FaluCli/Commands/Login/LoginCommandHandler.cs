@@ -66,6 +66,8 @@ internal class LoginCommandHandler : ICommandHandler
     {
         while (true)
         {
+            cancellationToken.ThrowIfCancellationRequested();
+
             var request = new DeviceTokenRequest
             {
                 Address = disco.TokenEndpoint,
