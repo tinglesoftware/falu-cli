@@ -56,6 +56,8 @@ internal class LoginCommandHandler : ICommandHandler
         logger.LogInformation("Device code : {DeviceCode}", response.DeviceCode);
         logger.LogInformation("Opening your browser at {VerificationUri}", response.VerificationUri);
 
+        // delay for 2 seconds before opening the browser for the user to see the code
+        await Task.Delay(TimeSpan.FromSeconds(2), cancellationToken);
         Process.Start(new ProcessStartInfo(response.VerificationUriComplete) { UseShellExecute = true });
 
         return response;
