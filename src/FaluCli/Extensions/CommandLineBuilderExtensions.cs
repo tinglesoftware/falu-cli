@@ -1,4 +1,5 @@
 ﻿using Falu;
+using Falu.Updates;
 using System.CommandLine.IO;
 using System.Net;
 using Res = Falu.Properties.Resources;
@@ -12,6 +13,8 @@ internal static class CommandLineBuilderExtensions
 {
     public static CommandLineBuilder UseFaluDefaults(this CommandLineBuilder builder)
     {
+        ArgumentNullException.ThrowIfNull(builder, nameof(builder));
+
         return builder.UseVersionOption()
                       .UseHelp()
                       .UseEnvironmentVariableDirective()
@@ -75,5 +78,40 @@ internal static class CommandLineBuilderExtensions
         }
 
         console.ResetTerminalForegroundColor();
+    }
+
+    public static CommandLineBuilder UseUpdateChecker(this CommandLineBuilder builder)
+    {
+        ArgumentNullException.ThrowIfNull(builder, nameof(builder));
+
+        return builder.UseMiddleware(async (invocation, next) =>
+        {
+            await next(invocation);
+
+            // At this point, we can check if a newer version was found.
+            // This code will not be reached if there's an exception but validation errors do get here.
+
+            var latest = UpdateChecker.LatestVersion;
+            if (latest is not null && latest > UpdateChecker.CurrentVersion)
+            {
+                var console = invocation.Console;
+                var stdout = console.Out;
+
+                stdout.WriteLine(); // empty line
+
+                console.ResetTerminalForegroundColor();
+                stdout.Write("New version (");
+                console.SetTerminalForegroundGreen();
+                stdout.Write($"{latest}");
+                console.ResetTerminalForegroundColor();
+                stdout.WriteLine(") is available.");
+
+                var url = $"https://github.com/tinglesoftware/falu-cli/releases/tag/{latest}";
+                stdout.Write("Download at: ");
+                console.SetTerminalForegroundGreen();
+                stdout.WriteLine(url);
+                console.ResetTerminalForegroundColor();
+            }
+        });
     }
 }

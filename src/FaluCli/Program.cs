@@ -72,13 +72,15 @@ var builder = new CommandLineBuilder(rootCommand)
         {
             var configuration = context.Configuration;
             services.AddFaluClientForCli();
+            services.AddUpdateChecker();
         });
 
         host.UseCommandHandler<RetryCommand, RetryCommandHandler>();
         host.UseCommandHandler<PullTemplatesCommand, TemplatesCommandHandler>();
         host.UseCommandHandler<PushTemplatesCommand, TemplatesCommandHandler>();
     })
-    .UseFaluDefaults();
+    .UseFaluDefaults()
+    .UseUpdateChecker() /* update checker middleware must be added last because it only prints what the checker has */;
 
 // Parse the incoming args and invoke the handler
 var parser = builder.Build();

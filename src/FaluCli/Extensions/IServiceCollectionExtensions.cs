@@ -1,5 +1,6 @@
 ﻿using Falu;
 using Falu.Client;
+using Falu.Updates;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Headers;
 
@@ -7,9 +8,6 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 internal static class IServiceCollectionExtensions
 {
-    // get the version from the assembly
-    private static readonly string ProductVersion = typeof(Program).Assembly.GetName().Version!.ToString(3);
-
     public static IServiceCollection AddFaluClientForCli(this IServiceCollection services)
     {
         services.AddFalu<FaluCliClient, FaluClientOptions>()
@@ -18,10 +16,17 @@ internal static class IServiceCollectionExtensions
                 {
                     // change the User-Agent header
                     client.DefaultRequestHeaders.UserAgent.Clear();
-                    client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("falucli", ProductVersion));
+                    client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("falucli", VersioningHelper.ProductVersion));
                 });
 
         services.AddSingleton<IConfigureOptions<FaluClientOptions>, ConfigureFaluClientOptions>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddUpdateChecker(this IServiceCollection services)
+    {
+        services.AddHostedService<UpdateChecker>();
 
         return services;
     }
