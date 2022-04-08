@@ -77,6 +77,7 @@ var builder = new CommandLineBuilder(rootCommand)
             var configuration = context.Configuration;
             services.AddFaluClientForCli();
             services.AddUpdateChecker();
+            services.AddConfigValuesProvider();
             services.AddOpenIdServices();
         });
 
