@@ -23,8 +23,10 @@ internal class UploadMpesaStatementCommandHandler : ICommandHandler
         var command = context.ParseResult.CommandResult.Command;
         Uploader uploader = command switch
         {
-            UploadMpesaPaymentsStatementCommand p => client.Payments.UploadMpesaAsync,
-            UploadMpesaTransfersStatementCommand t => client.Transfers.UploadMpesaAsync,
+            UploadMpesaPaymentsStatementCommand => client.Payments.UploadMpesaAsync,
+            UploadMpesaTransfersStatementCommand => client.Transfers.UploadMpesaAsync,
+            UploadMpesaPaymentRefundsStatementCommand => client.PaymentRefunds.UploadMpesaAsync,
+            UploadMpesaTransferReversalsStatementCommand => client.TransferReversals.UploadMpesaAsync,
             _ => throw new InvalidOperationException($"Command of type '{command.GetType().FullName}' is not supported here."),
         };
 

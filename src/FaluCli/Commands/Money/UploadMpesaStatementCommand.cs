@@ -2,16 +2,22 @@
 
 public class UploadMpesaPaymentsStatementCommand : UploadMpesaStatementCommand
 {
-    public UploadMpesaPaymentsStatementCommand() : base("Upload an MPESA statement to Falu for payments.")
-    {
-    }
+    public UploadMpesaPaymentsStatementCommand() : base("Upload an MPESA statement to Falu for payments.") { }
+}
+
+public class UploadMpesaPaymentRefundsStatementCommand : UploadMpesaStatementCommand
+{
+    public UploadMpesaPaymentRefundsStatementCommand() : base("Upload an MPESA statement to Falu for payment refunds.") { }
 }
 
 public class UploadMpesaTransfersStatementCommand : UploadMpesaStatementCommand
 {
-    public UploadMpesaTransfersStatementCommand() : base("Upload an MPESA statement to Falu for transfers.")
-    {
-    }
+    public UploadMpesaTransfersStatementCommand() : base("Upload an MPESA statement to Falu for transfers.") { }
+}
+
+public class UploadMpesaTransferReversalsStatementCommand : UploadMpesaStatementCommand
+{
+    public UploadMpesaTransferReversalsStatementCommand() : base("Upload an MPESA statement to Falu for transfer reversals.") { }
 }
 
 public abstract class UploadMpesaStatementCommand : Command

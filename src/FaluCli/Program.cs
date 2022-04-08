@@ -30,9 +30,19 @@ var rootCommand = new RootCommand
         new UploadMpesaPaymentsStatementCommand(),
     },
 
+    new Command("payment-refunds", "Manage payment refunds.")
+    {
+        new UploadMpesaPaymentRefundsStatementCommand(),
+    },
+
     new Command("transfers", "Manage transfers.")
     {
         new UploadMpesaTransfersStatementCommand(),
+    },
+
+    new Command("transfer-reversals", "Manage transfer reversals.")
+    {
+        new UploadMpesaTransferReversalsStatementCommand(),
     },
 
     new Command("events", "Work with events on Falu.")
