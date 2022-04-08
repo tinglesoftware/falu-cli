@@ -6,11 +6,6 @@ namespace Falu.Commands.Login;
 
 internal class LoginCommandHandler : ICommandHandler
 {
-    private static readonly string Scopes = string.Join(" ",
-                                                        OidcConstants.StandardScopes.Profile,
-                                                        OidcConstants.StandardScopes.OfflineAccess,
-                                                        Constants.ScopeApi);
-
     private readonly HttpClient client;
     private readonly IDiscoveryCache discoveryCache;
     private readonly ILogger logger;
@@ -51,7 +46,7 @@ internal class LoginCommandHandler : ICommandHandler
             Address = disco.DeviceAuthorizationEndpoint,
             ClientId = Constants.ClientId,
             ClientCredentialStyle = ClientCredentialStyle.PostBody,
-            Scope = Scopes,
+            Scope = Constants.Scopes,
         };
         var response = await client.RequestDeviceAuthorizationAsync(request, cancellationToken);
         if (response.IsError) throw new LoginException(response.Error);
