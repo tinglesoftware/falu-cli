@@ -76,6 +76,7 @@ var builder = new CommandLineBuilder(rootCommand)
             var configuration = context.Configuration;
             services.AddFaluClientForCli();
             services.AddUpdateChecker();
+            services.AddHttpClient<LoginCommandHandler>();
         });
 
         host.UseCommandHandler<LoginCommand, LoginCommandHandler>();

@@ -12,11 +12,12 @@ internal class LoginCommandHandler : ICommandHandler
     private readonly IDiscoveryCache discoveryCache;
     private readonly ILogger logger;
 
-    public LoginCommandHandler(FaluCliClient client, IHttpClientFactory httpClientFactory, ILogger<LoginCommandHandler> logger)
+    public LoginCommandHandler(FaluCliClient client, HttpClient httpClient, ILogger<LoginCommandHandler> logger)
     {
         this.client = client ?? throw new ArgumentNullException(nameof(client));
+        this.httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        httpClient = httpClientFactory?.CreateClient() ?? throw new ArgumentNullException(nameof(httpClientFactory));
+
         discoveryCache = new DiscoveryCache(Constants.Authority, () => httpClient);
     }
 
