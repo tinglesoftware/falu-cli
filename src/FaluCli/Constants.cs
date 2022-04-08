@@ -2,7 +2,9 @@
 
 internal class Constants
 {
-    public const string OpenIdHttpClientName = "OpenIdClient";
+    public const string OpenIdCategoryOrClientName = "Oidc";
+
+    public const string DefaultApiKey = "default-api-key";
 
     public const string RepositoryOwner = "tinglesoftware";
     public const string RepositoryName = "falu-cli";
