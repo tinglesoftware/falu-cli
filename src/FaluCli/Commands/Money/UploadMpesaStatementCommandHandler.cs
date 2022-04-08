@@ -19,14 +19,14 @@ internal class UploadMpesaStatementCommandHandler : ICommandHandler
     public async Task<int> InvokeAsync(InvocationContext context)
     {
         var cancellationToken = context.GetCancellationToken();
-        var type = context.ParseResult.ValueForArgument<MpesaStatementType>("type");
         var filePath = context.ParseResult.ValueForOption<string>("--file");
 
-        Uploader uploader = type switch
+        var command = context.ParseResult.CommandResult.Command;
+        Uploader uploader = command switch
         {
-            MpesaStatementType.Payments => client.MoneyMpesa.UploadPaymentsAsync,
-            MpesaStatementType.Transfers => client.MoneyMpesa.UploadTransfersAsync,
-            _ => throw new NotSupportedException($"'{nameof(MpesaStatementType)}.{type}' is not supported for this command."),
+            UploadMpesaPaymentsStatementCommand p => client.MoneyMpesa.UploadPaymentsAsync,
+            UploadMpesaTransfersStatementCommand t => client.MoneyMpesa.UploadTransfersAsync,
+            _ => throw new InvalidOperationException($"Command of type '{command.GetType().FullName}' is not supported here."),
         };
 
         // ensure the directory exists
