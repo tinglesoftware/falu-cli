@@ -1,5 +1,6 @@
 ﻿using Falu.Commands.Events;
 using Falu.Commands.Login;
+using Falu.Commands.Money;
 using Falu.Commands.Templates;
 using System.CommandLine.Builder;
 using System.CommandLine.Hosting;
@@ -26,6 +27,14 @@ var rootCommand = new RootCommand
 
     new Command("payments", "Manage payments.")
     {
+    },
+
+    new Command("money", "Manage money related items.")
+    {
+        new Command("mpesa", "Manage MPESA related stuff.")
+        {
+            new UploadMpesaStatementCommand(),
+        },
     },
 
     new Command("events", "Work with events on Falu.")
@@ -85,6 +94,7 @@ var builder = new CommandLineBuilder(rootCommand)
         host.UseCommandHandler<RetryCommand, RetryCommandHandler>();
         host.UseCommandHandler<PullTemplatesCommand, TemplatesCommandHandler>();
         host.UseCommandHandler<PushTemplatesCommand, TemplatesCommandHandler>();
+        host.UseCommandHandler<UploadMpesaStatementCommand, UploadMpesaStatementCommandHandler>();
     })
     .UseFaluDefaults()
     .UseUpdateChecker() /* update checker middleware must be added last because it only prints what the checker has */;
