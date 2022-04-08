@@ -17,9 +17,7 @@ internal class HttpAuthenticationHandler : DelegatingHandler
                                      IDiscoveryCache discoveryCache,
                                      InvocationContext context,
                                      IConfigValuesProvider configValuesProvider,
-                                     HttpMessageHandler innerHandler,
                                      ILoggerFactory loggerFactory)
-        : base(innerHandler)
     {
         this.httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
         this.discoveryCache = discoveryCache ?? throw new ArgumentNullException(nameof(discoveryCache));
