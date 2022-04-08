@@ -1,5 +1,6 @@
 ﻿using Falu;
 using Falu.Client;
+using Falu.Config;
 using Falu.Updates;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Headers;
@@ -26,9 +27,12 @@ internal static class IServiceCollectionExtensions
 
     public static IServiceCollection AddUpdateChecker(this IServiceCollection services)
     {
-        services.AddHostedService<UpdateChecker>();
+        return services.AddHostedService<UpdateChecker>();
+    }
 
-        return services;
+    public static IServiceCollection AddConfigValuesProvider(this IServiceCollection services)
+    {
+        return services.AddScoped<IConfigValuesProvider, ConfigValuesProvider>();
     }
 
     internal class FaluClientConfigureOptions : IConfigureOptions<FaluClientOptions>
