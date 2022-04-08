@@ -89,7 +89,7 @@ internal static class CommandLineBuilderExtensions
             await next(invocation);
 
             var latest = UpdateChecker.LatestVersion;
-            if (latest > UpdateChecker.CurrentVersion)
+            if (latest is not null && latest > UpdateChecker.CurrentVersion)
             {
                 var console = invocation.Console;
                 var stdout = console.Out;
