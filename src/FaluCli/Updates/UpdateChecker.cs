@@ -5,6 +5,9 @@ namespace Falu.Updates;
 
 internal class UpdateChecker : BackgroundService
 {
+    public const string RepositoryOwner = "tinglesoftware";
+    public const string RepositoryName = "falu-cli";
+
     private static readonly SemaphoreSlim locker = new(1);
     private static SemanticVersioning.Version? latestVersion, currentVersion;
 
@@ -23,9 +26,9 @@ internal class UpdateChecker : BackgroundService
 
             try
             {
-                var client = new GitHubClient(new ProductHeaderValue(options.RepositoryName));
+                var client = new GitHubClient(new ProductHeaderValue(RepositoryName));
                 await locker.WaitAsync(stoppingToken);
-                var release = await client.Repository.Release.GetLatest(options.RepositoryOwner, options.RepositoryName);
+                var release = await client.Repository.Release.GetLatest(RepositoryOwner, RepositoryName);
                 Interlocked.Exchange(ref latestVersion, SemanticVersioning.Version.Parse(release.TagName));
                 Interlocked.Exchange(ref currentVersion, SemanticVersioning.Version.Parse(options.CurrentVersion));
             }
@@ -35,24 +38,6 @@ internal class UpdateChecker : BackgroundService
             }
         }
         catch { } // nothing to do here
-    }
-
-    public static async Task CheckForUpdateAsync(UpdateCheckerOptions options, CancellationToken cancellationToken = default)
-    {
-        if (latestVersion is not null) return;
-
-        try
-        {
-            var client = new GitHubClient(new ProductHeaderValue(options.RepositoryName));
-            await locker.WaitAsync(cancellationToken);
-            var release = await client.Repository.Release.GetLatest(options.RepositoryOwner, options.RepositoryName);
-            Interlocked.Exchange(ref latestVersion, SemanticVersioning.Version.Parse(release.TagName));
-            Interlocked.Exchange(ref currentVersion, SemanticVersioning.Version.Parse(options.CurrentVersion));
-        }
-        finally
-        {
-            locker.Release();
-        }
     }
 
     public static SemanticVersioning.Version? LatestVersion => latestVersion;

@@ -72,7 +72,7 @@ var builder = new CommandLineBuilder(rootCommand)
         {
             var configuration = context.Configuration;
             services.AddFaluClientForCli();
-            services.AddUpdateChecker(configuration.GetSection("UpdateChecker"));
+            services.AddUpdateChecker();
         });
 
         host.UseCommandHandler<RetryCommand, RetryCommandHandler>();

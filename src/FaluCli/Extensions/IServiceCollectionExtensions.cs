@@ -33,11 +33,8 @@ internal static class IServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddUpdateChecker(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddUpdateChecker(this IServiceCollection services)
     {
-        services.Configure<UpdateCheckerOptions>(o => o.CurrentVersion = ProductVersion.Value);
-        services.Configure<UpdateCheckerOptions>(configuration);
-        services.ConfigureOptions<UpdateCheckerConfigureOptions>();
         services.AddHostedService<UpdateChecker>();
 
         return services;
