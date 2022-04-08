@@ -22,8 +22,15 @@ internal class ConfigValuesProvider : IConfigValuesProvider
     {
         if (values is null)
         {
-            var toml = await File.ReadAllTextAsync(FilePath, cancellationToken);
-            values = Tomlyn.Toml.ToModel<ConfigValues>(toml);
+            if (File.Exists(FilePath))
+            {
+                var toml = await File.ReadAllTextAsync(FilePath, cancellationToken);
+                values = Tomlyn.Toml.ToModel<ConfigValues>(toml);
+            }
+            else
+            {
+                values = new ConfigValues();
+            }
         }
         return values;
     }
