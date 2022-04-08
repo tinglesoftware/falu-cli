@@ -42,6 +42,7 @@ internal static class IServiceCollectionExtensions
 
         public void Configure(FaluClientOptions options)
         {
+            // TODO: pull from stored configuration
             options.ApiKey = context.ParseResult.ValueForOption<string>("--apikey");
         }
     }

@@ -1,5 +1,4 @@
-﻿using Falu.Client;
-using IdentityModel;
+﻿using IdentityModel;
 using IdentityModel.Client;
 using System.Diagnostics;
 
@@ -7,18 +6,16 @@ namespace Falu.Commands.Login;
 
 internal class LoginCommandHandler : ICommandHandler
 {
-    public FaluCliClient client;
-    private readonly HttpClient httpClient;
+    private readonly HttpClient client;
     private readonly IDiscoveryCache discoveryCache;
     private readonly ILogger logger;
 
-    public LoginCommandHandler(FaluCliClient client, HttpClient httpClient, ILogger<LoginCommandHandler> logger)
+    public LoginCommandHandler(HttpClient client, ILogger<LoginCommandHandler> logger)
     {
         this.client = client ?? throw new ArgumentNullException(nameof(client));
-        this.httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-        discoveryCache = new DiscoveryCache(Constants.Authority, () => httpClient);
+        discoveryCache = new DiscoveryCache(Constants.Authority, () => client);
     }
 
     public async Task<int> InvokeAsync(InvocationContext context)
@@ -50,7 +47,7 @@ internal class LoginCommandHandler : ICommandHandler
             ClientCredentialStyle = ClientCredentialStyle.PostBody,
             Scope = Constants.ScopeApi,
         };
-        var response = await httpClient.RequestDeviceAuthorizationAsync(request, cancellationToken);
+        var response = await client.RequestDeviceAuthorizationAsync(request, cancellationToken);
         if (response.IsError) throw new LoginException(response.Error);
 
         logger.LogInformation("Complete authentication in the browser using the following information:");
@@ -75,7 +72,7 @@ internal class LoginCommandHandler : ICommandHandler
                 ClientId = Constants.ClientId,
                 DeviceCode = auth.DeviceCode,
             };
-            var response = await httpClient.RequestDeviceTokenAsync(request, cancellationToken);
+            var response = await client.RequestDeviceTokenAsync(request, cancellationToken);
 
             if (response.IsError)
             {
