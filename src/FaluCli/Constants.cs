@@ -7,7 +7,7 @@ internal class Constants
 
     public const string Authority = "https://login.falu.io";
     public const string ScopeApi = "api";
-    public const string ClientId = "device";
+    public const string ClientId = "cli";
     public static readonly ICollection<string> ScopesList = new HashSet<string>
     {
         IdentityModel.OidcConstants.StandardScopes.OpenId,
