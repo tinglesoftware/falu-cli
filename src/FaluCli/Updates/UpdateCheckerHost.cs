@@ -7,7 +7,7 @@ internal sealed class UpdateCheckerHost : BackgroundService
     private readonly UpdateCheckerOptions options;
     private readonly ILogger logger;
 
-    public UpdateCheckerHost(IHostApplicationLifetime lifetime, IOptions<UpdateCheckerOptions> optionsAccessor, LoggerFactory loggerFactory)
+    public UpdateCheckerHost(IHostApplicationLifetime lifetime, IOptions<UpdateCheckerOptions> optionsAccessor, ILoggerFactory loggerFactory)
     {
         options = optionsAccessor?.Value ?? throw new ArgumentNullException(nameof(optionsAccessor));
         logger = loggerFactory.CreateLogger("");
