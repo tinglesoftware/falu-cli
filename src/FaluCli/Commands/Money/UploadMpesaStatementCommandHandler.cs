@@ -18,7 +18,7 @@ internal class UploadMpesaStatementCommandHandler : ICommandHandler
     public async Task<int> InvokeAsync(InvocationContext context)
     {
         var cancellationToken = context.GetCancellationToken();
-        var filePath = context.ParseResult.ValueForOption<string>("--file");
+        var filePath = context.ParseResult.ValueForOption<string>("--file")!;
 
         var command = context.ParseResult.CommandResult.Command;
         Uploader uploader = command switch
@@ -31,7 +31,8 @@ internal class UploadMpesaStatementCommandHandler : ICommandHandler
         };
 
         // ensure the directory exists
-        if (!File.Exists(filePath))
+        var info = new FileInfo(filePath);
+        if (!info.Exists)
         {
             logger.LogError("The file {FilePath} does not exist.", filePath);
             return -1;
