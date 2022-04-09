@@ -29,6 +29,9 @@ internal class ConfigValuesProvider : IConfigValuesProvider
 
     public async Task SaveConfigValuesAsync(CancellationToken cancellationToken = default)
     {
+        // ensure the directory exists
+        Directory.CreateDirectory(Path.GetDirectoryName(FilePath)!);
+
         values ??= await GetConfigValuesAsync(cancellationToken);
         var toml = Tomlyn.Toml.FromModel(values);
         await File.WriteAllTextAsync(FilePath, toml, cancellationToken);
