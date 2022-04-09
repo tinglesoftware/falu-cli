@@ -30,11 +30,19 @@ internal class UploadMpesaStatementCommandHandler : ICommandHandler
             _ => throw new InvalidOperationException($"Command of type '{command.GetType().FullName}' is not supported here."),
         };
 
-        // ensure the directory exists
+        // ensure the file exists
         var info = new FileInfo(filePath);
         if (!info.Exists)
         {
             logger.LogError("The file {FilePath} does not exist.", filePath);
+            return -1;
+        }
+
+        // ensure the file size does not exceed the limit
+        var size = ByteSizeLib.ByteSize.FromBytes(info.Length);
+        if (size > Constants.MaxMpesaStatementFileSize)
+        {
+            logger.LogError("The file provided exceeds the size limit of {SizeLimit}. Trying exporting a smaller date range.", Constants.MaxMpesaStatementFileSizeString);
             return -1;
         }
 

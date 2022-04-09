@@ -25,7 +25,7 @@ public abstract class UploadMpesaStatementCommand : Command
     public UploadMpesaStatementCommand(string description) : base("mpesa-upload", description)
     {
         this.AddOption<string>(new[] { "-f", "--file", },
-                               description: "File path for the statement file (upto 128KiB).",
+                               description: $"File path for the statement file (upto {Constants.MaxMpesaStatementFileSizeString}).",
                                configure: o => o.IsRequired = true);
     }
 }
