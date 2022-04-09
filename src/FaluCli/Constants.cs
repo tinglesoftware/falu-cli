@@ -17,4 +17,7 @@ internal class Constants
         ScopeApi,
     };
     public static readonly string Scopes = string.Join(" ", ScopesList);
+
+    public static readonly ByteSizeLib.ByteSize MaxMpesaStatementFileSize = ByteSizeLib.ByteSize.FromKibiBytes(128);
+    public static readonly string MaxMpesaStatementFileSizeString = MaxMpesaStatementFileSize.ToBinaryString();
 }

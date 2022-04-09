@@ -1,5 +1,6 @@
 ﻿using Falu.Commands.Events;
 using Falu.Commands.Login;
+using Falu.Commands.Money;
 using Falu.Commands.Templates;
 using System.CommandLine.Builder;
 using System.CommandLine.Hosting;
@@ -26,6 +27,22 @@ var rootCommand = new RootCommand
 
     new Command("payments", "Manage payments.")
     {
+        new UploadMpesaPaymentsStatementCommand(),
+    },
+
+    new Command("payment-refunds", "Manage payment refunds.")
+    {
+        new UploadMpesaPaymentRefundsStatementCommand(),
+    },
+
+    new Command("transfers", "Manage transfers.")
+    {
+        new UploadMpesaTransfersStatementCommand(),
+    },
+
+    new Command("transfer-reversals", "Manage transfer reversals.")
+    {
+        new UploadMpesaTransferReversalsStatementCommand(),
     },
 
     new Command("events", "Work with events on Falu.")
@@ -85,6 +102,8 @@ var builder = new CommandLineBuilder(rootCommand)
         host.UseCommandHandler<RetryCommand, RetryCommandHandler>();
         host.UseCommandHandler<PullTemplatesCommand, TemplatesCommandHandler>();
         host.UseCommandHandler<PushTemplatesCommand, TemplatesCommandHandler>();
+        host.UseCommandHandler<UploadMpesaPaymentsStatementCommand, UploadMpesaStatementCommandHandler>();
+        host.UseCommandHandler<UploadMpesaTransfersStatementCommand, UploadMpesaStatementCommandHandler>();
     })
     .UseFaluDefaults()
     .UseUpdateChecker() /* update checker middleware must be added last because it only prints what the checker has */;
