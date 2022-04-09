@@ -1,4 +1,5 @@
 ﻿using Falu.Commands.Events;
+using Falu.Commands.Login;
 using Falu.Commands.Templates;
 using System.CommandLine.Builder;
 using System.CommandLine.Hosting;
@@ -7,6 +8,8 @@ using System.CommandLine.Parsing;
 // Create a root command with some options
 var rootCommand = new RootCommand
 {
+    new LoginCommand(),
+
     new Command("evaluations", "Manage evaluations.")
     {
     },
@@ -53,7 +56,8 @@ var builder = new CommandLineBuilder(rootCommand)
 
                 // See https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-requests?view=aspnetcore-5.0#logging
                 ["Logging:LogLevel:System.Net.Http.HttpClient"] = "None", // removes all we do not need
-                ["Logging:LogLevel:System.Net.Http.HttpClient.FaluCliClient.ClientHandler"] = verbose ? "Trace" : "Warning", // add the one we need
+                ["Logging:LogLevel:System.Net.Http.HttpClient.Oidc.ClientHandler"] = verbose ? "Trace" : "Warning", // add what we need
+                ["Logging:LogLevel:System.Net.Http.HttpClient.FaluCliClient.ClientHandler"] = verbose ? "Trace" : "Warning", // add what we need
 
                 ["Logging:Console:FormatterName"] = "Falu",
                 ["Logging:Console:FormatterOptions:SingleLine"] = verbose ? "False" : "True",
@@ -73,8 +77,11 @@ var builder = new CommandLineBuilder(rootCommand)
             var configuration = context.Configuration;
             services.AddFaluClientForCli();
             services.AddUpdateChecker();
+            services.AddConfigValuesProvider();
+            services.AddOpenIdServices();
         });
 
+        host.UseCommandHandler<LoginCommand, LoginCommandHandler>();
         host.UseCommandHandler<RetryCommand, RetryCommandHandler>();
         host.UseCommandHandler<PullTemplatesCommand, TemplatesCommandHandler>();
         host.UseCommandHandler<PushTemplatesCommand, TemplatesCommandHandler>();

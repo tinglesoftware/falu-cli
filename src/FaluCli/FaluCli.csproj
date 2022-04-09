@@ -9,11 +9,13 @@
 
   <ItemGroup>
     <PackageReference Include="Falu" Version="1.0.0" />
+    <PackageReference Include="IdentityModel.OidcClient" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     <PackageReference Include="Octokit" Version="0.50.0" />
     <PackageReference Include="SemanticVersioning" Version="2.0.2" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.21308.1" />
     <PackageReference Include="System.CommandLine.Hosting" Version="0.3.0-alpha.21216.1" />
+    <PackageReference Include="Tomlyn" Version="0.14.1" />
   </ItemGroup>
 
 </Project>

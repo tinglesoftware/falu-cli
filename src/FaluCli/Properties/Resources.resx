@@ -122,6 +122,10 @@
 Consult your Falu dashboard to confirm the permissions of the API key or ask your administrator to grant you permissions.</value>
     <comment>Error message to display for HTTP 403 (Forbidden) responses.</comment>
   </data>
+  <data name="LoginFailedFormat" xml:space="preserve">
+    <value>Login request failed with code: {0}</value>
+    <comment>Error message to display failed login/OIDC responses.</comment>
+  </data>
   <data name="ProblemDetailsErrorCodeFormat" xml:space="preserve">
     <value>Error Code: {0}</value>
   </data>
