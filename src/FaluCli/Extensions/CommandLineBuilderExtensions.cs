@@ -47,11 +47,17 @@ internal static class CommandLineBuilderExtensions
             if (error is not null)
             {
                 stderr.WriteLine(Res.RequestFailedHeader);
-                stderr.WriteLine();
-                stderr.WriteLine(Res.RequestIdFormat, fe.RequestId);
-                if (!string.IsNullOrWhiteSpace(fe.TraceId))
+
+                var id = fe.RequestId;
+                if (!string.IsNullOrEmpty(id))
                 {
-                    stderr.WriteLine(Res.TraceIdentifierFormat, fe.TraceId);
+                    stderr.WriteLine(Res.RequestIdFormat, id);
+                }
+
+                id = fe.TraceId;
+                if (!string.IsNullOrEmpty(id))
+                {
+                    stderr.WriteLine(Res.TraceIdentifierFormat, id);
                 }
 
                 stderr.WriteLine(Res.ProblemDetailsErrorCodeFormat, error.Title);

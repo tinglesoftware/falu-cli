@@ -1,23 +1,26 @@
-﻿using Falu.Core;
+﻿using Falu.Client.Money;
+using Falu.Core;
 using Falu.TransferReversals;
-using System.IO;
 
-namespace Falu.Client.Money;
+namespace Falu.Client.TransferReversals;
 
-internal class ExtendedTransferReversalsServiceClient : TransferReversalsServiceClient
+internal class ExtendedTransferReversalsServiceClient : TransferReversalsServiceClient, ISupportsUploadingMpesaStatement
 {
     public ExtendedTransferReversalsServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
-    public virtual Task<ResourceResponse<List<ExtractedMpesaStatementRecord>>> UploadMpesaAsync(string fileName,
-                                                                                                Stream fileContent,
-                                                                                                RequestOptions? options = null,
-                                                                                                CancellationToken cancellationToken = default)
+    #region ISupportsUploadingMpesaStatement members
+
+    string ISupportsUploadingMpesaStatement.ObjectKind => "transfer_reversals";
+
+    Task<ResourceResponse<TResource>> ISupportsUploadingMpesaStatement.RequestAsync<TResource>(string uri,
+                                                                                               HttpMethod method,
+                                                                                               HttpContent? content,
+                                                                                               RequestOptions? options,
+                                                                                               CancellationToken cancellationToken)
     {
-        var content = new MultipartFormDataContent
-        {
-            { new StreamContent(fileContent), "file", fileName }
-        };
-        var uri = "/v1/money/mpesa/statements/upload/transfer_reversals";
-        return RequestAsync<List<ExtractedMpesaStatementRecord>>(uri, HttpMethod.Post, content, options, cancellationToken);
+        return base.RequestAsync<TResource>(uri, method, content, options, cancellationToken);
     }
+
+    #endregion
+
 }

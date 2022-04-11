@@ -151,7 +151,7 @@ falu config clear authentication</value>
     <value>Request Id: {0}</value>
   </data>
   <data name="TraceIdentifierFormat" xml:space="preserve">
-    <value>Trace Identifier:</value>
+    <value>Trace Identifier: {0}</value>
   </data>
   <data name="Unauthorized401ErrorMessage" xml:space="preserve">
     <value>The API key provided cannot authenticate your request.

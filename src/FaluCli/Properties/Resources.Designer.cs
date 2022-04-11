@@ -146,7 +146,7 @@ namespace Falu.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Trace Identifier:.
+        ///   Looks up a localized string similar to Trace Identifier: {0}.
         /// </summary>
         internal static string TraceIdentifierFormat {
             get {

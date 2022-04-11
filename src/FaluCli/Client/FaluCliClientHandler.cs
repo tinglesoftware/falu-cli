@@ -22,6 +22,7 @@ internal class FaluCliClientHandler : DelegatingHandler
 
         if (live is not null)
         {
+            request.Headers.Remove("X-Live-Mode"); // avoid multiple values or headers
             request.Headers.Add("X-Live-Mode", live.Value.ToString().ToLowerInvariant());
         }
 

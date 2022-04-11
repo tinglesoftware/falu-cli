@@ -1,6 +1,6 @@
 ﻿using Falu.Client;
+using Falu.Client.Money;
 using Falu.Core;
-using System.IO;
 
 namespace Falu.Commands.Money;
 
@@ -21,12 +21,12 @@ internal class UploadMpesaStatementCommandHandler : ICommandHandler
         var filePath = context.ParseResult.ValueForOption<string>("--file")!;
 
         var command = context.ParseResult.CommandResult.Command;
-        Uploader uploader = command switch
+        ISupportsUploadingMpesaStatement uploader = command switch
         {
-            UploadMpesaPaymentsStatementCommand => client.Payments.UploadMpesaAsync,
-            UploadMpesaTransfersStatementCommand => client.Transfers.UploadMpesaAsync,
-            UploadMpesaPaymentRefundsStatementCommand => client.PaymentRefunds.UploadMpesaAsync,
-            UploadMpesaTransferReversalsStatementCommand => client.TransferReversals.UploadMpesaAsync,
+            UploadMpesaPaymentsStatementCommand => client.Payments,
+            UploadMpesaTransfersStatementCommand => client.Transfers,
+            UploadMpesaPaymentRefundsStatementCommand => client.PaymentRefunds,
+            UploadMpesaTransferReversalsStatementCommand => client.TransferReversals,
             _ => throw new InvalidOperationException($"Command of type '{command.GetType().FullName}' is not supported here."),
         };
 
@@ -47,8 +47,9 @@ internal class UploadMpesaStatementCommandHandler : ICommandHandler
         }
 
         var fileName = Path.GetFileName(filePath);
+        logger.LogInformation("Uploading {FileName} ({FileSize})", fileName, size.ToBinaryString());
         using var fileContent = File.OpenRead(filePath);
-        var response = await uploader(fileName, fileContent, cancellationToken: cancellationToken);
+        var response = await uploader.UploadMpesaAsync(fileName, fileContent, cancellationToken: cancellationToken);
         response.EnsureSuccess();
 
         var extracted = response.Resource!;
@@ -61,9 +62,4 @@ internal class UploadMpesaStatementCommandHandler : ICommandHandler
 
         return 0;
     }
-
-    private delegate Task<ResourceResponse<List<ExtractedMpesaStatementRecord>>> Uploader(string fileName,
-                                                                                          Stream fileContent,
-                                                                                          RequestOptions? options = null,
-                                                                                          CancellationToken cancellationToken = default);
 }

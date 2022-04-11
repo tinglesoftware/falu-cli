@@ -1,6 +1,8 @@
 ﻿using Falu.Client.Events;
-using Falu.Client.Money;
+using Falu.Client.PaymentRefunds;
 using Falu.Client.Payments;
+using Falu.Client.TransferReversals;
+using Falu.Client.Transfers;
 using Microsoft.Extensions.Options;
 
 namespace Falu.Client;

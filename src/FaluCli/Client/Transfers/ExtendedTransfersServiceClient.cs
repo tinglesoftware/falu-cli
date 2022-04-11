@@ -1,23 +1,25 @@
-﻿using Falu.Core;
+﻿using Falu.Client.Money;
+using Falu.Core;
 using Falu.Transfers;
-using System.IO;
 
-namespace Falu.Client.Money;
+namespace Falu.Client.Transfers;
 
-internal class ExtendedTransfersServiceClient : TransfersServiceClient
+internal class ExtendedTransfersServiceClient : TransfersServiceClient, ISupportsUploadingMpesaStatement
 {
     public ExtendedTransfersServiceClient(HttpClient backChannel, FaluClientOptions options) : base(backChannel, options) { }
 
-    public virtual Task<ResourceResponse<List<ExtractedMpesaStatementRecord>>> UploadMpesaAsync(string fileName,
-                                                                                                Stream fileContent,
-                                                                                                RequestOptions? options = null,
-                                                                                                CancellationToken cancellationToken = default)
+    #region ISupportsUploadingMpesaStatement members
+
+    string ISupportsUploadingMpesaStatement.ObjectKind => "transfers";
+
+    Task<ResourceResponse<TResource>> ISupportsUploadingMpesaStatement.RequestAsync<TResource>(string uri,
+                                                                                               HttpMethod method,
+                                                                                               HttpContent? content,
+                                                                                               RequestOptions? options,
+                                                                                               CancellationToken cancellationToken)
     {
-        var content = new MultipartFormDataContent
-        {
-            { new StreamContent(fileContent), "file", fileName }
-        };
-        var uri = "/v1/money/mpesa/statements/upload/transfers";
-        return RequestAsync<List<ExtractedMpesaStatementRecord>>(uri, HttpMethod.Post, content, options, cancellationToken);
+        return base.RequestAsync<TResource>(uri, method, content, options, cancellationToken);
     }
+
+    #endregion
 }
