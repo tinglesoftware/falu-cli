@@ -24,4 +24,8 @@ internal class Constants
     public static readonly string MaxMpesaStatementFileSizeString = MaxMpesaStatementFileSize.ToBinaryString();
 
     public static readonly Regex ObjectIdFormat = new(@"^[a-z]{2,7}_[a-zA-Z0-9]{20,30}$");
+    public static readonly Regex EventIdFormat = new(@"^evt_[a-zA-Z0-9]{20,30}$");
+    public static readonly Regex WorkspaceIdFormat = new(@"^wksp_[a-zA-Z0-9]{20,30}$");
+    public static readonly Regex ApiKeyFormat = new(@"^{sk|pk}_{live|test}_[0-9a-zA-Z]{20,30}$");
+    public static readonly Regex WebhookEndpointIdFormat = new(@"^we_[a-zA-Z0-9]{20,30}$");
 }
