@@ -1,4 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Falu.Tests</RootNamespace>
+  </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\FaluCli\FaluCli.csproj" />
