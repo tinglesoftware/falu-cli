@@ -1,4 +1,7 @@
-﻿namespace System.CommandLine;
+﻿using System.Text.RegularExpressions;
+using Res = Falu.Properties.Resources;
+
+namespace System.CommandLine;
 
 /// <summary>
 /// Extension methods on <see cref="Command"/>.
@@ -6,6 +9,28 @@
 public static class CommandExtensions
 {
     #region Options
+
+    ///
+    public static Command AddOption(this Command command,
+                                    IEnumerable<string> aliases,
+                                    string? description = null,
+                                    Regex? format = null,
+                                    Action<Option<string>>? configure = null)
+    {
+        ValidateSymbolResult<OptionResult>? validate = null;
+        if (format is not null)
+        {
+            validate = (ar) =>
+            {
+                var value = ar.GetValueOrDefault<string>();
+                if (value is null || !format.IsMatch(value))
+                {
+                    ar.ErrorMessage = string.Format(Res.InvalidInputFormat, format);
+                }
+            };
+        }
+        return command.AddOption(aliases, description, validate, configure);
+    }
 
     ///
     public static Command AddOption<T>(this Command command,
@@ -67,6 +92,28 @@ public static class CommandExtensions
     }
 
     ///
+    public static Command AddGlobalOption(this Command command,
+                                          IEnumerable<string> aliases,
+                                          string? description = null,
+                                          Regex? format = null,
+                                          Action<Option<string>>? configure = null)
+    {
+        ValidateSymbolResult<OptionResult>? validate = null;
+        if (format is not null)
+        {
+            validate = (ar) =>
+            {
+                var value = ar.GetValueOrDefault<string>();
+                if (value is null || !format.IsMatch(value))
+                {
+                    ar.ErrorMessage = string.Format(Res.InvalidInputFormat, format);
+                }
+            };
+        }
+        return command.AddGlobalOption(aliases, description, validate, configure);
+    }
+
+    ///
     public static Command AddGlobalOption<T>(this Command command,
                                              IEnumerable<string> aliases,
                                              string? description = null,
@@ -106,6 +153,28 @@ public static class CommandExtensions
     #endregion
 
     #region Arguments
+
+    ///
+    public static Command AddArgument(this Command command,
+                                      string name,
+                                      string? description = null,
+                                      Regex? format = null,
+                                      Action<Argument<string>>? configure = null)
+    {
+        ValidateSymbolResult<ArgumentResult>? validate = null;
+        if (format is not null)
+        {
+            validate = (ar) =>
+            {
+                var value = ar.GetValueOrDefault<string>();
+                if (value is null || !format.IsMatch(value))
+                {
+                    ar.ErrorMessage = string.Format(Res.InvalidInputFormat, format);
+                }
+            };
+        }
+        return command.AddArgument(name, description, validate, configure);
+    }
 
     ///
     public static Command AddArgument<T>(this Command command,

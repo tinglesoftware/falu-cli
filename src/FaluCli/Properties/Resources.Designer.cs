@@ -81,6 +81,15 @@ namespace Falu.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Input has invalid format. The expected pattern is &apos;{0}&apos;.
+        /// </summary>
+        internal static string InvalidInputFormat {
+            get {
+                return ResourceManager.GetString("InvalidInputFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login request failed! {0}.
         /// </summary>
         internal static string LoginFailedFormat {
