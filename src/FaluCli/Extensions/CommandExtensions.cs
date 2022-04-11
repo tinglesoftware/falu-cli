@@ -21,12 +21,12 @@ public static class CommandExtensions
         ValidateSymbolResult<OptionResult>? validate = null;
         if (format is not null)
         {
-            validate = (ar) =>
+            validate = (or) =>
             {
-                var value = ar.GetValueOrDefault<string>();
+                var value = or.GetValueOrDefault<string>();
                 if (value is null || !format.IsMatch(value))
                 {
-                    ar.ErrorMessage = string.Format(Res.InvalidInputFormat, format);
+                    or.ErrorMessage = string.Format(Res.InvalidInputValue, or.Option.Name, format);
                 }
             };
         }
@@ -102,12 +102,12 @@ public static class CommandExtensions
         ValidateSymbolResult<OptionResult>? validate = null;
         if (format is not null)
         {
-            validate = (ar) =>
+            validate = (or) =>
             {
-                var value = ar.GetValueOrDefault<string>();
+                var value = or.GetValueOrDefault<string>();
                 if (value is null || !format.IsMatch(value))
                 {
-                    ar.ErrorMessage = string.Format(Res.InvalidInputFormat, format);
+                    or.ErrorMessage = string.Format(Res.InvalidInputValue, or.Option.Name, format);
                 }
             };
         }
@@ -170,7 +170,7 @@ public static class CommandExtensions
                 var value = ar.GetValueOrDefault<string>();
                 if (value is null || !format.IsMatch(value))
                 {
-                    ar.ErrorMessage = string.Format(Res.InvalidInputFormat, format);
+                    ar.ErrorMessage = string.Format(Res.InvalidInputValue, ar.Argument.Name, format);
                 }
             };
         }

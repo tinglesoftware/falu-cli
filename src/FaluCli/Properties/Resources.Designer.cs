@@ -81,11 +81,11 @@ namespace Falu.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Input has invalid format. The expected pattern is &apos;{0}&apos;.
+        ///   Looks up a localized string similar to Value for &apos;{0}&apos; has invalid format. The expected pattern is &apos;{1}&apos;.
         /// </summary>
-        internal static string InvalidInputFormat {
+        internal static string InvalidInputValue {
             get {
-                return ResourceManager.GetString("InvalidInputFormat", resourceCulture);
+                return ResourceManager.GetString("InvalidInputValue", resourceCulture);
             }
         }
         
