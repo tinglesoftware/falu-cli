@@ -82,7 +82,7 @@ jobs:
         src/FaluCli/FaluCli.csproj
 
     - name: Publish Artifact (drop)
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         path: ${{ github.workspace }}/drop/**
         name: drop
@@ -107,7 +107,7 @@ jobs:
         directory: ${{ github.workspace }}/drop/${{ matrix.config.rid }}
 
     - name: Publish Artifact (releases)
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         path: ${{ github.workspace }}/releases/**
         name: releases
