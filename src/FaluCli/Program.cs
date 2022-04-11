@@ -4,7 +4,6 @@ using Falu.Commands.Money;
 using Falu.Commands.Templates;
 using System.CommandLine.Builder;
 using System.CommandLine.Hosting;
-using System.CommandLine.Parsing;
 
 // Create a root command with some options
 var rootCommand = new RootCommand

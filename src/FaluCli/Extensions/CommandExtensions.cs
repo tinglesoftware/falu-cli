@@ -1,6 +1,4 @@
-﻿using System.CommandLine.Parsing;
-
-namespace System.CommandLine;
+﻿namespace System.CommandLine;
 
 /// <summary>
 /// Extension methods on <see cref="Command"/>.
@@ -13,7 +11,7 @@ public static class CommandExtensions
     public static Command AddOption<T>(this Command command,
                                        IEnumerable<string> aliases,
                                        string? description = null,
-                                       ValidateSymbol<OptionResult>? validate = null,
+                                       ValidateSymbolResult<OptionResult>? validate = null,
                                        Action<Option<T>>? configure = null)
     {
         // Create the option and add it to the command
@@ -31,7 +29,7 @@ public static class CommandExtensions
                                        IEnumerable<string> aliases,
                                        string? description,
                                        T defaultValue,
-                                       ValidateSymbol<OptionResult>? validate = null,
+                                       ValidateSymbolResult<OptionResult>? validate = null,
                                        Action<Option<T>>? configure = null)
     {
         // Create the option and add it to the command
@@ -52,7 +50,7 @@ public static class CommandExtensions
                                              IEnumerable<string> aliases,
                                              string? description,
                                              T defaultValue,
-                                             ValidateSymbol<OptionResult>? validate = null,
+                                             ValidateSymbolResult<OptionResult>? validate = null,
                                              Action<Option<T>>? configure = null)
     {
         // Create the option and add it to the command
@@ -72,7 +70,7 @@ public static class CommandExtensions
     public static Command AddGlobalOption<T>(this Command command,
                                              IEnumerable<string> aliases,
                                              string? description = null,
-                                             ValidateSymbol<OptionResult>? validate = null,
+                                             ValidateSymbolResult<OptionResult>? validate = null,
                                              Action<Option<T>>? configure = null)
     {
         // Create the option and add it to the command
@@ -87,7 +85,7 @@ public static class CommandExtensions
 
     private static Option<T> CreateOption<T>(IEnumerable<string> aliases,
                                              string? description = null,
-                                             ValidateSymbol<OptionResult>? validate = null,
+                                             ValidateSymbolResult<OptionResult>? validate = null,
                                              Action<Option<T>>? configure = null)
     {
         // Create the option
@@ -113,7 +111,7 @@ public static class CommandExtensions
     public static Command AddArgument<T>(this Command command,
                                          string name,
                                          string? description = null,
-                                         ValidateSymbol<ArgumentResult>? validate = null,
+                                         ValidateSymbolResult<ArgumentResult>? validate = null,
                                          Action<Argument<T>>? configure = null)
     {
         // Create the argument and add it to the command
@@ -131,7 +129,7 @@ public static class CommandExtensions
                                          string name,
                                          string? description,
                                          T defaultValue,
-                                         ValidateSymbol<ArgumentResult>? validate = null,
+                                         ValidateSymbolResult<ArgumentResult>? validate = null,
                                          Action<Argument<T>>? configure = null)
     {
         // Create the argument and add it to the command
@@ -149,7 +147,7 @@ public static class CommandExtensions
 
     private static Argument<T> CreateArgument<T>(string name,
                                                  string? description = null,
-                                                 ValidateSymbol<ArgumentResult>? validate = null,
+                                                 ValidateSymbolResult<ArgumentResult>? validate = null,
                                                  Action<Argument<T>>? configure = null)
     {
         // Create the argument

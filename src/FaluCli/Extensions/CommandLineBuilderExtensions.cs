@@ -20,7 +20,6 @@ internal static class CommandLineBuilderExtensions
                       .UseHelp()
                       .UseEnvironmentVariableDirective()
                       .UseParseDirective()
-                      .UseDebugDirective()
                       .UseSuggestDirective()
                       .RegisterWithDotnetSuggest()
                       .UseTypoCorrections()
@@ -95,7 +94,7 @@ internal static class CommandLineBuilderExtensions
     {
         ArgumentNullException.ThrowIfNull(builder, nameof(builder));
 
-        return builder.UseMiddleware(async (invocation, next) =>
+        return builder.AddMiddleware(async (invocation, next) =>
         {
             await next(invocation);
 
