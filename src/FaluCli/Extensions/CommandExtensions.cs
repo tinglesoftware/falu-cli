@@ -1,6 +1,4 @@
-﻿using System.CommandLine.Parsing;
-
-namespace System.CommandLine;
+﻿namespace System.CommandLine;
 
 /// <summary>
 /// Extension methods on <see cref="Command"/>.

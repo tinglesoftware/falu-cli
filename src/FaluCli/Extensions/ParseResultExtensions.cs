@@ -1,6 +1,4 @@
-﻿using System.CommandLine.Parsing;
-
-namespace System.CommandLine;
+﻿namespace System.CommandLine.Parsing;
 
 /// <summary>Extensions for <see cref="ParseResult"/>.</summary>
 internal static class ParseResultExtensions
