@@ -1,4 +1,6 @@
-﻿namespace Falu;
+﻿using System.Text.RegularExpressions;
+
+namespace Falu;
 
 internal class Constants
 {
@@ -20,4 +22,6 @@ internal class Constants
 
     public static readonly ByteSizeLib.ByteSize MaxMpesaStatementFileSize = ByteSizeLib.ByteSize.FromKibiBytes(128);
     public static readonly string MaxMpesaStatementFileSizeString = MaxMpesaStatementFileSize.ToBinaryString();
+
+    public static readonly Regex ObjectIdFormat = new(@"^[a-z]{2,7}_[a-zA-Z0-9]{20,30}$");
 }
