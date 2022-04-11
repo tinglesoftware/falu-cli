@@ -1,12 +1,12 @@
 ﻿using Falu.Config;
 using IdentityModel.Client;
 using System.Net.Http.Headers;
+using Res = Falu.Properties.Resources;
 
 namespace Falu.Client;
 
 internal class HttpAuthenticationHandler : DelegatingHandler
 {
-    private const string AuthMissingMessage = "Authentication information is missing. Either pass an api key via --apikey option or perform login via the login command.";
     private readonly IHttpClientFactory httpClientFactory;
     private readonly IDiscoveryCache discoveryCache;
     private readonly InvocationContext context;
@@ -35,16 +35,10 @@ internal class HttpAuthenticationHandler : DelegatingHandler
         {
             var config = await configValuesProvider.GetConfigValuesAsync(cancellationToken);
 
-            // ensure we have login information
-            if (config.Authentication is null)
+            // ensure we have login information and that it contains a valid access token or refresh token
+            if (config.Authentication is null || (!config.Authentication.HasValidAccessToken() && !config.Authentication.HasValidRefreshToken()))
             {
-                throw new FaluException(AuthMissingMessage);
-            }
-
-            // ensure we have a valid access token or refresh token
-            if (!config.Authentication.HasValidAccessToken() && !config.Authentication.HasValidRefreshToken())
-            {
-                throw new FaluException(AuthMissingMessage);
+                throw new FaluException(Res.AuthenticationInformationMissing);
             }
 
             // at this point, we either have a valid access token or an invalid acess token with a valid refresh token
@@ -64,6 +58,11 @@ internal class HttpAuthenticationHandler : DelegatingHandler
                 };
                 var client = httpClientFactory.CreateOpenIdClient();
                 var token_resp = await client.RequestRefreshTokenAsync(rtr, cancellationToken);
+                if (token_resp.IsError)
+                {
+                    throw new FaluException(Res.RefreshingAccessTokenFailed);
+                }
+
                 logger.LogInformation("Access token refreshed.");
                 await configValuesProvider.SaveConfigValuesAsync(token_resp, cancellationToken);
             }

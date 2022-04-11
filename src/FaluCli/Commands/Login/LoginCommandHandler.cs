@@ -36,7 +36,6 @@ internal class LoginCommandHandler : ICommandHandler
 
         // save the authentication information
         await configValuesProvider.SaveConfigValuesAsync(token_resp, cancellationToken);
-        logger.LogInformation("Authentication tokens issued successfully.");
 
         return 0;
     }
@@ -53,13 +52,13 @@ internal class LoginCommandHandler : ICommandHandler
             Scope = Constants.Scopes,
         };
         var response = await client.RequestDeviceAuthorizationAsync(request, cancellationToken);
-        if (response.IsError) throw new LoginException(response.Error);
+        if (response.IsError) throw new LoginException(response);
 
-        var info = string.Join(Environment.NewLine,
-                               $"User code   : {response.UserCode}",
-                               $"Device code : {response.DeviceCode}",
-                               $"Opening your browser at {response.VerificationUri}");
-        logger.LogInformation("Complete authentication in the browser using the following information:{SignInInformation}", info);
+        // This information is logged per line to make independent entries because logging is compressed by default
+        logger.LogInformation("Complete authentication in the browser.");
+        logger.LogInformation("User code   : {UserCode}", response.UserCode);
+        logger.LogInformation("Device code : {DeviceCode}", response.DeviceCode);
+        logger.LogInformation("Opening your browser at {response.VerificationUri}", response.VerificationUri);
 
         // delay for 2 seconds before opening the browser for the user to see the code
         await Task.Delay(TimeSpan.FromSeconds(2), cancellationToken);
@@ -84,15 +83,15 @@ internal class LoginCommandHandler : ICommandHandler
 
             if (response.IsError)
             {
-                if (response.Error == OidcConstants.TokenErrors.AuthorizationPending || response.Error == OidcConstants.TokenErrors.SlowDown)
+                var msg = response.Error switch
                 {
-                    logger.LogInformation("{Error}... waiting.", response.Error);
-                    await Task.Delay(TimeSpan.FromSeconds(auth.Interval), cancellationToken);
-                }
-                else
-                {
-                    throw new LoginException(response.Error, response.Exception);
-                }
+                    OidcConstants.TokenErrors.AuthorizationPending => "Authorization is pending.",
+                    OidcConstants.TokenErrors.SlowDown => "Slowing down check for authorization.",
+                    _ => throw new LoginException(response),
+                };
+
+                logger.LogInformation("{Message}. Delaying for {Duration} seconds", msg, auth.Interval);
+                await Task.Delay(TimeSpan.FromSeconds(auth.Interval), cancellationToken);
             }
             else
             {

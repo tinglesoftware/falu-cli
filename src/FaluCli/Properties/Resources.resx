@@ -117,20 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AuthenticationInformationMissing" xml:space="preserve">
+    <value>Authentication information is missing.
+Either pass an API key via --apikey option or perform login via 'falu login' command.</value>
+  </data>
   <data name="Forbidden403Message" xml:space="preserve">
-    <value>The API Key provided or logged in user does not have permissions to perform this operation.
+    <value>Either you or the API Key provided does not have permissions to perform this operation.
 Consult your Falu dashboard to confirm the permissions of the API key or ask your administrator to grant you permissions.</value>
     <comment>Error message to display for HTTP 403 (Forbidden) responses.</comment>
   </data>
   <data name="LoginFailedFormat" xml:space="preserve">
-    <value>Login request failed with code: {0}</value>
+    <value>Login request failed! {0}</value>
     <comment>Error message to display failed login/OIDC responses.</comment>
+  </data>
+  <data name="LoginFailedWithCodeFormat" xml:space="preserve">
+    <value>Login request failed with code: {0}</value>
   </data>
   <data name="ProblemDetailsErrorCodeFormat" xml:space="preserve">
     <value>Error Code: {0}</value>
   </data>
   <data name="ProblemDetailsErrorDetailFormat" xml:space="preserve">
     <value>Error Detail: {0}</value>
+  </data>
+  <data name="RefreshingAccessTokenFailed" xml:space="preserve">
+    <value>Refreshing access token failed. Most likely the refresh token is no longer valid.
+You can clear authentication information using the command:
+falu config clear authentication</value>
   </data>
   <data name="RequestFailedHeader" xml:space="preserve">
     <value>Request to Falu servers failed.</value>
@@ -144,7 +156,8 @@ Consult your Falu dashboard to confirm the permissions of the API key or ask you
   <data name="Unauthorized401ErrorMessage" xml:space="preserve">
     <value>The API key provided cannot authenticate your request.
 Confirm you have provided the right value and that it matches any other related values.
-For example, do not use a key that belongs to another workspace or mix live and test mode keys.</value>
+For example, do not use a key that belongs to another workspace or mix live and test mode keys.
+If you are not using an API key ensure you have logged correctly.</value>
     <comment>Error message to display for HTTP 401 (Unauthorized) responses.</comment>
   </data>
   <data name="UnhandledExceptionFormat" xml:space="preserve">

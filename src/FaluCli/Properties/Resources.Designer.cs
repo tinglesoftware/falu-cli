@@ -61,7 +61,17 @@ namespace Falu.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The API Key provided or logged in user does not have permissions to perform this operation.
+        ///   Looks up a localized string similar to Authentication information is missing.
+        ///Either pass an API key via --apikey option or perform login via &apos;falu login&apos; command..
+        /// </summary>
+        internal static string AuthenticationInformationMissing {
+            get {
+                return ResourceManager.GetString("AuthenticationInformationMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Either you or the API Key provided does not have permissions to perform this operation.
         ///Consult your Falu dashboard to confirm the permissions of the API key or ask your administrator to grant you permissions..
         /// </summary>
         internal static string Forbidden403Message {
@@ -71,11 +81,20 @@ namespace Falu.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Login request failed with code: {0}.
+        ///   Looks up a localized string similar to Login request failed! {0}.
         /// </summary>
         internal static string LoginFailedFormat {
             get {
                 return ResourceManager.GetString("LoginFailedFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login request failed with code: {0}.
+        /// </summary>
+        internal static string LoginFailedWithCodeFormat {
+            get {
+                return ResourceManager.GetString("LoginFailedWithCodeFormat", resourceCulture);
             }
         }
         
@@ -94,6 +113,17 @@ namespace Falu.Properties {
         internal static string ProblemDetailsErrorDetailFormat {
             get {
                 return ResourceManager.GetString("ProblemDetailsErrorDetailFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refreshing access token failed. Most likely the refresh token is no longer valid.
+        ///You can clear authentication information using the command:
+        ///falu config clear authentication.
+        /// </summary>
+        internal static string RefreshingAccessTokenFailed {
+            get {
+                return ResourceManager.GetString("RefreshingAccessTokenFailed", resourceCulture);
             }
         }
         
@@ -127,7 +157,8 @@ namespace Falu.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The API key provided cannot authenticate your request.
         ///Confirm you have provided the right value and that it matches any other related values.
-        ///For example, do not use a key that belongs to another workspace or mix live and test mode keys..
+        ///For example, do not use a key that belongs to another workspace or mix live and test mode keys.
+        ///If you are not using an API key ensure you have logged correctly..
         /// </summary>
         internal static string Unauthorized401ErrorMessage {
             get {

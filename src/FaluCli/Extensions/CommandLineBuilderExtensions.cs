@@ -75,7 +75,7 @@ internal static class CommandLineBuilderExtensions
         }
         else if (exception is LoginException le)
         {
-            stderr.WriteLine(Res.LoginFailedFormat, le.Message);
+            stderr.WriteLine(le.InnerException is null ? Res.LoginFailedWithCodeFormat : Res.LoginFailedFormat, le.Message);
         }
         else
         {
