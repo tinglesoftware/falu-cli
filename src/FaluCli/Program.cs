@@ -12,14 +12,6 @@ var rootCommand = new RootCommand
     new LoginCommand(),
     new LogoutCommand(),
 
-    new Command("evaluations", "Manage evaluations.")
-    {
-    },
-
-    new Command("messages", "Manage messages.")
-    {
-    },
-
     new Command("templates", "Manage message templates.")
     {
         new PullTemplatesCommand(),
@@ -49,10 +41,6 @@ var rootCommand = new RootCommand
     new Command("events", "Work with events on Falu.")
     {
         new RetryCommand(),
-    },
-
-    new Command("webhooks", "Manage webhooks.")
-    {
     },
 };
 
