@@ -20,10 +20,10 @@ public class ConstantsTests
     }
 
     [Theory]
-    [InlineData("sk_live_602cd2747409e867a240d000")]
-    [InlineData("sk_test_60ffe3f79c1deb8060f91312")]
-    [InlineData("pk_test_27e868O6xW4NYrQb3WvxDb8iW6D")]
-    [InlineData("pk_live_27e868O6xW4NYrQb3WvxDb8iW6D")]
+    [InlineData("sk_live_1234567890abcdefgABCDEFG")]
+    [InlineData("sk_test_1234567890abcdefgABCDEFG")]
+    [InlineData("pk_test_1234567890abcdefghABCDEFGHI")]
+    [InlineData("pk_live_1234567890abcdefghABCDEFGHI")]
     public void ApiKeyFormat_IsCorrect(string input)
     {
         Assert.Matches(Constants.ApiKeyFormat, input);
