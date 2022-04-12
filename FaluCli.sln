@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{03C404AC
 		tests\Directory.Build.props = tests\Directory.Build.props
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FaluCli.Tests", "tests\FaluCli.Tests\FaluCli.Tests.csproj", "{B975D593-4EBF-41C8-BF36-B124B9D1A86B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,12 +27,17 @@ Global
 		{FE48265D-93DF-4B00-9EFD-A8DB2815CA2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE48265D-93DF-4B00-9EFD-A8DB2815CA2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE48265D-93DF-4B00-9EFD-A8DB2815CA2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B975D593-4EBF-41C8-BF36-B124B9D1A86B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B975D593-4EBF-41C8-BF36-B124B9D1A86B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B975D593-4EBF-41C8-BF36-B124B9D1A86B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B975D593-4EBF-41C8-BF36-B124B9D1A86B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FE48265D-93DF-4B00-9EFD-A8DB2815CA2B} = {08B40617-9B88-4F7E-A294-1365BE71D353}
+		{B975D593-4EBF-41C8-BF36-B124B9D1A86B} = {03C404AC-4BD7-48D3-8973-07AAC9F1D84B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {74F859A4-C759-4A66-B464-23D4F3FC20CA}

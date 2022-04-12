@@ -126,6 +126,9 @@ Either pass an API key via --apikey option or perform login via 'falu login' com
 Consult your Falu dashboard to confirm the permissions of the API key or ask your administrator to grant you permissions.</value>
     <comment>Error message to display for HTTP 403 (Forbidden) responses.</comment>
   </data>
+  <data name="InvalidInputValue" xml:space="preserve">
+    <value>Value for '{0}' has invalid format. The expected pattern is '{1}'</value>
+  </data>
   <data name="LoginFailedFormat" xml:space="preserve">
     <value>Login request failed! {0}</value>
     <comment>Error message to display failed login/OIDC responses.</comment>

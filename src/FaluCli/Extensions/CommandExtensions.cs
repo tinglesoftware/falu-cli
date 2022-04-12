@@ -1,4 +1,8 @@
-﻿namespace System.CommandLine;
+﻿using Falu;
+using System.Text.RegularExpressions;
+using Res = Falu.Properties.Resources;
+
+namespace System.CommandLine;
 
 /// <summary>
 /// Extension methods on <see cref="Command"/>.
@@ -6,6 +10,28 @@
 public static class CommandExtensions
 {
     #region Options
+
+    ///
+    public static Command AddOption(this Command command,
+                                    IEnumerable<string> aliases,
+                                    string? description = null,
+                                    Regex? format = null,
+                                    Action<Option<string>>? configure = null)
+    {
+        ValidateSymbolResult<OptionResult>? validate = null;
+        if (format is not null)
+        {
+            validate = (or) =>
+            {
+                var value = or.GetValueOrDefault<string>();
+                if (value is null || !format.IsMatch(value))
+                {
+                    or.ErrorMessage = string.Format(Res.InvalidInputValue, or.Option.Name, format);
+                }
+            };
+        }
+        return command.AddOption(aliases, description, validate, configure);
+    }
 
     ///
     public static Command AddOption<T>(this Command command,
@@ -67,6 +93,28 @@ public static class CommandExtensions
     }
 
     ///
+    public static Command AddGlobalOption(this Command command,
+                                          IEnumerable<string> aliases,
+                                          string? description = null,
+                                          Regex? format = null,
+                                          Action<Option<string>>? configure = null)
+    {
+        ValidateSymbolResult<OptionResult>? validate = null;
+        if (format is not null)
+        {
+            validate = (or) =>
+            {
+                var value = or.GetValueOrDefault<string>();
+                if (value is null || !format.IsMatch(value))
+                {
+                    or.ErrorMessage = string.Format(Res.InvalidInputValue, or.Option.Name, format);
+                }
+            };
+        }
+        return command.AddGlobalOption(aliases, description, validate, configure);
+    }
+
+    ///
     public static Command AddGlobalOption<T>(this Command command,
                                              IEnumerable<string> aliases,
                                              string? description = null,
@@ -106,6 +154,28 @@ public static class CommandExtensions
     #endregion
 
     #region Arguments
+
+    ///
+    public static Command AddArgument(this Command command,
+                                      string name,
+                                      string? description = null,
+                                      Regex? format = null,
+                                      Action<Argument<string>>? configure = null)
+    {
+        ValidateSymbolResult<ArgumentResult>? validate = null;
+        if (format is not null)
+        {
+            validate = (ar) =>
+            {
+                var value = ar.GetValueOrDefault<string>();
+                if (value is null || !format.IsMatch(value))
+                {
+                    ar.ErrorMessage = string.Format(Res.InvalidInputValue, ar.Argument.Name, format);
+                }
+            };
+        }
+        return command.AddArgument(name, description, validate, configure);
+    }
 
     ///
     public static Command AddArgument<T>(this Command command,
@@ -169,16 +239,16 @@ public static class CommandExtensions
 
     public static Command AddCommonGlobalOptions(this Command command)
     {
-        // TODO: validate workspaceId using regex -> "^wksp_[0-9a-f]{24}$"
-        command.AddGlobalOption<string>(aliases: new[] { "--workspace", },
-                                        description: "The identifier of the workspace being accessed. Required when login is by user account. Example: wksp_610010be9228355f14ce6e08");
+        command.AddGlobalOption(aliases: new[] { "--workspace", },
+                                description: "The identifier of the workspace being accessed. Required when login is by user account. Example: wksp_610010be9228355f14ce6e08",
+                                format: Constants.WorkspaceIdFormat);
 
         command.AddGlobalOption<bool>(aliases: new[] { "--live", },
                                       description: "Whether the entity resides in live mode or not. Required when login is by user account.");
 
-        // TODO: validate api key using regex -> "^{sk|pk}_{live|test}_[0-9a-zA-Z]+$"
-        command.AddGlobalOption<string>(aliases: new[] { "-k", "--apikey", },
-                                        description: "The API key to use for the command. Required it not logged in or when accessing another workspace. Looks like: sk_test_LdVyn0upN...");
+        command.AddGlobalOption(aliases: new[] { "-k", "--apikey", },
+                                description: "The API key to use for the command. Required it not logged in or when accessing another workspace. Looks like: sk_test_LdVyn0upN...",
+                                format: Constants.ApiKeyFormat);
 
         command.AddGlobalOption(new[] { "-v", "--verbose" }, "Whether to output verbosely.", false);
 

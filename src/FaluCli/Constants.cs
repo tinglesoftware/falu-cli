@@ -1,4 +1,6 @@
-﻿namespace Falu;
+﻿using System.Text.RegularExpressions;
+
+namespace Falu;
 
 internal class Constants
 {
@@ -20,4 +22,9 @@ internal class Constants
 
     public static readonly ByteSizeLib.ByteSize MaxMpesaStatementFileSize = ByteSizeLib.ByteSize.FromKibiBytes(128);
     public static readonly string MaxMpesaStatementFileSizeString = MaxMpesaStatementFileSize.ToBinaryString();
+
+    public static readonly Regex WorkspaceIdFormat = new(@"^wksp_[a-zA-Z0-9]{20,30}$");
+    public static readonly Regex ApiKeyFormat = new(@"^^[s|p]k_(?:live|test)_[0-9a-zA-Z]{20,30}$");
+    public static readonly Regex EventIdFormat = new(@"^evt_[a-zA-Z0-9]{20,30}$");
+    public static readonly Regex WebhookEndpointIdFormat = new(@"^we_[a-zA-Z0-9]{20,30}$");
 }
