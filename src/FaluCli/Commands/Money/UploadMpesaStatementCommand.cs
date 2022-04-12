@@ -1,31 +1,27 @@
 ﻿namespace Falu.Commands.Money;
 
-public class UploadMpesaPaymentsStatementCommand : UploadMpesaStatementCommand
+public class UploadMpesaStatementCommand : Command
 {
-    public UploadMpesaPaymentsStatementCommand() : base("Upload an MPESA statement to Falu for payments.") { }
-}
-
-public class UploadMpesaPaymentRefundsStatementCommand : UploadMpesaStatementCommand
-{
-    public UploadMpesaPaymentRefundsStatementCommand() : base("Upload an MPESA statement to Falu for payment refunds.") { }
-}
-
-public class UploadMpesaTransfersStatementCommand : UploadMpesaStatementCommand
-{
-    public UploadMpesaTransfersStatementCommand() : base("Upload an MPESA statement to Falu for transfers.") { }
-}
-
-public class UploadMpesaTransferReversalsStatementCommand : UploadMpesaStatementCommand
-{
-    public UploadMpesaTransferReversalsStatementCommand() : base("Upload an MPESA statement to Falu for transfer reversals.") { }
-}
-
-public abstract class UploadMpesaStatementCommand : Command
-{
-    public UploadMpesaStatementCommand(string description) : base("mpesa-upload", description)
+    private static readonly ICollection<FaluObjectKind> AllowedKinds = new HashSet<FaluObjectKind>
     {
+        FaluObjectKind.Payments,
+        FaluObjectKind.PaymentRefunds,
+        FaluObjectKind.Transfers,
+        FaluObjectKind.TransferReversals,
+    };
+
+    public UploadMpesaStatementCommand(FaluObjectKind kind)
+        : base("mpesa-upload", $"Upload an MPESA statement to Falu for {kind.GetReadableName()}.")
+    {
+        if (!AllowedKinds.Contains(Kind = kind))
+        {
+            throw new ArgumentOutOfRangeException(nameof(kind), $"'{nameof(FaluObjectKind)}'.'{kind}' is not allowed.");
+        }
+
         this.AddOption<string>(new[] { "-f", "--file", },
                                description: $"File path for the statement file (up to {Constants.MaxMpesaStatementFileSizeString}).",
                                configure: o => o.IsRequired = true);
     }
+
+    internal FaluObjectKind Kind { get; }
 }

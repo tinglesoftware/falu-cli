@@ -1,4 +1,5 @@
-﻿using Falu.Commands.Events;
+﻿using Falu;
+using Falu.Commands.Events;
 using Falu.Commands.Login;
 using Falu.Commands.Money;
 using Falu.Commands.Templates;
@@ -27,22 +28,22 @@ var rootCommand = new RootCommand
 
     new Command("payments", "Manage payments.")
     {
-        new UploadMpesaPaymentsStatementCommand(),
+        new UploadMpesaStatementCommand(FaluObjectKind.Payments),
     },
 
     new Command("payment-refunds", "Manage payment refunds.")
     {
-        new UploadMpesaPaymentRefundsStatementCommand(),
+        new UploadMpesaStatementCommand(FaluObjectKind.PaymentRefunds),
     },
 
     new Command("transfers", "Manage transfers.")
     {
-        new UploadMpesaTransfersStatementCommand(),
+        new UploadMpesaStatementCommand(FaluObjectKind.Transfers),
     },
 
     new Command("transfer-reversals", "Manage transfer reversals.")
     {
-        new UploadMpesaTransferReversalsStatementCommand(),
+        new UploadMpesaStatementCommand(FaluObjectKind.TransferReversals),
     },
 
     new Command("events", "Work with events on Falu.")
@@ -103,8 +104,7 @@ var builder = new CommandLineBuilder(rootCommand)
         host.UseCommandHandler<RetryCommand, RetryCommandHandler>();
         host.UseCommandHandler<PullTemplatesCommand, TemplatesCommandHandler>();
         host.UseCommandHandler<PushTemplatesCommand, TemplatesCommandHandler>();
-        host.UseCommandHandler<UploadMpesaPaymentsStatementCommand, UploadMpesaStatementCommandHandler>();
-        host.UseCommandHandler<UploadMpesaTransfersStatementCommand, UploadMpesaStatementCommandHandler>();
+        host.UseCommandHandler<UploadMpesaStatementCommand, UploadMpesaStatementCommandHandler>();
     })
     .UseFaluDefaults()
     .UseUpdateChecker() /* update checker middleware must be added last because it only prints what the checker has */;

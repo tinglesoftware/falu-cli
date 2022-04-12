@@ -20,14 +20,14 @@ internal class UploadMpesaStatementCommandHandler : ICommandHandler
         var cancellationToken = context.GetCancellationToken();
         var filePath = context.ParseResult.ValueForOption<string>("--file")!;
 
-        var command = context.ParseResult.CommandResult.Command;
-        ISupportsUploadingMpesaStatement uploader = command switch
+        var kind = ((UploadMpesaStatementCommand)context.ParseResult.CommandResult.Command).Kind;
+        ISupportsUploadingMpesaStatement uploader = kind switch
         {
-            UploadMpesaPaymentsStatementCommand => client.Payments,
-            UploadMpesaTransfersStatementCommand => client.Transfers,
-            UploadMpesaPaymentRefundsStatementCommand => client.PaymentRefunds,
-            UploadMpesaTransferReversalsStatementCommand => client.TransferReversals,
-            _ => throw new InvalidOperationException($"Command of type '{command.GetType().FullName}' is not supported here."),
+            FaluObjectKind.Payments => client.Payments,
+            FaluObjectKind.Transfers => client.Transfers,
+            FaluObjectKind.PaymentRefunds => client.PaymentRefunds,
+            FaluObjectKind.TransferReversals => client.TransferReversals,
+            _ => throw new InvalidOperationException($"'{nameof(FaluObjectKind)}'.'{kind}' is not supported here."),
         };
 
         // ensure the file exists
