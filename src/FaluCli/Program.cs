@@ -12,6 +12,11 @@ var rootCommand = new RootCommand
     new LoginCommand(),
     new LogoutCommand(),
 
+    new Command("events", "Work with events on Falu.")
+    {
+        new RetryCommand(),
+    },
+
     new Command("templates", "Manage message templates.")
     {
         new PullTemplatesCommand(),
@@ -36,11 +41,6 @@ var rootCommand = new RootCommand
     new Command("transfer-reversals", "Manage transfer reversals.")
     {
         new UploadMpesaStatementCommand(FaluObjectKind.TransferReversals),
-    },
-
-    new Command("events", "Work with events on Falu.")
-    {
-        new RetryCommand(),
     },
 };
 
