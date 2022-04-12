@@ -25,9 +25,11 @@ falu [command] -h
 
 The Falu CLI supports a broad range of commands including:
 
-<!-- - [`events resend`](/wiki/commands/events-resend) -->
-- [`templates pull`](/wiki/commands/templates-pull)
-- [`templates push`](/wiki/commands/templates-push)
+- [`login`][wiki-command-login]
+- [`logout`][wiki-command-logout]
+- [`events retry`][wiki-command-events-retry]
+- [`templates pull`][wiki-command-templates-pull]
+- [`templates push`][wiki-command-templates-push]
 
 Check out the [wiki](/wiki) for more on using the CLI.
 
@@ -56,9 +58,11 @@ For any requests, bug or comments, please [open an issue][issues] or [submit a p
 [issues]: https://github.com/tingle/falu-dotnet/issues/new
 [pulls]: https://github.com/tingle/falu-dotnet/pulls
 [falu]: https://falu.io
-[wiki-command-logs-tail]: https://github.com/tingle/falu-dotnet/wiki/commands/logs-tail
-[wiki-command-events-resend]: https://github.com/tingle/falu-dotnet/wiki/commands/events-resend
-[wiki-command-listen]: https://github.com/tingle/falu-dotnet/wiki/commands/listen
+[wiki-command-login]: https://github.com/tingle/falu-dotnet/wiki/commands/login
+[wiki-command-logout]: https://github.com/tingle/falu-dotnet/wiki/commands/logout
+[wiki-command-events-retry]: https://github.com/tingle/falu-dotnet/wiki/commands/events-retry
+[wiki-command-templates-pull]: https://github.com/tingle/falu-dotnet/wiki/commands/templates-pull
+[wiki-command-templates-push]: https://github.com/tingle/falu-dotnet/wiki/commands/templates-push
 
 ### License
 
