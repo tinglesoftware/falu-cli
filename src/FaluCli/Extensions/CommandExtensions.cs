@@ -246,7 +246,7 @@ public static class CommandExtensions
         command.AddGlobalOption<bool>(aliases: new[] { "--live", },
                                       description: "Whether the entity resides in live mode or not. Required when login is by user account.");
 
-        command.AddGlobalOption(aliases: new[] { "-k", "--apikey", },
+        command.AddGlobalOption(aliases: new[] { "--apikey", },
                                 description: "The API key to use for the command. Required it not logged in or when accessing another workspace. Looks like: sk_test_LdVyn0upN...",
                                 format: Constants.ApiKeyFormat);
 
