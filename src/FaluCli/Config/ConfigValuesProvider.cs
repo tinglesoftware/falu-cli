@@ -23,8 +23,8 @@ internal class ConfigValuesProvider : IConfigValuesProvider
         {
             if (File.Exists(FilePath))
             {
-                using var stream = File.OpenRead(FilePath);
-                values = (await JsonSerializer.DeserializeAsync<ConfigValues>(stream, serializerOptions, cancellationToken))!;
+                var json = await File.ReadAllTextAsync(FilePath, cancellationToken);
+                values = JsonSerializer.Deserialize<ConfigValues>(json, serializerOptions)!;
             }
             else
             {
@@ -40,8 +40,8 @@ internal class ConfigValuesProvider : IConfigValuesProvider
         Directory.CreateDirectory(Path.GetDirectoryName(FilePath)!);
 
         values ??= await GetConfigValuesAsync(cancellationToken);
-        using var stream = File.OpenWrite(FilePath);
-        await JsonSerializer.SerializeAsync(stream, values, serializerOptions, cancellationToken);
+        var json = JsonSerializer.Serialize(values, serializerOptions);
+        await File.WriteAllTextAsync(FilePath, json, cancellationToken);
     }
 
     public async Task SaveConfigValuesAsync(TokenResponse response, CancellationToken cancellationToken = default)
