@@ -1,4 +1,5 @@
 ﻿using IdentityModel.Client;
+using System.Text.Json;
 
 namespace Falu.Config;
 
@@ -6,7 +7,8 @@ internal class ConfigValuesProvider : IConfigValuesProvider
 {
     // Path example C:\Users\USERNAME\.config\falu\config.toml
     private static readonly string UserProfileFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-    private static readonly string FilePath = Path.Combine(UserProfileFolder, ".config", "falu", "config.toml");
+    private static readonly string FilePath = Path.Combine(UserProfileFolder, ".config", "falu", "config.json");
+    private static readonly JsonSerializerOptions serializerOptions = new(JsonSerializerDefaults.Web);
 
     private ConfigValues? values;
 
@@ -16,8 +18,8 @@ internal class ConfigValuesProvider : IConfigValuesProvider
         {
             if (File.Exists(FilePath))
             {
-                var toml = await File.ReadAllTextAsync(FilePath, cancellationToken);
-                values = Tomlyn.Toml.ToModel<ConfigValues>(toml);
+                using var stream = File.OpenRead(FilePath);
+                values = (await JsonSerializer.DeserializeAsync<ConfigValues>(stream, serializerOptions, cancellationToken))!;
             }
             else
             {
@@ -33,8 +35,8 @@ internal class ConfigValuesProvider : IConfigValuesProvider
         Directory.CreateDirectory(Path.GetDirectoryName(FilePath)!);
 
         values ??= await GetConfigValuesAsync(cancellationToken);
-        var toml = Tomlyn.Toml.FromModel(values);
-        await File.WriteAllTextAsync(FilePath, toml, cancellationToken);
+        using var stream = File.OpenWrite(FilePath);
+        await JsonSerializer.SerializeAsync(stream, values, serializerOptions, cancellationToken);
     }
 
     public async Task SaveConfigValuesAsync(TokenResponse response, CancellationToken cancellationToken = default)
