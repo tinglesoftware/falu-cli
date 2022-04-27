@@ -1,5 +1,6 @@
 ﻿using IdentityModel.Client;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Falu.Config;
 
@@ -8,7 +9,11 @@ internal class ConfigValuesProvider : IConfigValuesProvider
     // Path example C:\Users\USERNAME\.config\falu\config.toml
     private static readonly string UserProfileFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
     private static readonly string FilePath = Path.Combine(UserProfileFolder, ".config", "falu", "config.json");
-    private static readonly JsonSerializerOptions serializerOptions = new(JsonSerializerDefaults.Web);
+    private static readonly JsonSerializerOptions serializerOptions = new(JsonSerializerDefaults.Web)
+    {
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault | JsonIgnoreCondition.WhenWritingNull,
+        WriteIndented = true,
+    };
 
     private ConfigValues? values;
 
@@ -18,8 +23,8 @@ internal class ConfigValuesProvider : IConfigValuesProvider
         {
             if (File.Exists(FilePath))
             {
-                using var stream = File.OpenRead(FilePath);
-                values = (await JsonSerializer.DeserializeAsync<ConfigValues>(stream, serializerOptions, cancellationToken))!;
+                var json = await File.ReadAllTextAsync(FilePath, cancellationToken);
+                values = JsonSerializer.Deserialize<ConfigValues>(json, serializerOptions)!;
             }
             else
             {
@@ -35,8 +40,8 @@ internal class ConfigValuesProvider : IConfigValuesProvider
         Directory.CreateDirectory(Path.GetDirectoryName(FilePath)!);
 
         values ??= await GetConfigValuesAsync(cancellationToken);
-        using var stream = File.OpenWrite(FilePath);
-        await JsonSerializer.SerializeAsync(stream, values, serializerOptions, cancellationToken);
+        var json = JsonSerializer.Serialize(values, serializerOptions);
+        await File.WriteAllTextAsync(FilePath, json, cancellationToken);
     }
 
     public async Task SaveConfigValuesAsync(TokenResponse response, CancellationToken cancellationToken = default)
