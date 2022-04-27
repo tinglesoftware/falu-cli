@@ -1,5 +1,6 @@
 ﻿using IdentityModel.Client;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Falu.Config;
 
@@ -8,7 +9,11 @@ internal class ConfigValuesProvider : IConfigValuesProvider
     // Path example C:\Users\USERNAME\.config\falu\config.toml
     private static readonly string UserProfileFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
     private static readonly string FilePath = Path.Combine(UserProfileFolder, ".config", "falu", "config.json");
-    private static readonly JsonSerializerOptions serializerOptions = new(JsonSerializerDefaults.Web);
+    private static readonly JsonSerializerOptions serializerOptions = new(JsonSerializerDefaults.Web)
+    {
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault | JsonIgnoreCondition.WhenWritingNull,
+        WriteIndented = true,
+    };
 
     private ConfigValues? values;
 
