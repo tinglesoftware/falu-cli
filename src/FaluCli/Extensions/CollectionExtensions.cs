@@ -6,6 +6,12 @@ internal static class CollectionExtensions
     {
         if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
 
+        if (dictionary.Count == 0)
+        {
+            width = 0;
+            return string.Empty;
+        }
+
         var totalWidth = width = dictionary.Max(kvp => kvp.Key.Length) + 1;
         return string.Join("\r\n", dictionary.Select(kvp => $"{kvp.Key.PadRight(totalWidth)}{separator}{kvp.Value}"));
     }
