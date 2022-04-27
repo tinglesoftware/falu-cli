@@ -44,4 +44,22 @@ internal class ConfigValuesProvider : IConfigValuesProvider
 
         await SaveConfigValuesAsync(cancellationToken);
     }
+
+    public async Task ClearAuthenticationAsync(CancellationToken cancellationToken = default)
+    {
+        values ??= await GetConfigValuesAsync(cancellationToken);
+        if (values.Authentication is not null)
+        {
+            values.Authentication = null;
+            await SaveConfigValuesAsync(cancellationToken);
+        }
+    }
+
+    public void ClearAll()
+    {
+        if (File.Exists(FilePath))
+        {
+            File.Delete(FilePath);
+        }
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using Falu;
+using Falu.Commands.Config;
 using Falu.Commands.Events;
 using Falu.Commands.Login;
 using Falu.Commands.Money;
@@ -41,6 +42,15 @@ var rootCommand = new RootCommand
     new Command("transfer-reversals", "Manage transfer reversals.")
     {
         new UploadMpesaStatementCommand(FaluObjectKind.TransferReversals),
+    },
+
+    new Command("config", "Manage configuration for the CLI.")
+    {
+        new Command("clear", "Clear configuration for the CLI.")
+        {
+            new ConfigClearAllCommand(),
+            new ConfigClearAuthenticationCommand(),
+        },
     },
 };
 
@@ -93,6 +103,8 @@ var builder = new CommandLineBuilder(rootCommand)
         host.UseCommandHandler<PullTemplatesCommand, TemplatesCommandHandler>();
         host.UseCommandHandler<PushTemplatesCommand, TemplatesCommandHandler>();
         host.UseCommandHandler<UploadMpesaStatementCommand, UploadMpesaStatementCommandHandler>();
+        host.UseCommandHandler<ConfigClearAllCommand, ConfigCommandHandler>();
+        host.UseCommandHandler<ConfigClearAuthenticationCommand, ConfigCommandHandler>();
     })
     .UseFaluDefaults()
     .UseUpdateChecker() /* update checker middleware must be added last because it only prints what the checker has */;
