@@ -20,7 +20,6 @@
     <PackageReference Include="SemanticVersioning" Version="2.0.2" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta3.22114.1" />
     <PackageReference Include="System.CommandLine.Hosting" Version="0.4.0-alpha.22114.1" />
-    <PackageReference Include="Tomlyn" Version="0.14.1" />
   </ItemGroup>
 
 </Project>
