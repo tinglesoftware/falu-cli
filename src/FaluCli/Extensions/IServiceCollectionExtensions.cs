@@ -9,6 +9,8 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 internal static class IServiceCollectionExtensions
 {
+    // services are registered as transit to allow for easier debugging because no scope is created by the parser
+
     public static IServiceCollection AddFaluClientForCli(this IServiceCollection services)
     {
         // A dummy ApiKey is used so that the options validator can pass
@@ -22,8 +24,8 @@ internal static class IServiceCollectionExtensions
                     client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("falucli", VersioningHelper.ProductVersion));
                 });
 
-        services.AddScoped<FaluCliClientHandler>();
-        services.AddScoped<HttpAuthenticationHandler>();
+        services.AddTransient<FaluCliClientHandler>();
+        services.AddTransient<HttpAuthenticationHandler>();
 
         return services;
     }
@@ -35,14 +37,14 @@ internal static class IServiceCollectionExtensions
 
     public static IServiceCollection AddConfigValuesProvider(this IServiceCollection services)
     {
-        return services.AddScoped<IConfigValuesProvider, ConfigValuesProvider>();
+        return services.AddTransient<IConfigValuesProvider, ConfigValuesProvider>();
     }
 
     public static IServiceCollection AddOpenIdServices(this IServiceCollection services)
     {
         services.AddHttpClient(Constants.OpenIdCategoryOrClientName);
 
-        services.AddScoped<IDiscoveryCache>(p =>
+        services.AddTransient<IDiscoveryCache>(p =>
         {
             var httpClientFactory = p.GetRequiredService<IHttpClientFactory>();
             var client = httpClientFactory.CreateOpenIdClient();
