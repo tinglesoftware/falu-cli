@@ -24,8 +24,8 @@ internal class ConfigCommandHandler : ICommandHandler
                     var values = await configValuesProvider.GetConfigValuesAsync(cancellationToken);
                     var data = new Dictionary<string, object?>
                     {
-                        ["ActiveWorkspaceId"] = values.ActiveWorkspaceId,
-                        ["ActiveLiveMode"] = values.ActiveLiveMode,
+                        ["DefaultWorkspaceId"] = values.DefaultWorkspaceId,
+                        ["DefaultLiveMode"] = values.DefaultLiveMode,
                     };
 
                     var str = data.RemoveDefaultAndEmpty().MakePaddedString("=");

@@ -2,8 +2,8 @@
 
 internal record ConfigValues
 {
-    public string? ActiveWorkspaceId { get; set; }
-    public bool ActiveLiveMode { get; set; }
+    public string? DefaultWorkspaceId { get; set; }
+    public bool DefaultLiveMode { get; set; }
     public AuthenticationTokenConfigData? Authentication { get; set; }
 }
 
