@@ -54,11 +54,10 @@ internal class LoginCommandHandler : ICommandHandler
         var response = await client.RequestDeviceAuthorizationAsync(request, cancellationToken);
         if (response.IsError) throw new LoginException(response);
 
-        // This information is logged per line to make independent entries because logging is compressed by default
-        logger.LogInformation("Complete authentication in the browser.");
-        logger.LogInformation("User code   : {UserCode}", response.UserCode);
-        logger.LogInformation("Device code : {DeviceCode}", response.DeviceCode);
-        logger.LogInformation("Opening your browser at {response.VerificationUri}", response.VerificationUri);
+        // inform the user where to authentication
+        logger.LogInformation("To authenticate, open your web browser at {VerificationUri} and enter the code {UserCode}.",
+                              response.VerificationUri,
+                              response.UserCode);
 
         // delay for 2 seconds before opening the browser for the user to see the code
         await Task.Delay(TimeSpan.FromSeconds(2), cancellationToken);
