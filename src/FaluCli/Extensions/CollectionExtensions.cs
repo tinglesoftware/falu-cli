@@ -2,15 +2,21 @@
 
 internal static class CollectionExtensions
 {
-    public static string MakePaddedString(this IDictionary<string, object> dictionary, out int width, string separator = ": ")
+    public static string MakePaddedString(this IDictionary<string, object> dictionary, out int width, string separator = " : ")
     {
         if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
 
-        var totalWidth = width = dictionary.Max(kvp => kvp.Key.Length) + 1;
+        if (dictionary.Count == 0)
+        {
+            width = 0;
+            return string.Empty;
+        }
+
+        var totalWidth = width = dictionary.Max(kvp => kvp.Key.Length);
         return string.Join("\r\n", dictionary.Select(kvp => $"{kvp.Key.PadRight(totalWidth)}{separator}{kvp.Value}"));
     }
 
-    public static string MakePaddedString(this IDictionary<string, object> dictionary, string separator = ": ")
+    public static string MakePaddedString(this IDictionary<string, object> dictionary, string separator = " : ")
     {
         return dictionary.MakePaddedString(out _, separator);
     }

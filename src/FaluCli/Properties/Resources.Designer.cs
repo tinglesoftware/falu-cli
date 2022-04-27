@@ -128,7 +128,7 @@ namespace Falu.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Refreshing access token failed. Most likely the refresh token is no longer valid.
         ///You can clear authentication information using the command:
-        ///falu config clear authentication.
+        ///falu config clear auth.
         /// </summary>
         internal static string RefreshingAccessTokenFailed {
             get {
