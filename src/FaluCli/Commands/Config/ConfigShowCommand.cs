@@ -7,6 +7,18 @@ public class ConfigShowCommand : Command
     }
 }
 
+public class ConfigSetCommand : Command
+{
+    public ConfigSetCommand() : base("set", "Set a cofiguration value.")
+    {
+        this.AddArgument<string>(name: "key",
+                                 description: "The configuration key.",
+                                 configure: a => a.FromAmong("workspace", "livemode"));
+
+        this.AddArgument<string>(name: "value", description: "The configuration value.");
+    }
+}
+
 public class ConfigClearAllCommand : Command
 {
     public ConfigClearAllCommand() : base("all", "Clear all cofiguration values by deleting the configuration file.")

@@ -47,10 +47,11 @@ var rootCommand = new RootCommand
     new Command("config", "Manage configuration for the CLI.")
     {
         new ConfigShowCommand(),
+        new ConfigSetCommand(),
         new Command("clear", "Clear configuration for the CLI.")
         {
-            new ConfigClearAllCommand(),
             new ConfigClearAuthenticationCommand(),
+            new ConfigClearAllCommand(),
         },
     },
 };
@@ -105,6 +106,7 @@ var builder = new CommandLineBuilder(rootCommand)
         host.UseCommandHandler<PushTemplatesCommand, TemplatesCommandHandler>();
         host.UseCommandHandler<UploadMpesaStatementCommand, UploadMpesaStatementCommandHandler>();
         host.UseCommandHandler<ConfigShowCommand, ConfigCommandHandler>();
+        host.UseCommandHandler<ConfigSetCommand, ConfigCommandHandler>();
         host.UseCommandHandler<ConfigClearAllCommand, ConfigCommandHandler>();
         host.UseCommandHandler<ConfigClearAuthenticationCommand, ConfigCommandHandler>();
     })

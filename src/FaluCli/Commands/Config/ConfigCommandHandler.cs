@@ -40,6 +40,27 @@ internal class ConfigCommandHandler : ICommandHandler
 
                     break;
                 }
+            case ConfigSetCommand:
+                {
+                    var values = await configValuesProvider.GetConfigValuesAsync(cancellationToken);
+
+                    var key = context.ParseResult.ValueForArgument<string>("key")!.ToLower();
+                    var value = context.ParseResult.ValueForArgument<string>("value")!;
+                    switch (key)
+                    {
+                        case "workspace":
+                            values.DefaultWorkspaceId = value;
+                            break;
+                        case "livemode":
+                            values.DefaultLiveMode = bool.Parse(value);
+                            break;
+                        default:
+                            throw new NotSupportedException($"The key '{key}' is no supported yet.");
+                    }
+                    await configValuesProvider.SaveConfigValuesAsync(cancellationToken);
+                    logger.LogInformation("Successfully set configuration '{Key}={Value}'.", key, value);
+                    break;
+                }
             case ConfigClearAuthenticationCommand:
                 {
                     logger.LogInformation("Removing authentication configuration ...");
