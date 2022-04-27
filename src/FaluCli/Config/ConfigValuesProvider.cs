@@ -40,7 +40,12 @@ internal class ConfigValuesProvider : IConfigValuesProvider
     public async Task SaveConfigValuesAsync(TokenResponse response, CancellationToken cancellationToken = default)
     {
         values ??= await GetConfigValuesAsync(cancellationToken);
-        values.Update(response);
+        values.Authentication = new AuthenticationTokenConfigData
+        {
+            AccessToken = response.AccessToken,
+            RefreshToken = response.RefreshToken,
+            AccessTokenExpiry = DateTimeOffset.UtcNow.AddSeconds(response.ExpiresIn).AddSeconds(-5),
+        };
 
         await SaveConfigValuesAsync(cancellationToken);
     }
