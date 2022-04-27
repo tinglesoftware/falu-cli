@@ -23,12 +23,13 @@ internal class LoginCommandHandler : ICommandHandler
     public async Task<int> InvokeAsync(InvocationContext context)
     {
         var cancellationToken = context.GetCancellationToken();
+        var noBrowser = context.ParseResult.ValueForOption<bool>("--no-browser");
 
         // perform confirguration discovery
         var disco = await discoveryCache.GetSafelyAsync(cancellationToken);
 
         // perform device authorization
-        var auth_resp = await RequestAuthorizationAsync(disco, cancellationToken);
+        var auth_resp = await RequestAuthorizationAsync(disco, noBrowser, cancellationToken);
 
         // get the token via polling
         var token_resp = await RequestTokenAsync(disco, auth_resp, cancellationToken);
@@ -40,7 +41,7 @@ internal class LoginCommandHandler : ICommandHandler
         return 0;
     }
 
-    private async Task<DeviceAuthorizationResponse> RequestAuthorizationAsync(DiscoveryDocumentResponse disco, CancellationToken cancellationToken = default)
+    private async Task<DeviceAuthorizationResponse> RequestAuthorizationAsync(DiscoveryDocumentResponse disco, bool noBrowser, CancellationToken cancellationToken = default)
     {
         logger.LogInformation("Performing device authentication. You will be redirected to the browser.");
 
@@ -59,9 +60,15 @@ internal class LoginCommandHandler : ICommandHandler
                               response.VerificationUri,
                               response.UserCode);
 
-        // delay for 2 seconds before opening the browser for the user to see the code
-        await Task.Delay(TimeSpan.FromSeconds(2), cancellationToken);
-        Process.Start(new ProcessStartInfo(response.VerificationUriComplete) { UseShellExecute = true });
+        // open browser unless told not to
+        if (!noBrowser)
+        {
+            logger.LogInformation("Automatically opening the browser ...");
+
+            // delay for 2 seconds before opening the browser for the user to see the code
+            await Task.Delay(TimeSpan.FromSeconds(2), cancellationToken);
+            Process.Start(new ProcessStartInfo(response.VerificationUriComplete) { UseShellExecute = true });
+        }
 
         return response;
     }
