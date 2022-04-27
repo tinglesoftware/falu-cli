@@ -63,14 +63,12 @@ internal class ConfigCommandHandler : ICommandHandler
                 }
             case ConfigClearAuthenticationCommand:
                 {
-                    logger.LogInformation("Removing authentication configuration ...");
                     await configValuesProvider.ClearAuthenticationAsync(cancellationToken);
                     logger.LogInformation("Successfully removed all authentication configuration values.");
                     break;
                 }
             case ConfigClearAllCommand:
                 {
-                    logger.LogInformation("Clearing all configuration values ...");
                     configValuesProvider.ClearAll();
                     logger.LogInformation("Successfully removed all configuration values and the configuration file.");
                     break;
