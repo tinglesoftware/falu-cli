@@ -50,7 +50,7 @@ var rootCommand = new RootCommand
         new ConfigSetCommand(),
         new Command("clear", "Clear configuration for the CLI.")
         {
-            new ConfigClearAuthenticationCommand(),
+            new ConfigClearAuthCommand(),
             new ConfigClearAllCommand(),
         },
     },
@@ -108,7 +108,7 @@ var builder = new CommandLineBuilder(rootCommand)
         host.UseCommandHandler<ConfigShowCommand, ConfigCommandHandler>();
         host.UseCommandHandler<ConfigSetCommand, ConfigCommandHandler>();
         host.UseCommandHandler<ConfigClearAllCommand, ConfigCommandHandler>();
-        host.UseCommandHandler<ConfigClearAuthenticationCommand, ConfigCommandHandler>();
+        host.UseCommandHandler<ConfigClearAuthCommand, ConfigCommandHandler>();
     })
     .UseFaluDefaults()
     .UseUpdateChecker() /* update checker middleware must be added last because it only prints what the checker has */;

@@ -145,7 +145,7 @@ Consult your Falu dashboard to confirm the permissions of the API key or ask you
   <data name="RefreshingAccessTokenFailed" xml:space="preserve">
     <value>Refreshing access token failed. Most likely the refresh token is no longer valid.
 You can clear authentication information using the command:
-falu config clear authentication</value>
+falu config clear auth</value>
   </data>
   <data name="RequestFailedHeader" xml:space="preserve">
     <value>Request to Falu servers failed.</value>

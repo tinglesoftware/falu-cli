@@ -26,9 +26,9 @@ public class ConfigClearAllCommand : Command
     }
 }
 
-public class ConfigClearAuthenticationCommand : Command
+public class ConfigClearAuthCommand : Command
 {
-    public ConfigClearAuthenticationCommand() : base("authentication", "Clear cofiguration values related to authenticatin.")
+    public ConfigClearAuthCommand() : base("auth", "Clear cofiguration values related to authentication.")
     {
     }
 }

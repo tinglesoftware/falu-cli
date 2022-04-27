@@ -61,7 +61,7 @@ internal class ConfigCommandHandler : ICommandHandler
                     logger.LogInformation("Successfully set configuration '{Key}={Value}'.", key, value);
                     break;
                 }
-            case ConfigClearAuthenticationCommand:
+            case ConfigClearAuthCommand:
                 {
                     await configValuesProvider.ClearAuthenticationAsync(cancellationToken);
                     logger.LogInformation("Successfully removed all authentication configuration values.");
