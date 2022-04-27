@@ -19,16 +19,41 @@ internal class ConfigCommandHandler : ICommandHandler
 
         switch (context.ParseResult.CommandResult.Command)
         {
+            case ConfigShowCommand:
+                {
+                    var values = await configValuesProvider.GetConfigValuesAsync(cancellationToken);
+                    var data = new Dictionary<string, object?>
+                    {
+                        ["ActiveWorkspaceId"] = values.ActiveWorkspaceId,
+                        ["ActiveLiveMode"] = values.ActiveLiveMode,
+                    };
+
+                    var str = data.RemoveDefaultAndEmpty().MakePaddedString("=");
+                    if (string.IsNullOrWhiteSpace(str))
+                    {
+                        logger.LogInformation("Configuration values are empty or only contain sensitive information.");
+                    }
+                    else
+                    {
+                        logger.LogInformation("Configuration values:\r\n{Values}", str);
+                    }
+
+                    break;
+                }
             case ConfigClearAuthenticationCommand:
-                logger.LogInformation("Removing authentication configuration ...");
-                await configValuesProvider.ClearAuthenticationAsync(cancellationToken);
-                logger.LogInformation("Successfully removed all authentication configuration values.");
-                break;
+                {
+                    logger.LogInformation("Removing authentication configuration ...");
+                    await configValuesProvider.ClearAuthenticationAsync(cancellationToken);
+                    logger.LogInformation("Successfully removed all authentication configuration values.");
+                    break;
+                }
             case ConfigClearAllCommand:
-                logger.LogInformation("Clearing all configuration values ...");
-                configValuesProvider.ClearAll();
-                logger.LogInformation("Successfully removed all configuration values and the configuration file.");
-                break;
+                {
+                    logger.LogInformation("Clearing all configuration values ...");
+                    configValuesProvider.ClearAll();
+                    logger.LogInformation("Successfully removed all configuration values and the configuration file.");
+                    break;
+                }
         }
 
         return 0;
