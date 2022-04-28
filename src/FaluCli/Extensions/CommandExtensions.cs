@@ -1,5 +1,4 @@
-﻿using Falu;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using Res = Falu.Properties.Resources;
 
 namespace System.CommandLine;
@@ -236,22 +235,4 @@ public static class CommandExtensions
     }
 
     #endregion
-
-    public static Command AddCommonGlobalOptions(this Command command)
-    {
-        command.AddGlobalOption(aliases: new[] { "--apikey", },
-                                description: "The API key to use for the command. Required it not logged in or when accessing another workspace. Looks like: sk_test_LdVyn0upN...",
-                                format: Constants.ApiKeyFormat);
-
-        command.AddGlobalOption(aliases: new[] { "--workspace", },
-                                description: "The identifier of the workspace being accessed. Required when login is by user account. Example: wksp_610010be9228355f14ce6e08",
-                                format: Constants.WorkspaceIdFormat);
-
-        command.AddGlobalOption<bool>(aliases: new[] { "--live", },
-                                      description: "Whether the entity resides in live mode or not. Required when login is by user account.");
-
-        command.AddGlobalOption(new[] { "-v", "--verbose" }, "Whether to output verbosely.", false);
-
-        return command;
-    }
 }
