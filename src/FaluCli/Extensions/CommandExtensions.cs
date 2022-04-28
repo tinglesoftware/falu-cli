@@ -235,11 +235,4 @@ public static class CommandExtensions
     }
 
     #endregion
-
-    public static Command AddCommonGlobalOptions(this Command command)
-    {
-        command.AddGlobalOption(new[] { "-v", "--verbose" }, "Whether to output verbosely.", false);
-
-        return command;
-    }
 }
