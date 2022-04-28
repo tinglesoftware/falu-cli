@@ -13,33 +13,33 @@ var rootCommand = new RootCommand
     new LoginCommand(),
     new LogoutCommand(),
 
-    new Command("events", "Work with events on Falu.")
+    new WorkspacedCommand("events", "Work with events on Falu.")
     {
         new RetryCommand(),
     },
 
-    new Command("templates", "Manage message templates.")
+    new WorkspacedCommand("templates", "Manage message templates.")
     {
         new PullTemplatesCommand(),
         new PushTemplatesCommand(),
     },
 
-    new Command("payments", "Manage payments.")
+    new WorkspacedCommand("payments", "Manage payments.")
     {
         new UploadMpesaStatementCommand(FaluObjectKind.Payments),
     },
 
-    new Command("payment-refunds", "Manage payment refunds.")
+    new WorkspacedCommand("payment-refunds", "Manage payment refunds.")
     {
         new UploadMpesaStatementCommand(FaluObjectKind.PaymentRefunds),
     },
 
-    new Command("transfers", "Manage transfers.")
+    new WorkspacedCommand("transfers", "Manage transfers.")
     {
         new UploadMpesaStatementCommand(FaluObjectKind.Transfers),
     },
 
-    new Command("transfer-reversals", "Manage transfer reversals.")
+    new WorkspacedCommand("transfer-reversals", "Manage transfer reversals.")
     {
         new UploadMpesaStatementCommand(FaluObjectKind.TransferReversals),
     },
