@@ -13,13 +13,3 @@ internal class LoginCommand : Command
         //               defaultValue: false);
     }
 }
-
-internal class LogoutCommand : Command
-{
-    public LogoutCommand() : base("logout", "Logout of your Falu account from the CLI")
-    {
-        //this.AddOption(new[] { "-a", "--all", },
-        //               description: " Clear credentials for all workspaces you are currently logged into.",
-        //               defaultValue: false);
-    }
-}
