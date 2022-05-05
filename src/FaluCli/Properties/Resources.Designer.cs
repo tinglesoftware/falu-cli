@@ -81,11 +81,38 @@ namespace Falu.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Value for &apos;{0}&apos; is not a valid E.164 phone number: &apos;{1}&apos;.
+        /// </summary>
+        internal static string InvalidE164PhoneNumber {
+            get {
+                return ResourceManager.GetString("InvalidE164PhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value for &apos;{0}&apos; has invalid format. The expected pattern is &apos;{1}&apos;.
         /// </summary>
         internal static string InvalidInputValue {
             get {
                 return ResourceManager.GetString("InvalidInputValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value for &apos;{0}&apos; is not a valid JSON representation..
+        /// </summary>
+        internal static string InvalidJsonInputValue {
+            get {
+                return ResourceManager.GetString("InvalidJsonInputValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to JSON input value for &apos;{0}&apos; should be an {1}..
+        /// </summary>
+        internal static string JsonInputShouldBeOfType {
+            get {
+                return ResourceManager.GetString("JsonInputShouldBeOfType", resourceCulture);
             }
         }
         
