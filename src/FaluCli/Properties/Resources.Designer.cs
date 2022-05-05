@@ -99,20 +99,11 @@ namespace Falu.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Value for &apos;{0}&apos; is not a valid JSON representation..
+        ///   Looks up a localized string similar to Value for &apos;{0}&apos; is not a valid JSON representation. Ensure it is a valid JSON object..
         /// </summary>
         internal static string InvalidJsonInputValue {
             get {
                 return ResourceManager.GetString("InvalidJsonInputValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to JSON input value for &apos;{0}&apos; should be an {1}..
-        /// </summary>
-        internal static string JsonInputShouldBeOfType {
-            get {
-                return ResourceManager.GetString("JsonInputShouldBeOfType", resourceCulture);
             }
         }
         

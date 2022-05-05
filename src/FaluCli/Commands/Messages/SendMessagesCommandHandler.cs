@@ -39,7 +39,7 @@ internal class SendMessagesCommandHandler : ICommandHandler
     {
         var id = context.ParseResult.ValueForOption<string>("--id");
         var alias = context.ParseResult.ValueForOption<string>("--alias");
-        var model = System.Text.Json.Nodes.JsonNode.Parse(context.ParseResult.ValueForOption<string>("--model")!);
+        var model = System.Text.Json.JsonSerializer.Deserialize<IDictionary<string, object>>(context.ParseResult.ValueForOption<string>("--model")!);
 
         // ensure we both id and alias are not null
         if (string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(alias))

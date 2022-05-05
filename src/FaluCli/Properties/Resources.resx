@@ -133,10 +133,7 @@ Consult your Falu dashboard to confirm the permissions of the API key or ask you
     <value>Value for '{0}' has invalid format. The expected pattern is '{1}'</value>
   </data>
   <data name="InvalidJsonInputValue" xml:space="preserve">
-    <value>Value for '{0}' is not a valid JSON representation.</value>
-  </data>
-  <data name="JsonInputShouldBeOfType" xml:space="preserve">
-    <value>JSON input value for '{0}' should be an {1}.</value>
+    <value>Value for '{0}' is not a valid JSON representation. Ensure it is a valid JSON object.</value>
   </data>
   <data name="LoginFailedFormat" xml:space="preserve">
     <value>Login request failed! {0}</value>

@@ -75,11 +75,7 @@ public class SendTemplatedMessagesCommand : AsbtractSendMessagesCommand
                            var value = or.GetValueOrDefault<string>()!;
                            try
                            {
-                               var node = System.Text.Json.Nodes.JsonNode.Parse(value);
-                               if (node is not System.Text.Json.Nodes.JsonObject jo)
-                               {
-                                   or.ErrorMessage = string.Format(Res.JsonInputShouldBeOfType, or.Option.Name, "object");
-                               }
+                               System.Text.Json.JsonSerializer.Deserialize<IDictionary<string, object>>(value);
                            }
                            catch (System.Text.Json.JsonException)
                            {
