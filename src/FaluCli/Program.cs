@@ -19,9 +19,13 @@ var rootCommand = new RootCommand
         new RetryCommand(),
     },
 
-    new WorkspacedCommand("messages", "Send messages.")
+    new WorkspacedCommand("messages", "Work with messages.")
     {
-        new SendMessagesCommand(),
+        new Command("send", "Send messages.")
+        {
+            new SendRawMessagesCommand(),
+            new SendTemplatedMessagesCommand(),
+        }
     },
 
     new WorkspacedCommand("templates", "Manage message templates.")
