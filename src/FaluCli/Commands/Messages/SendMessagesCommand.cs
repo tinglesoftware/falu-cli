@@ -9,39 +9,56 @@ public abstract class AsbtractSendMessagesCommand : Command
     {
         this.AddOption<string[]>(new[] { "--to", "-t", },
                                  description: "Phone number(s) you are sending to, in E.164 format.",
-                                 validate: (or) =>
-                                 {
-                                     var value = or.GetValueOrDefault<string[]>()!;
+                                 validate: (or) => or.ErrorMessage = ValidateNumbers(or.Option.Name, or.GetValueOrDefault<string[]>()!));
 
-                                     // ensure not more than 500*1000 (500 per batch and 1000 batches per request)
-                                     var limit = 500_000;
-                                     if (value.Length > limit)
-                                     {
-                                         or.ErrorMessage = string.Format(Res.TooManyMessagesToBeSent, limit);
-                                         return;
-                                     }
+        this.AddOption<string>(new[] { "-f", "--file", },
+                               description: "File path for the path containing the phone numbers you are sending to, in E.164 format."
+                                          + " The file should have no headers, all values on one line, separated by commas.",
+                               validate: (or) =>
+                               {
+                                   // ensure the file exists
+                                   var value = or.GetValueOrDefault<string>()!;
+                                   var info = new FileInfo(value);
+                                   if (!info.Exists)
+                                   {
+                                       or.ErrorMessage = $"The file {value} does not exist.";
+                                       return;
+                                   }
 
-                                     // ensure each value is in E.164 format
-                                     var util = PhoneNumberUtil.GetInstance();
-                                     foreach (var v in value)
-                                     {
-                                         try
-                                         {
-                                             _ = util.Parse(v, null);
-                                         }
-                                         catch (Exception ex) when (ex is NumberParseException)
-                                         {
-                                             or.ErrorMessage = string.Format(Res.InvalidE164PhoneNumber, or.Option.Name, v);
-                                             return;
-                                         }
-                                     }
-                                 },
-                                 configure: o => o.IsRequired = true);
+                                   var numbers = File.ReadAllText(value).Split(',', StringSplitOptions.RemoveEmptyEntries);
+                                   or.ErrorMessage = ValidateNumbers(or.Option.Name, numbers);
+                               });
 
         this.AddOption(new[] { "--stream", "-s", },
                        description: "The stream to use, either the name or unique identifier. Example: mstr_610010be9228355f14ce6e08 or transactional",
                        defaultValue: "transactional",
                        configure: o => o.IsRequired = true);
+    }
+
+    private static string? ValidateNumbers(string optionName, string[] numbers)
+    {
+        // ensure not more than 500*1000 (500 per batch and 1000 batches per request)
+        var limit = 500_000;
+        if (numbers.Length > limit)
+        {
+            return string.Format(Res.TooManyMessagesToBeSent, limit);
+        }
+
+        // ensure each value is in E.164 format
+        var util = PhoneNumberUtil.GetInstance();
+        foreach (var n in numbers)
+        {
+            try
+            {
+                _ = util.Parse(n, null);
+            }
+            catch (Exception ex) when (ex is NumberParseException)
+            {
+                return string.Format(Res.InvalidE164PhoneNumber, optionName, n);
+            }
+        }
+
+        return null;
     }
 }
 

@@ -16,9 +16,30 @@ internal class SendMessagesCommandHandler : ICommandHandler
 
     public Task<int> InvokeAsync(InvocationContext context)
     {
-        var cancellationToken = context.GetCancellationToken();
-        var tos = context.ParseResult.ValueForOption<string[]>("--to")!;
+        // ensure both to and file are not null or empty
+        var tos = context.ParseResult.ValueForOption<string[]>("--to");
+        var filePath = context.ParseResult.ValueForOption<string>("--file");
+        if ((tos is null || tos.Length == 0) && string.IsNullOrWhiteSpace(filePath))
+        {
+            logger.LogError("A CSV file path must be specified or the destinations using the --to option.");
+            return Task.FromResult(-1);
+        }
+
+        // ensure both to and file are not specified
+        if (tos is not null && tos.Length > 0 && !string.IsNullOrWhiteSpace(filePath))
+        {
+            logger.LogError("Either specify the CSV file path or destinations not both.");
+            return Task.FromResult(-1);
+        }
+
+        // read the numbers from the CSV file
+        if ((tos is null || tos.Length == 0) && !string.IsNullOrWhiteSpace(filePath))
+        {
+            tos = File.ReadAllText(filePath).Split(',', StringSplitOptions.RemoveEmptyEntries);
+        }
+
         var stream = context.ParseResult.ValueForOption<string>("--stream")!;
+        var cancellationToken = context.GetCancellationToken();
 
         var command = context.ParseResult.CommandResult.Command;
         if (command is SendRawMessagesCommand) return HandleRawAsync(context, tos, stream, cancellationToken);
