@@ -24,9 +24,9 @@ internal class ConfigCommandHandler : ICommandHandler
                     var values = await configValuesProvider.GetConfigValuesAsync(cancellationToken);
                     var data = new Dictionary<string, object?>
                     {
-                        ["Retries"] = values.Retries,
-                        ["DefaultWorkspaceId"] = values.DefaultWorkspaceId,
-                        ["DefaultLiveMode"] = values.DefaultLiveMode,
+                        ["retries"] = values.Retries,
+                        ["workspace"] = values.DefaultWorkspaceId,
+                        ["livemode"] = values.DefaultLiveMode,
                     }.RemoveDefaultAndEmpty();
 
                     var str = context.IsVerboseEnabled() ? data.MakePaddedString(" = ") : data.MakeString("=");
