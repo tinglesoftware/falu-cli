@@ -47,7 +47,7 @@ public class SendRawMessagesCommand : AsbtractSendMessagesCommand
 
 public class SendTemplatedMessagesCommand : AsbtractSendMessagesCommand
 {
-    public SendTemplatedMessagesCommand() : base("template", "Send a templated message.")
+    public SendTemplatedMessagesCommand() : base("templated", "Send a templated message.")
     {
         this.AddOption(new[] { "--id", "-i", },
                        description: "The unique template identifier. Example: mtpl_610010be9228355f14ce6e08",
