@@ -126,6 +126,15 @@ namespace Falu.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Errors: {0}.
+        /// </summary>
+        internal static string ProblemDetailsErrorsFormat {
+            get {
+                return ResourceManager.GetString("ProblemDetailsErrorsFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Refreshing access token failed. Most likely the refresh token is no longer valid.
         ///You can clear authentication information using the command:
         ///falu config clear auth.

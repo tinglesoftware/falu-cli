@@ -64,6 +64,12 @@ internal static class CommandLineBuilderExtensions
                 {
                     stderr.WriteLine(Res.ProblemDetailsErrorDetailFormat, error.Detail);
                 }
+
+                if (error.Errors is not null && error.Errors.Count > 0)
+                {
+                    var errors = string.Join(Environment.NewLine, error.Errors.Select(k => $"{k.Key}: {string.Join("; ", k.Value)}"));
+                    stderr.WriteLine(Res.ProblemDetailsErrorsFormat, errors);
+                }
             }
             else if (fe.StatusCode == HttpStatusCode.Unauthorized)
             {
