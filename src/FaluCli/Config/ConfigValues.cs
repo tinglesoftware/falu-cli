@@ -2,7 +2,7 @@
 
 internal record ConfigValues
 {
-    public int Retries { get; set; } = 2;
+    public int Retries { get; set; } = 0;
     public string? DefaultWorkspaceId { get; set; }
     public bool DefaultLiveMode { get; set; }
     public AuthenticationTokenConfigData? Authentication { get; set; }
