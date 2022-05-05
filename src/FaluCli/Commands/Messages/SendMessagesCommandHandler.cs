@@ -72,7 +72,7 @@ internal class SendMessagesCommandHandler : ICommandHandler
         ArgumentNullException.ThrowIfNull(setupFunc);
 
         // a maximum of 500 tos per batch
-        var groups = tos.Chunk(500).ToList();
+        var groups = tos.Distinct(StringComparer.OrdinalIgnoreCase).Chunk(500).ToList();
         var results = new List<MessageCreateRequest>(groups.Count);
         foreach (var group in groups)
         {
