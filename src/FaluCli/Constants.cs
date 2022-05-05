@@ -27,6 +27,6 @@ internal class Constants
     public static readonly Regex ApiKeyFormat = new(@"^^[s|p]k_(?:live|test)_[0-9a-zA-Z]{20,30}$");
     public static readonly Regex EventIdFormat = new(@"^evt_[a-zA-Z0-9]{20,30}$");
     public static readonly Regex WebhookEndpointIdFormat = new(@"^we_[a-zA-Z0-9]{20,30}$");
-    public static readonly Regex MessageTemplateIdFormat = new(@"^mtpl_[a-zA-Z0-9]{20,30}$");
+    public static readonly Regex MessageTemplateIdFormat = new(@"^(?:mtpl|tmpl)_[a-zA-Z0-9]{20,30}$");
     public static readonly Regex MessageTemplateAliasFormat = new(@"^[a-zA-Z]([a-zA-Z0-9\-_]+)$");
 }
