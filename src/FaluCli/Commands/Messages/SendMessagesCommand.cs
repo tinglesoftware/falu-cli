@@ -1,5 +1,14 @@
 ﻿namespace Falu.Commands.Messages;
 
+public class SendMessagesCommand : WorkspacedCommand
+{
+    public SendMessagesCommand() : base("send", "Send messages.")
+    {
+        AddCommand(new SendRawMessagesCommand());
+        AddCommand(new SendTemplatedMessagesCommand());
+    }
+}
+
 public class SendRawMessagesCommand : Command
 {
     public SendRawMessagesCommand() : base("raw", "Send a message with the body defined.")

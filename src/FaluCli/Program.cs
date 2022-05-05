@@ -21,8 +21,7 @@ var rootCommand = new RootCommand
 
     new WorkspacedCommand("messages", "Send messages.")
     {
-        new SendRawMessagesCommand(),
-        new SendTemplatedMessagesCommand(),
+        new SendMessagesCommand(),
     },
 
     new WorkspacedCommand("templates", "Manage message templates.")
