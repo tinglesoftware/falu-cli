@@ -27,9 +27,9 @@ internal class ConfigCommandHandler : ICommandHandler
                         ["Retries"] = values.Retries,
                         ["DefaultWorkspaceId"] = values.DefaultWorkspaceId,
                         ["DefaultLiveMode"] = values.DefaultLiveMode,
-                    };
+                    }.RemoveDefaultAndEmpty();
 
-                    var str = data.RemoveDefaultAndEmpty().MakePaddedString("=");
+                    var str = context.IsVerboseEnabled() ? data.MakePaddedString(" = ") : data.MakeString("=");
                     if (string.IsNullOrWhiteSpace(str))
                     {
                         logger.LogInformation("Configuration values are empty or only contain sensitive information.");

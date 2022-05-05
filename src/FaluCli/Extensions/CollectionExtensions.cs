@@ -21,6 +21,18 @@ internal static class CollectionExtensions
         return dictionary.MakePaddedString(out _, separator);
     }
 
+    public static string MakeString(this IDictionary<string, object> dictionary, string separator = " : ")
+    {
+        if (dictionary is null) throw new ArgumentNullException(nameof(dictionary));
+
+        if (dictionary.Count == 0)
+        {
+            return string.Empty;
+        }
+
+        return string.Join("\r\n", dictionary.Select(kvp => $"{kvp.Key}{separator}{kvp.Value}"));
+    }
+
     public static Dictionary<string, object> RemoveDefaultAndEmpty(this IDictionary<string, object?> data)
     {
         var result = new Dictionary<string, object>();
