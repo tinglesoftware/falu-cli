@@ -27,6 +27,8 @@ internal static class IServiceCollectionExtensions
         services.AddTransient<FaluCliClientHandler>();
         services.AddTransient<HttpAuthenticationHandler>();
 
+        services.ConfigureOptions<FaluClientConfigureOptions>();
+
         return services;
     }
 

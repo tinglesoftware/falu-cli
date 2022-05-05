@@ -24,11 +24,12 @@ internal class ConfigCommandHandler : ICommandHandler
                     var values = await configValuesProvider.GetConfigValuesAsync(cancellationToken);
                     var data = new Dictionary<string, object?>
                     {
-                        ["DefaultWorkspaceId"] = values.DefaultWorkspaceId,
-                        ["DefaultLiveMode"] = values.DefaultLiveMode,
-                    };
+                        ["retries"] = values.Retries,
+                        ["workspace"] = values.DefaultWorkspaceId,
+                        ["livemode"] = values.DefaultLiveMode,
+                    }.RemoveDefaultAndEmpty();
 
-                    var str = data.RemoveDefaultAndEmpty().MakePaddedString("=");
+                    var str = context.IsVerboseEnabled() ? data.MakePaddedString(" = ") : data.MakeString("=");
                     if (string.IsNullOrWhiteSpace(str))
                     {
                         logger.LogInformation("Configuration values are empty or only contain sensitive information.");
@@ -48,6 +49,9 @@ internal class ConfigCommandHandler : ICommandHandler
                     var value = context.ParseResult.ValueForArgument<string>("value")!;
                     switch (key)
                     {
+                        case "retries":
+                            values.Retries = int.Parse(value);
+                            break;
                         case "workspace":
                             values.DefaultWorkspaceId = value;
                             break;
