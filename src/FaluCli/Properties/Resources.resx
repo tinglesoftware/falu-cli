@@ -165,6 +165,9 @@ falu config clear auth</value>
   <data name="RequestIdFormat" xml:space="preserve">
     <value>Request Id: {0}</value>
   </data>
+  <data name="TooManyMessagesToBeSent" xml:space="preserve">
+    <value>Message destinations (to) cannot exceed {0:n0} in one request.</value>
+  </data>
   <data name="TraceIdentifierFormat" xml:space="preserve">
     <value>Trace Identifier: {0}</value>
   </data>

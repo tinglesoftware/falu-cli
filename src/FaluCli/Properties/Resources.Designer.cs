@@ -191,6 +191,15 @@ namespace Falu.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Message destinations (to) cannot exceed {0:n0} in one request..
+        /// </summary>
+        internal static string TooManyMessagesToBeSent {
+            get {
+                return ResourceManager.GetString("TooManyMessagesToBeSent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trace Identifier: {0}.
         /// </summary>
         internal static string TraceIdentifierFormat {

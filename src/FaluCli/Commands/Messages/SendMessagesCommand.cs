@@ -11,8 +11,18 @@ public abstract class AsbtractSendMessagesCommand : Command
                                  description: "Phone number(s) you are sending to, in E.164 format.",
                                  validate: (or) =>
                                  {
-                                     var util = PhoneNumberUtil.GetInstance();
                                      var value = or.GetValueOrDefault<string[]>()!;
+
+                                     // ensure not more than 500*1000 (500 per batch and 1000 batches per request)
+                                     var limit = 500_000;
+                                     if (value.Length > limit)
+                                     {
+                                         or.ErrorMessage = string.Format(Res.TooManyMessagesToBeSent, limit);
+                                         return;
+                                     }
+
+                                     // ensure each value is in E.164 format
+                                     var util = PhoneNumberUtil.GetInstance();
                                      foreach (var v in value)
                                      {
                                          try
