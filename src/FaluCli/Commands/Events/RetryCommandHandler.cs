@@ -37,7 +37,7 @@ internal class RetryCommandHandler : ICommandHandler
             ["Response Time"] = $"{time.TotalSeconds:n3} seconds",
         };
 
-        if (!attempt.Successful)
+        if (!attempt.Successful && context.IsVerboseEnabled())
         {
             var statusCode = Enum.Parse<HttpStatusCode>(attempt.HttpStatus.ToString());
             data["Http Status"] = $"{statusCode} ({attempt.HttpStatus})";
@@ -50,7 +50,7 @@ internal class RetryCommandHandler : ICommandHandler
 
         var str = $"{(attempt.Successful ? "Retry succeeded." : "Retry failed!")}\r\n";
         str += data.RemoveDefaultAndEmpty().MakePaddedString();
-        logger.LogInformation(str);
+        logger.LogInformation("{MessageStr}", str);
 
         return 0;
     }
