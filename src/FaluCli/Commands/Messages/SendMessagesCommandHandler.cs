@@ -41,10 +41,17 @@ internal class SendMessagesCommandHandler : ICommandHandler
         var alias = context.ParseResult.ValueForOption<string>("--alias");
         var model = System.Text.Json.JsonSerializer.Deserialize<IDictionary<string, object>>(context.ParseResult.ValueForOption<string>("--model")!);
 
-        // ensure we both id and alias are not null
+        // ensure both id and alias are not null
         if (string.IsNullOrWhiteSpace(id) && string.IsNullOrWhiteSpace(alias))
         {
             logger.LogError("A template identifier or template alias must be provided when sending a templated message.");
+            return -1;
+        }
+
+        // ensure both id and alias are not specified
+        if (!string.IsNullOrWhiteSpace(id) && !string.IsNullOrWhiteSpace(alias))
+        {
+            logger.LogError("Either specify the template identifier or template alias not both.");
             return -1;
         }
 
