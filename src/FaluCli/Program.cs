@@ -112,8 +112,8 @@ var builder = new CommandLineBuilder(rootCommand)
         host.UseCommandHandler<LoginCommand, LoginCommandHandler>();
         host.UseCommandHandler<LogoutCommand, LogoutCommandHandler>();
         host.UseCommandHandler<RetryCommand, RetryCommandHandler>();
-        //host.UseCommandHandler<SendRawMessagesCommand, SendMessagesCommandHandler>();
-        //host.UseCommandHandler<SendTemplatedMessagesCommand, SendMessagesCommandHandler>();
+        host.UseCommandHandler<SendRawMessagesCommand, SendMessagesCommandHandler>();
+        host.UseCommandHandler<SendTemplatedMessagesCommand, SendMessagesCommandHandler>();
         host.UseCommandHandler<PullTemplatesCommand, TemplatesCommandHandler>();
         host.UseCommandHandler<PushTemplatesCommand, TemplatesCommandHandler>();
         host.UseCommandHandler<UploadMpesaStatementCommand, UploadMpesaStatementCommandHandler>();
