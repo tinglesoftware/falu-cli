@@ -7,7 +7,7 @@ public abstract class AsbtractSendMessagesCommand : Command
 {
     public AsbtractSendMessagesCommand(string name, string? description = null) : base(name, description)
     {
-        this.AddOption<string[]>(new[] { "-t", "--to", },
+        this.AddOption<string[]>(new[] { "--to", "-t", },
                                  description: "Phone number(s) you are sending to, in E.164 format.",
                                  validate: (or) =>
                                  {
@@ -28,7 +28,7 @@ public abstract class AsbtractSendMessagesCommand : Command
                                  },
                                  configure: o => o.IsRequired = true);
 
-        this.AddOption(new[] { "-s", "--stream", },
+        this.AddOption(new[] { "--stream", "-s", },
                        description: "The stream to use, either the name or unique identifier. Example: mstr_610010be9228355f14ce6e08 or transactional",
                        defaultValue: "transactional",
                        configure: o => o.IsRequired = true);
@@ -49,15 +49,15 @@ public class SendTemplatedMessagesCommand : AsbtractSendMessagesCommand
 {
     public SendTemplatedMessagesCommand() : base("template", "Send a templated message.")
     {
-        this.AddOption(new[] { "-i", "--id", },
+        this.AddOption(new[] { "--id", "-i", },
                        description: "The unique template identifier. Example: mtpl_610010be9228355f14ce6e08",
                        format: Constants.MessageTemplateIdFormat);
 
-        this.AddOption(new[] { "-a", "--alias", },
+        this.AddOption(new[] { "--alias", "-a", },
                        description: "The template alias, unique to your workspace.",
                        format: Constants.MessageTemplateAliasFormat);
 
-        this.AddOption(new[] { "-m", "--model", },
+        this.AddOption(new[] { "--model", "-m", },
                        description: "The model to use with the template. Example --model '{\"name\": \"John\"}'",
                        defaultValue: "{}",
                        validate: (or) =>
