@@ -24,6 +24,7 @@ internal class ConfigCommandHandler : ICommandHandler
                     var values = await configValuesProvider.GetConfigValuesAsync(cancellationToken);
                     var data = new Dictionary<string, object?>
                     {
+                        ["Retries"] = values.Retries,
                         ["DefaultWorkspaceId"] = values.DefaultWorkspaceId,
                         ["DefaultLiveMode"] = values.DefaultLiveMode,
                     };
@@ -48,6 +49,9 @@ internal class ConfigCommandHandler : ICommandHandler
                     var value = context.ParseResult.ValueForArgument<string>("value")!;
                     switch (key)
                     {
+                        case "retries":
+                            values.Retries = int.Parse(value);
+                            break;
                         case "workspace":
                             values.DefaultWorkspaceId = value;
                             break;
