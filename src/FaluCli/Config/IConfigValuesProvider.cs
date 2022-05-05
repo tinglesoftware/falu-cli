@@ -4,7 +4,7 @@ namespace Falu.Config;
 
 internal interface IConfigValuesProvider
 {
-    ValueTask<ConfigValues> GetConfigValuesAsync(CancellationToken cancellationToken = default);
+    Task<ConfigValues> GetConfigValuesAsync(CancellationToken cancellationToken = default);
     Task SaveConfigValuesAsync(CancellationToken cancellationToken = default);
     Task SaveConfigValuesAsync(TokenResponse response, CancellationToken cancellationToken = default);
 

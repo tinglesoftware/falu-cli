@@ -17,7 +17,7 @@ internal class ConfigValuesProvider : IConfigValuesProvider
 
     private ConfigValues? values;
 
-    public async ValueTask<ConfigValues> GetConfigValuesAsync(CancellationToken cancellationToken = default)
+    public async Task<ConfigValues> GetConfigValuesAsync(CancellationToken cancellationToken = default)
     {
         if (values is null)
         {
