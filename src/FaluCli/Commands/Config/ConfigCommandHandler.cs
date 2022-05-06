@@ -25,6 +25,7 @@ internal class ConfigCommandHandler : ICommandHandler
                     var data = new Dictionary<string, object?>
                     {
                         ["retries"] = values.Retries,
+                        ["timeout"] = $"{values.Timeout} seconds",
                         ["workspace"] = values.DefaultWorkspaceId,
                         ["livemode"] = values.DefaultLiveMode,
                     }.RemoveDefaultAndEmpty();
@@ -51,6 +52,9 @@ internal class ConfigCommandHandler : ICommandHandler
                     {
                         case "retries":
                             values.Retries = int.Parse(value);
+                            break;
+                        case "timeout":
+                            values.Timeout = int.Parse(value);
                             break;
                         case "workspace":
                             values.DefaultWorkspaceId = value;
