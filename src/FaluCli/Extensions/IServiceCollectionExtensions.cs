@@ -17,17 +17,7 @@ internal static class IServiceCollectionExtensions
         services.AddFalu<FaluCliClient, FaluClientOptions>(o => o.ApiKey = "dummy")
                 .AddHttpMessageHandler<FaluCliClientHandler>()
                 .AddHttpMessageHandler<HttpAuthenticationHandler>()
-                .ConfigureHttpClient((provider, client) =>
-                {
-                    // change the User-Agent header
-                    client.DefaultRequestHeaders.UserAgent.Clear();
-                    client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("falucli", VersioningHelper.ProductVersion));
-
-                    // set the Timeout from ConfigValues
-                    var configValuesProvider = provider.GetRequiredService<IConfigValuesProvider>();
-                    var configValues = configValuesProvider.GetConfigValuesAsync().GetAwaiter().GetResult();
-                    client.Timeout = TimeSpan.FromSeconds(configValues.Timeout);
-                });
+                .ConfigureHttpClientStandard();
 
         services.AddTransient<FaluCliClientHandler>();
         services.AddTransient<HttpAuthenticationHandler>();
@@ -50,13 +40,7 @@ internal static class IServiceCollectionExtensions
     public static IServiceCollection AddOpenIdServices(this IServiceCollection services)
     {
         services.AddHttpClient(Constants.OpenIdCategoryOrClientName)
-                .ConfigureHttpClient((provider, client) =>
-                {
-                    // set the Timeout from ConfigValues
-                    var configValuesProvider = provider.GetRequiredService<IConfigValuesProvider>();
-                    var configValues = configValuesProvider.GetConfigValuesAsync().GetAwaiter().GetResult();
-                    client.Timeout = TimeSpan.FromSeconds(configValues.Timeout);
-                });
+                .ConfigureHttpClientStandard();
 
         services.AddTransient<IDiscoveryCache>(p =>
         {
@@ -66,5 +50,20 @@ internal static class IServiceCollectionExtensions
         });
 
         return services;
+    }
+
+    private static IHttpClientBuilder ConfigureHttpClientStandard(this IHttpClientBuilder buidler)
+    {
+        return buidler.ConfigureHttpClient((provider, client) =>
+        {
+            // change the User-Agent header
+            client.DefaultRequestHeaders.UserAgent.Clear();
+            client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("falucli", VersioningHelper.ProductVersion));
+
+            // set the Timeout from ConfigValues
+            var configValuesProvider = provider.GetRequiredService<IConfigValuesProvider>();
+            var configValues = configValuesProvider.GetConfigValuesAsync().GetAwaiter().GetResult();
+            client.Timeout = TimeSpan.FromSeconds(configValues.Timeout);
+        });
     }
 }
