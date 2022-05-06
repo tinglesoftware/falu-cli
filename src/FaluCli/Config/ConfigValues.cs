@@ -3,6 +3,7 @@
 internal record ConfigValues
 {
     public int Retries { get; set; } = 0;
+    public int Timeout { get; set; } = 120;
     public string? DefaultWorkspaceId { get; set; }
     public bool DefaultLiveMode { get; set; }
     public AuthenticationTokenConfigData? Authentication { get; set; }

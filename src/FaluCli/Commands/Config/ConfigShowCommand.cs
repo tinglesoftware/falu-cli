@@ -13,7 +13,7 @@ public class ConfigSetCommand : Command
     {
         this.AddArgument<string>(name: "key",
                                  description: "The configuration key.",
-                                 configure: a => a.FromAmong("retries", "workspace", "livemode"));
+                                 configure: a => a.FromAmong("retries", "timeout", "workspace", "livemode"));
 
         this.AddArgument<string>(name: "value", description: "The configuration value.");
     }
