@@ -17,11 +17,18 @@ internal static class IServiceCollectionExtensions
         services.AddFalu<FaluCliClient, FaluClientOptions>(o => o.ApiKey = "dummy")
                 .AddHttpMessageHandler<FaluCliClientHandler>()
                 .AddHttpMessageHandler<HttpAuthenticationHandler>()
-                .ConfigureHttpClient(client =>
+                .ConfigureHttpClient((sp, client) =>
                 {
                     // change the User-Agent header
                     client.DefaultRequestHeaders.UserAgent.Clear();
                     client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("falucli", VersioningHelper.ProductVersion));
+
+                    // Using scope otherwise the IOptionsSnapshot<T> instance will be singleton, never changing
+                    using var scope = sp.CreateScope();
+                    var provider = scope.ServiceProvider;
+                    var configValuesProvider = provider.GetRequiredService<IConfigValuesProvider>();
+                    var configValues = configValuesProvider.GetConfigValuesAsync().GetAwaiter().GetResult();
+                    client.Timeout = TimeSpan.FromSeconds(configValues.Timeout);
                 });
 
         services.AddTransient<FaluCliClientHandler>();
