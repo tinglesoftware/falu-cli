@@ -51,7 +51,16 @@ internal static class IServiceCollectionExtensions
 
     public static IServiceCollection AddOpenIdServices(this IServiceCollection services)
     {
-        services.AddHttpClient(Constants.OpenIdCategoryOrClientName);
+        services.AddHttpClient(Constants.OpenIdCategoryOrClientName)
+                .ConfigureHttpClient((sp, client) =>
+                {
+                    // Using scope otherwise the IOptionsSnapshot<T> instance will be singleton, never changing
+                    using var scope = sp.CreateScope();
+                    var provider = scope.ServiceProvider;
+                    var configValuesProvider = provider.GetRequiredService<IConfigValuesProvider>();
+                    var configValues = configValuesProvider.GetConfigValuesAsync().GetAwaiter().GetResult();
+                    client.Timeout = TimeSpan.FromSeconds(configValues.Timeout);
+                });
 
         services.AddTransient<IDiscoveryCache>(p =>
         {
