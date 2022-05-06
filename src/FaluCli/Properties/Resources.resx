@@ -126,8 +126,14 @@ Either pass an API key via --apikey option or perform login via 'falu login' com
 Consult your Falu dashboard to confirm the permissions of the API key or ask your administrator to grant you permissions.</value>
     <comment>Error message to display for HTTP 403 (Forbidden) responses.</comment>
   </data>
+  <data name="InvalidE164PhoneNumber" xml:space="preserve">
+    <value>Value for '{0}' is not a valid E.164 phone number: '{1}'</value>
+  </data>
   <data name="InvalidInputValue" xml:space="preserve">
     <value>Value for '{0}' has invalid format. The expected pattern is '{1}'</value>
+  </data>
+  <data name="InvalidJsonInputValue" xml:space="preserve">
+    <value>Value for '{0}' is not a valid JSON representation. Ensure it is a valid JSON object.</value>
   </data>
   <data name="LoginFailedFormat" xml:space="preserve">
     <value>Login request failed! {0}</value>
@@ -155,6 +161,9 @@ falu config clear auth</value>
   </data>
   <data name="RequestIdFormat" xml:space="preserve">
     <value>Request Id: {0}</value>
+  </data>
+  <data name="TooManyMessagesToBeSent" xml:space="preserve">
+    <value>Message destinations (to) cannot exceed {0:n0} in one request.</value>
   </data>
   <data name="TraceIdentifierFormat" xml:space="preserve">
     <value>Trace Identifier: {0}</value>

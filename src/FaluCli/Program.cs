@@ -2,6 +2,7 @@
 using Falu.Commands.Config;
 using Falu.Commands.Events;
 using Falu.Commands.Login;
+using Falu.Commands.Messages;
 using Falu.Commands.Money;
 using Falu.Commands.Templates;
 using System.CommandLine.Builder;
@@ -16,6 +17,15 @@ var rootCommand = new RootCommand
     new WorkspacedCommand("events", "Work with events on Falu.")
     {
         new RetryCommand(),
+    },
+
+    new WorkspacedCommand("messages", "Work with messages.")
+    {
+        new Command("send", "Send messages.")
+        {
+            new SendRawMessagesCommand(),
+            new SendTemplatedMessagesCommand(),
+        }
     },
 
     new WorkspacedCommand("templates", "Manage message templates.")
@@ -102,6 +112,8 @@ var builder = new CommandLineBuilder(rootCommand)
         host.UseCommandHandler<LoginCommand, LoginCommandHandler>();
         host.UseCommandHandler<LogoutCommand, LogoutCommandHandler>();
         host.UseCommandHandler<RetryCommand, RetryCommandHandler>();
+        host.UseCommandHandler<SendRawMessagesCommand, SendMessagesCommandHandler>();
+        host.UseCommandHandler<SendTemplatedMessagesCommand, SendMessagesCommandHandler>();
         host.UseCommandHandler<PullTemplatesCommand, TemplatesCommandHandler>();
         host.UseCommandHandler<PushTemplatesCommand, TemplatesCommandHandler>();
         host.UseCommandHandler<UploadMpesaStatementCommand, UploadMpesaStatementCommandHandler>();

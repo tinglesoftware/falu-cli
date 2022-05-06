@@ -81,11 +81,29 @@ namespace Falu.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Value for &apos;{0}&apos; is not a valid E.164 phone number: &apos;{1}&apos;.
+        /// </summary>
+        internal static string InvalidE164PhoneNumber {
+            get {
+                return ResourceManager.GetString("InvalidE164PhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value for &apos;{0}&apos; has invalid format. The expected pattern is &apos;{1}&apos;.
         /// </summary>
         internal static string InvalidInputValue {
             get {
                 return ResourceManager.GetString("InvalidInputValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value for &apos;{0}&apos; is not a valid JSON representation. Ensure it is a valid JSON object..
+        /// </summary>
+        internal static string InvalidJsonInputValue {
+            get {
+                return ResourceManager.GetString("InvalidJsonInputValue", resourceCulture);
             }
         }
         
@@ -160,6 +178,15 @@ namespace Falu.Properties {
         internal static string RequestIdFormat {
             get {
                 return ResourceManager.GetString("RequestIdFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message destinations (to) cannot exceed {0:n0} in one request..
+        /// </summary>
+        internal static string TooManyMessagesToBeSent {
+            get {
+                return ResourceManager.GetString("TooManyMessagesToBeSent", resourceCulture);
             }
         }
         
