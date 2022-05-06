@@ -17,15 +17,13 @@ internal static class IServiceCollectionExtensions
         services.AddFalu<FaluCliClient, FaluClientOptions>(o => o.ApiKey = "dummy")
                 .AddHttpMessageHandler<FaluCliClientHandler>()
                 .AddHttpMessageHandler<HttpAuthenticationHandler>()
-                .ConfigureHttpClient((sp, client) =>
+                .ConfigureHttpClient((provider, client) =>
                 {
                     // change the User-Agent header
                     client.DefaultRequestHeaders.UserAgent.Clear();
                     client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("falucli", VersioningHelper.ProductVersion));
 
-                    // Using scope otherwise the IOptionsSnapshot<T> instance will be singleton, never changing
-                    using var scope = sp.CreateScope();
-                    var provider = scope.ServiceProvider;
+                    // set the Timeout from ConfigValues
                     var configValuesProvider = provider.GetRequiredService<IConfigValuesProvider>();
                     var configValues = configValuesProvider.GetConfigValuesAsync().GetAwaiter().GetResult();
                     client.Timeout = TimeSpan.FromSeconds(configValues.Timeout);
@@ -52,11 +50,9 @@ internal static class IServiceCollectionExtensions
     public static IServiceCollection AddOpenIdServices(this IServiceCollection services)
     {
         services.AddHttpClient(Constants.OpenIdCategoryOrClientName)
-                .ConfigureHttpClient((sp, client) =>
+                .ConfigureHttpClient((provider, client) =>
                 {
-                    // Using scope otherwise the IOptionsSnapshot<T> instance will be singleton, never changing
-                    using var scope = sp.CreateScope();
-                    var provider = scope.ServiceProvider;
+                    // set the Timeout from ConfigValues
                     var configValuesProvider = provider.GetRequiredService<IConfigValuesProvider>();
                     var configValues = configValuesProvider.GetConfigValuesAsync().GetAwaiter().GetResult();
                     client.Timeout = TimeSpan.FromSeconds(configValues.Timeout);
