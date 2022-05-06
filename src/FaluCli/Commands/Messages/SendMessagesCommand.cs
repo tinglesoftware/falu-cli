@@ -1,5 +1,4 @@
-﻿using PhoneNumbers;
-using Res = Falu.Properties.Resources;
+﻿using Res = Falu.Properties.Resources;
 
 namespace Falu.Commands.Messages;
 
@@ -45,14 +44,9 @@ public abstract class AsbtractSendMessagesCommand : Command
         }
 
         // ensure each value is in E.164 format
-        var util = PhoneNumberUtil.GetInstance();
         foreach (var n in numbers)
         {
-            try
-            {
-                _ = util.Parse(n, null);
-            }
-            catch (Exception ex) when (ex is NumberParseException)
+            if (!Constants.E164PhoneNumberFormat.IsMatch(n))
             {
                 return string.Format(Res.InvalidE164PhoneNumber, optionName, n);
             }

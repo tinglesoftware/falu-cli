@@ -29,4 +29,5 @@ internal class Constants
     public static readonly Regex WebhookEndpointIdFormat = new(@"^we_[a-zA-Z0-9]{20,30}$");
     public static readonly Regex MessageTemplateIdFormat = new(@"^(?:mtpl|tmpl)_[a-zA-Z0-9]{20,30}$");
     public static readonly Regex MessageTemplateAliasFormat = new(@"^[a-zA-Z]([a-zA-Z0-9\-_]+)$");
+    public static readonly Regex E164PhoneNumberFormat = new(@"^\+[1-9]\d{1,14}$"); // https://ihateregex.io/expr/e164-phone/
 }
