@@ -20,6 +20,16 @@ public class ConstantsTests
     }
 
     [Theory]
+    [InlineData("5C5F6FC9-DD6A-4C5D-A63A-DC96740CFE12")]
+    [InlineData("dad11640-8f1c-4b91-8e61-051241204c8f")]
+    [InlineData("pay:reload:202205091300")]
+    [InlineData("pay_reload:202205091300")]
+    public void IdempotencyKeyFormat_IsCorrect(string input)
+    {
+        Assert.Matches(Constants.IdempotencyKeyFormat, input);
+    }
+
+    [Theory]
     [InlineData("evt_602cd2747409e867a240d000")]
     [InlineData("evt_60ffe3f79c1deb8060f91312")]
     [InlineData("evt_27e868O6xW4NYrQb3WvxDb8iW6D")]
