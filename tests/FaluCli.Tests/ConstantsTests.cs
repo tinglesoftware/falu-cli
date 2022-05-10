@@ -38,6 +38,15 @@ public class ConstantsTests
     }
 
     [Theory]
+    [InlineData("mtpl_602cd2747409e867a240d000")]
+    [InlineData("tmpl_60ffe3f79c1deb8060f91312")]
+    [InlineData("mtpl_27e868O6xW4NYrQb3WvxDb8iW6D")]
+    public void MessageTemplateIdFormat_IsCorrect(string input)
+    {
+        Assert.Matches(Constants.MessageTemplateIdFormat, input);
+    }
+
+    [Theory]
     [InlineData("promo-message")]
     [InlineData("promo_message")]
     [InlineData("Birthday_Wishes_2022-05-10")]
