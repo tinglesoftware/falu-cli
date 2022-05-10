@@ -36,4 +36,13 @@ public class ConstantsTests
     {
         Assert.Matches(Constants.WebhookEndpointIdFormat, input);
     }
+
+    [Theory]
+    [InlineData("+254722000000")]
+    [InlineData("+254700000000")]
+    [InlineData("+14155552671")]
+    public void E164PhoneNumberFormat_IsCorrect(string input)
+    {
+        Assert.Matches(Constants.E164PhoneNumberFormat, input);
+    }
 }
