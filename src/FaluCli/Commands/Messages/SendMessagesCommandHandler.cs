@@ -35,7 +35,11 @@ internal class SendMessagesCommandHandler : ICommandHandler
         // read the numbers from the CSV file
         if (tos is null || tos.Length == 0)
         {
-            tos = File.ReadAllText(filePath!).Split(',', StringSplitOptions.RemoveEmptyEntries);
+            tos = File.ReadAllText(filePath!)
+                      .Replace("\r\n", ",")
+                      .Replace("\r", ",")
+                      .Replace("\n", ",")
+                      .Split(',', StringSplitOptions.RemoveEmptyEntries);
         }
 
         var stream = context.ParseResult.ValueForOption<string>("--stream")!;
