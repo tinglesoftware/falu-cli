@@ -33,23 +33,21 @@ internal class FaluCliClientHandler : DelegatingHandler
         var workspaceId = context.ParseResult.ValueForOption<string>("--workspace");
         if (!string.IsNullOrWhiteSpace(workspaceId))
         {
-            request.Headers.Add("X-Workspace-Id", workspaceId);
+            request.Headers.Replace("X-Workspace-Id", workspaceId);
         }
 
         // (2) Override the X-Idempotency-Key header if CLI contains the --idempotency-key option
         var idempotencyKey = context.ParseResult.ValueForOption<string>("--idempotency-key");
         if (!string.IsNullOrWhiteSpace(idempotencyKey))
         {
-            request.Headers.Remove("X-Idempotency-Key"); // avoid multiple values or headers
-            request.Headers.Add("X-Idempotency-Key", idempotencyKey);
+            request.Headers.Replace("X-Idempotency-Key", idempotencyKey);
         }
 
         // (3) Override the X-Live-Mode header if CLI contains the --live option
         var live = context.ParseResult.ValueForOption<bool?>("--live");
         if (live is not null)
         {
-            request.Headers.Remove("X-Live-Mode"); // avoid multiple values or headers
-            request.Headers.Add("X-Live-Mode", live.Value.ToString().ToLowerInvariant());
+            request.Headers.Replace("X-Live-Mode", live.Value.ToString().ToLowerInvariant());
         }
 
         // (4) Handle appropriate authentication
