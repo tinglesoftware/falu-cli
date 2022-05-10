@@ -13,11 +13,18 @@ internal class FaluCliClientHandler : DelegatingHandler
     protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         var workspaceId = context.ParseResult.ValueForOption<string>("--workspace");
+        var idempotencyKey = context.ParseResult.ValueForOption<string>("--idempotency-key");
         var live = context.ParseResult.ValueForOption<bool?>("--live");
 
         if (!string.IsNullOrWhiteSpace(workspaceId))
         {
             request.Headers.Add("X-Workspace-Id", workspaceId);
+        }
+
+        if (!string.IsNullOrWhiteSpace(idempotencyKey))
+        {
+            request.Headers.Remove("X-Idempotency-Key"); // avoid multiple values or headers
+            request.Headers.Add("X-Idempotency-Key", idempotencyKey);
         }
 
         if (live is not null)

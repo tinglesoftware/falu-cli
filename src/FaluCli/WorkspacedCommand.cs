@@ -15,5 +15,9 @@ public class WorkspacedCommand : Command
         // without this the nullable type, the option is not found because we have not migrated to the new bindings
         this.AddGlobalOption<bool?>(aliases: new[] { "--live", },
                                     description: "Whether the entity resides in live mode or not. Required when login is by user account.");
+
+        this.AddGlobalOption(aliases: new[] { "--idempotency-key", },
+                             description: "The identifier of the workspace being accessed. Required when login is by user account. Example: wksp_610010be9228355f14ce6e08",
+                             format: Constants.IdempotencyKeyFormat);
     }
 }
