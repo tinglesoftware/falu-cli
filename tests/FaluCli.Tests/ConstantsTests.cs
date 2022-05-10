@@ -38,6 +38,15 @@ public class ConstantsTests
     }
 
     [Theory]
+    [InlineData("promo-message")]
+    [InlineData("promo_message")]
+    [InlineData("Birthday_Wishes_2022-05-10")]
+    public void MessageTemplateAliasFormat_IsCorrect(string input)
+    {
+        Assert.Matches(Constants.MessageTemplateAliasFormat, input);
+    }
+
+    [Theory]
     [InlineData("+254722000000")]
     [InlineData("+254700000000")]
     [InlineData("+14155552671")]
