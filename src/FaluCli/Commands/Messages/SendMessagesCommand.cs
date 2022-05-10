@@ -24,7 +24,11 @@ public abstract class AsbtractSendMessagesCommand : Command
                                        return;
                                    }
 
-                                   var numbers = File.ReadAllText(value).Split(',', StringSplitOptions.RemoveEmptyEntries);
+                                   var numbers = File.ReadAllText(value)
+                                                     .Replace("\r\n", ",")
+                                                     .Replace("\r", ",")
+                                                     .Replace("\n", ",")
+                                                     .Split(',', StringSplitOptions.RemoveEmptyEntries);
                                    or.ErrorMessage = ValidateNumbers(or.Option.Name, numbers);
                                });
 
