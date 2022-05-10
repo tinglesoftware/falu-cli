@@ -16,12 +16,9 @@ internal static class IServiceCollectionExtensions
         // A dummy ApiKey is used so that the options validator can pass
         services.AddFalu<FaluCliClient, FaluClientOptions>(o => o.ApiKey = "dummy")
                 .AddHttpMessageHandler<FaluCliClientHandler>()
-                .AddHttpMessageHandler<HttpAuthenticationHandler>()
                 .ConfigureHttpClientStandard();
 
         services.AddTransient<FaluCliClientHandler>();
-        services.AddTransient<HttpAuthenticationHandler>();
-
         services.ConfigureOptions<FaluClientConfigureOptions>();
 
         return services;
