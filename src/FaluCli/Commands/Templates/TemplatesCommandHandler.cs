@@ -20,7 +20,8 @@ internal class TemplatesCommandHandler : ICommandHandler
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    /// <inheritdoc/>
+    int ICommandHandler.Invoke(InvocationContext context) => throw new NotImplementedException();
+
     public Task<int> InvokeAsync(InvocationContext context)
     {
         var command = context.ParseResult.CommandResult.Command;
