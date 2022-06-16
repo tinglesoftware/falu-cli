@@ -1,6 +1,5 @@
 ﻿using Falu.Client;
 using Falu.Client.Money;
-using Falu.Core;
 
 namespace Falu.Commands.Money;
 

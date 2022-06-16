@@ -5,7 +5,7 @@ public class WorkspacedCommand : Command
     public WorkspacedCommand(string name, string? description = null) : base(name, description)
     {
         this.AddGlobalOption(aliases: new[] { "--apikey", },
-                             description: "The API key to use for the command. Required it not logged in or when accessing another workspace. Looks like: sk_test_LdVyn0upN...",
+                             description: "The API key to use for the command. Required it not logged in or when accessing another workspace. Looks like: fskt_LdVyn0upN...",
                              format: Constants.ApiKeyFormat);
 
         this.AddGlobalOption(aliases: new[] { "--workspace", },
