@@ -14,6 +14,8 @@ internal class SendMessagesCommandHandler : ICommandHandler
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
+    int ICommandHandler.Invoke(InvocationContext context) => throw new NotImplementedException();
+
     public Task<int> InvokeAsync(InvocationContext context)
     {
         // ensure both to and file are not null or empty

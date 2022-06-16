@@ -17,6 +17,8 @@ internal class RetryCommandHandler : ICommandHandler
         this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
+    int ICommandHandler.Invoke(InvocationContext context) => throw new NotImplementedException();
+
     public async Task<int> InvokeAsync(InvocationContext context)
     {
         var cancellationToken = context.GetCancellationToken();
