@@ -126,6 +126,12 @@ Either pass an API key via --apikey option or perform login via 'falu login' com
 Consult your Falu dashboard to confirm the permissions of the API key or ask your administrator to grant you permissions.</value>
     <comment>Error message to display for HTTP 403 (Forbidden) responses.</comment>
   </data>
+  <data name="HostNotFoundExceptionFormat" xml:space="preserve">
+    <value>Seems there was a problem reaching api.falu.io. This likely a transient internet connectivity issue on this computer or its internet provider.
+Try again after a short while.
+If it persists, check your internet connection.
+You can also check https://status.falu.io to see if there are any server related issues.</value>
+  </data>
   <data name="InvalidE164PhoneNumber" xml:space="preserve">
     <value>Value for '{0}' is not a valid E.164 phone number: '{1}'</value>
   </data>

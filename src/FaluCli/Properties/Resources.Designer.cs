@@ -81,6 +81,18 @@ namespace Falu.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seems there was a problem reaching api.falu.io. This likely a transient internet connectivity issue on this computer or its internet provider.
+        ///Try again after a short while.
+        ///If it persists, check your internet connection.
+        ///You can also check https://status.falu.io to see if there are any server related issues..
+        /// </summary>
+        internal static string HostNotFoundExceptionFormat {
+            get {
+                return ResourceManager.GetString("HostNotFoundExceptionFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value for &apos;{0}&apos; is not a valid E.164 phone number: &apos;{1}&apos;.
         /// </summary>
         internal static string InvalidE164PhoneNumber {

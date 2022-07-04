@@ -3,6 +3,7 @@ using Falu.Commands.Login;
 using Falu.Updates;
 using System.CommandLine.IO;
 using System.Net;
+using System.Net.Sockets;
 using Res = Falu.Properties.Resources;
 
 namespace System.CommandLine.Builder;
@@ -87,6 +88,10 @@ internal static class CommandLineBuilderExtensions
         else if (exception is LoginException le)
         {
             stderr.WriteLine(le.InnerException is null ? Res.LoginFailedWithCodeFormat : Res.LoginFailedFormat, le.Message);
+        }
+        else if (exception is HttpRequestException hre && hre.InnerException is SocketException se && se.SocketErrorCode == SocketError.HostNotFound)
+        {
+            stderr.WriteLine(Res.HostNotFoundExceptionFormat);
         }
         else
         {
